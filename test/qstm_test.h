@@ -10,6 +10,7 @@
 #include <QLocale>
 #include <QJsonDocument>
 #include <gtest/gtest.h>
+#include "./qstm_types.h"
 
 namespace QStm {
 
@@ -39,15 +40,15 @@ public:
 
     static QByteArray toMd5(const QVariant&v){
         QByteArray bytes;
-        if(v.type()==QVariant::List || v.type()==QVariant::StringList || v.type()==QVariant::Map || v.type()==QVariant::Hash)
+        if(qTypeId(v)==QMetaType_QVariantList || qTypeId(v)==QMetaType_QStringList || qTypeId(v)==QMetaType_QVariantMap || qTypeId(v)==QMetaType_QVariantHash)
             bytes=QJsonDocument::fromVariant(v).toJson(QJsonDocument::Compact);
         else
             bytes=v.toByteArray();
-        return QCryptographicHash::hash(v.toByteArray(), QCryptographicHash::Md5).toHex();
+        return QCryptographicHash::hash(bytes, QCryptographicHash::Md5).toHex();
     }
 
     static QVariant toVar(const QVariant&v){
-        if(v.type()==QVariant::String || v.type()==QVariant::ByteArray)
+        if(qTypeId(v)==QMetaType_QString || qTypeId(v)==QMetaType_QByteArray)
             return QJsonDocument::fromJson(v.toByteArray()).toVariant();
         else
             return v;

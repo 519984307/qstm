@@ -1,16 +1,20 @@
 QT += core
 QT += network
 QT += websockets
+QT += sql
 
 INCLUDEPATH+=$$PWD
 
 HEADERS += \
+#    $$PWD/private/p_qstm_types_qt5.h \
+#    $$PWD/private/p_qstm_types_qt6.h \
     $$PWD/private/p_qstm_base_setting.h \
     $$PWD/private/p_qstm_setting_manager.h \
-    $$PWD/private/p_qstm_service_manager.h \
+    #$$PWD/private/p_qstm_service_manager.h \
     $$PWD/qstm_const.h \
     $$PWD/qstm_global.h \
     $$PWD/qstm_macro.h \
+    $$PWD/qstm_result_info.h \
     $$PWD/qstm_util_path.h \
     $$PWD/qstm_result.h \
     $$PWD/qstm_cache_pool.h \
@@ -31,6 +35,7 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/private/p_qstm_base_setting.cpp \
+    $$PWD/qstm_result_info.cpp \
     $$PWD/qstm_util_path.cpp \
     $$PWD/qstm_result.cpp \
     $$PWD/qstm_cache_pool.cpp \
@@ -38,6 +43,7 @@ SOURCES += \
     $$PWD/qstm_setting_manager.cpp \
     $$PWD/qstm_setting_base.cpp \
     $$PWD/qstm_svm.cpp \
+    $$PWD/qstm_types.cpp \
     $$PWD/qstm_currency.cpp \
     $$PWD/qstm_vvm.cpp \
     $$PWD/qstm_url.cpp \

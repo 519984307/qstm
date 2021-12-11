@@ -44,7 +44,7 @@ public:
             this->url.clear();
             this->headers.clear();
         }
-        else if(v.type()==v.Url)
+        else if(qTypeId(v)==QMetaType_QUrl)
             this->url=v.toUrl();
         else{
             auto vMap=this->vu.toHash(v);

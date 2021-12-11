@@ -11,9 +11,9 @@
 namespace QStm {
 
 #define dPvt()\
-    auto&p = *reinterpret_cast<MetaObjectUtilPvt*>(this->p)
+auto&p = *reinterpret_cast<MetaObjectUtilPvt*>(this->p)
 
-class MetaObjectUtilPvt{
+          class MetaObjectUtilPvt{
 public:
     MetaObjectUtil*parent=nullptr;
     QList<const QMetaObject*> metaObjectList;
@@ -24,101 +24,92 @@ public:
     }
 
     bool writeProperty(QObject*object, const QMetaProperty&property, const QVariant&value){
-        auto type = property.type();
+        auto type = qTypeId(property);
         QVariant vValue=value;
 
         if(property.write(object, vValue))
             return true;
-        else{
 
-            static const auto listString=QList<int>()<<QVariant::Uuid<<QVariant::String<<QVariant::ByteArray<<QVariant::Char<<QVariant::BitArray;
-            static const auto listNumber=QList<int>()<<QVariant::LongLong<<QVariant::Int<<QVariant::UInt<<QVariant::ULongLong<<QVariant::Double;
-            static const auto listClass=QList<int>()<<QVariant::Url<<QVariant::Map<<QVariant::Hash<<QVariant::List<<QVariant::StringList;
-            static const auto listJson=QList<int>()<<QVariant::Map<<QVariant::Hash<<QVariant::List<<QVariant::StringList;
-            static const auto listDates=QList<int>()<<QVariant::Date<<QVariant::DateTime<<QVariant::Time;
-            static const auto listBool=QList<int>()<<QVariant::Bool;
+        static const auto listString=QList<int>{QMetaType_QUuid, QMetaType_QString, QMetaType_QByteArray, QMetaType_QChar, QMetaType_QBitArray};
+        static const auto listNumber=QList<int>{QMetaType_LongLong, QMetaType_Int, QMetaType_UInt, QMetaType_ULongLong, QMetaType_Double};
+        static const auto listClass=QList<int>{QMetaType_QUrl, QMetaType_QVariantMap, QMetaType_QVariantHash, QMetaType_QVariantList, QMetaType_QStringList};
+        static const auto listJson=QList<int>{QMetaType_QVariantMap, QMetaType_QVariantHash, QMetaType_QVariantList, QMetaType_QStringList};
+        static const auto listDates=QList<int>{QMetaType_QDate, QMetaType_QDateTime, QMetaType_QTime};
+        static const auto listBool=QList<int>{QMetaType_Bool};
 
-            if(listString.contains(type)){
-                QVariant v;
-                if(listJson.contains(vValue.type())){
-                    v=QJsonDocument::fromVariant(vValue).toJson(QJsonDocument::Compact);
-                }
-                else{
-                    v=vValue.toByteArray();
-                }
+        if(listString.contains(type)){
+            QVariant v;
+            if(listJson.contains(qTypeId(value)))
+                v=QJsonDocument::fromVariant(vValue).toJson(QJsonDocument::Compact);
+            else
+                v=vValue.toByteArray();
 
 
-                if((type==QVariant::Uuid) && (property.write(object, vValue.toUuid())))
-                    return true;
-                else if((type==QVariant::String) && (property.write(object, v.toString())))
-                    return true;
-                else if((type==QVariant::ByteArray) && (property.write(object, v.toByteArray())))
-                    return true;
-                else if((type==QVariant::Char) && (property.write(object, v.toChar())))
-                    return true;
-                else if((type==QVariant::BitArray) && (property.write(object, v.toBitArray())))
-                    return true;
+            if((type==QMetaType_QUuid) && (property.write(object, vValue.toUuid())))
+                return true;
+            if((type==QMetaType_QString) && (property.write(object, v.toString())))
+                return true;
+            if((type==QMetaType_QByteArray) && (property.write(object, v.toByteArray())))
+                return true;
+            if((type==QMetaType_QChar) && (property.write(object, v.toChar())))
+                return true;
+            if((type==QMetaType_QBitArray) && (property.write(object, v.toBitArray())))
+                return true;
 
-            }
-            else if(listNumber.contains(type)){//ints
-                if((type==QVariant::LongLong) && (property.write(object, static_cast<qlonglong>(QLocale::c().toDouble(vValue.toString())))))
+        }
+        else if(listNumber.contains(type)){//ints
+            if((type==QMetaType_LongLong) && (property.write(object, static_cast<qlonglong>(QLocale::c().toDouble(vValue.toString())))))
+                return true;
+            if((type==QMetaType_Int) && (property.write(object, QLocale::c().toInt(vValue.toString()))))
+                return true;
+            if((type==QMetaType_UInt) && (property.write(object, QLocale::c().toInt(vValue.toString()))))
+                return true;
+            if((type==QMetaType_UInt) && (property.write(object, QLocale::c().toUInt(vValue.toString()))))
+                return true;
+            if((type==QMetaType_ULongLong) && (property.write(object, QLocale::c().toLongLong(vValue.toString()))))
+                return true;
+            if((type==QMetaType_ULongLong) && (property.write(object, QLocale::c().toLongLong(vValue.toString()))))
+                return true;
+            if((type==QMetaType_Double) && (property.write(object, QLocale::c().toDouble(vValue.toString()))))
+                return true;
+        }
+        else if(listClass.contains(type)){
+            if((type==QMetaType_QUrl) && (property.write(object, vValue.toUrl())))
+                return true;
+            if((type==QMetaType_QVariantMap) && (property.write(object, vValue.toHash())))
+                return true;
+            if((type==QMetaType_QVariantHash) && (property.write(object, vValue.toHash())))
+                return true;
+            if((type==QMetaType_QVariantList) && (property.write(object, vValue.toList())))
+                return true;
+            if((type==QMetaType_QStringList) && (property.write(object, vValue.toStringList())))
+                return true;
+        }
+        else if(listDates.contains(type)){
+            if((type==QMetaType_QDate) && (property.write(object, vValue.toDate())))
+                return true;
+            if((type==QMetaType_QDateTime) && (property.write(object, vValue.toDateTime())))
+                return true;
+            if((type==QMetaType_QTime) && (property.write(object, vValue.toTime())))
+                return true;
+        }
+        else if(listBool.contains(type) || listBool.contains(qTypeId(value))){
+            auto&v=vValue;
+            if((type==QMetaType_Bool) && (property.write(object, vValue.toBool())))
+                return true;
+            if(qTypeId(v)==QMetaType_Bool){
+                if(qTypeId(v)==QMetaType_Bool && property.write(object, vValue.toBool()))
                     return true;
-                else if((type==QVariant::Int) && (property.write(object, QLocale::c().toInt(vValue.toString()))))
-                    return true;
-                else if((type==QVariant::UInt) && (property.write(object, QLocale::c().toInt(vValue.toString()))))
-                    return true;
-                else if((type==QVariant::UInt) && (property.write(object, QLocale::c().toUInt(vValue.toString()))))
-                    return true;
-                else if((type==QVariant::ULongLong) && (property.write(object, QLocale::c().toLongLong(vValue.toString()))))
-                    return true;
-                else if((type==QVariant::ULongLong) && (property.write(object, QLocale::c().toLongLong(vValue.toString()))))
-                    return true;
-                else if((type==QVariant::Double) && (property.write(object, QLocale::c().toDouble(vValue.toString()))))
-                    return true;
-            }
-            else if(listClass.contains(type)){
-                if((type==QVariant::Url) && (property.write(object, vValue.toUrl())))
-                    return true;
-                else if((type==QVariant::Map) && (property.write(object, vValue.toHash())))
-                    return true;
-                else if((type==QVariant::Hash) && (property.write(object, vValue.toHash())))
-                    return true;
-                else if((type==QVariant::List) && (property.write(object, vValue.toList())))
-                    return true;
-                else if((type==QVariant::StringList) && (property.write(object, vValue.toStringList())))
-                    return true;
-            }
-            else if(listDates.contains(type)){
-                if((type==QVariant::Date) && (property.write(object, vValue.toDate())))
-                    return true;
-                else if((type==QVariant::DateTime) && (property.write(object, vValue.toDateTime())))
-                    return true;
-                else if((type==QVariant::Time) && (property.write(object, vValue.toTime())))
-                    return true;
-            }
-            else if(listBool.contains(type) || listBool.contains(vValue.type())){
-                auto&v=vValue;
-                if((type==QVariant::Bool) && (property.write(object, vValue.toBool())))
-                    return true;
-                else if(v.type()==QVariant::Bool){
-                    if(v.canConvert(v.Bool) && property.write(object, vValue.toBool()))
+                if(qTypeId(v)==QMetaType_Int || qTypeId(v)==QMetaType_UInt || qTypeId(v)==QMetaType_ULongLong || qTypeId(v)==QMetaType_LongLong || qTypeId(v)==QMetaType_Double){
+                    if(property.write(object, (vValue.toInt()==1)))
                         return true;
-                    else {
-                        if(v.canConvert(v.Int) || v.canConvert(v.UInt) || v.canConvert(v.ULongLong) || v.canConvert(v.LongLong) || v.canConvert(v.Double)){
-                            if(property.write(object, (vValue.toInt()==1))){
-                                return true;
-                            }
-                        }
-
-                        if(v.type()==v.String || v.type()==v.ByteArray || v.type()==v.Char){
-                            auto vv=vValue.toString().toLower();
-                            bool vBool=(vv==qsl("true"));
-                            if(property.write(object, vBool)){
-                                return true;
-                            }
-                        }
-                    }
                 }
+            }
+            if(qTypeId(v)==QMetaType_QString || qTypeId(v)==QMetaType_QByteArray || qTypeId(v)==QMetaType_QChar){
+                auto vv=vValue.toString().toLower();
+                bool vBool=(vv==qsl("true"));
+                if(property.write(object, vBool))
+                    return true;
             }
         }
         return false;
@@ -203,8 +194,8 @@ QMetaMethod MetaObjectUtil::method(const QString &name)
             auto name__=method.name().toLower();
             if(name__ != __name)
                 continue;
-            else
-                return method;
+
+            return method;
         }
     }
     return QMetaMethod();
@@ -220,8 +211,8 @@ QMetaProperty MetaObjectUtil::property(const QByteArray &name)
             auto name__=QByteArray(property.name()).toLower();
             if(name__ != __name)
                 continue;
-            else
-                return property;
+
+            return property;
         }
     }
     return QMetaProperty();
@@ -252,7 +243,7 @@ bool MetaObjectUtil::writeMap(QObject *object, const QVariantMap &v)
         i.next();
         auto k=i.key().toUtf8();
         auto&v=i.value();
-        auto&property=vProperty.value(k);
+        auto property=vProperty.value(k);
         if(p.writeProperty(object, property, v))
             __return=true;
     }
@@ -268,7 +259,7 @@ bool MetaObjectUtil::writeHash(QObject *object, const QVariantHash &v)
         i.next();
         auto k=i.key().toUtf8();
         auto&v=i.value();
-        auto&property=vProperty.value(k);
+        auto property=vProperty.value(k);
         if(p.writeProperty(object, property, v))
             __return=true;
     }

@@ -119,12 +119,12 @@ public:
     }
 
     bool v_load(const QVariant &v){
-        if(v.type()==v.List || v.type()==v.StringList)
+        if(v.typeId()==QMetaType::QVariantList || v.typeId()==QMetaType::QStringList)
             return this->load(v.toStringList());
-        else if(v.type()==v.Map || v.type()==v.Hash)
+        if(v.typeId()==QMetaType::QVariantMap || v.typeId()==QMetaType::QVariantHash)
             return this->load(v.toHash());
-        else
-            return this->load(v.toString());
+
+        return this->load(v.toString());
     }
 
     bool load(QObject *settingsObject)
@@ -265,14 +265,14 @@ public:
             else
                 this->variables[qsl("arguments")]=varguments;
 
-            if(varguments.type()==varguments.Map || varguments.type()==varguments.Hash){
+            if(varguments.typeId()==QMetaType::QVariantHash || varguments.typeId()==QMetaType::QVariantMap){
                 QHashIterator<QString, QVariant> i(varguments.toHash());
                 while (i.hasNext()) {
                     i.next();
                     arguments.insert(i.key().toLower(), i.value());
                 }
             }
-            else if(varguments.type()==varguments.List || varguments.type()==varguments.StringList){
+            else if(varguments.typeId()==QMetaType::QVariantList || varguments.typeId()==QMetaType::QStringList){
                 for(auto&v:varguments.toList()){
                     auto l=v.toString().split(qsl("="));
                     if(l.isEmpty()){

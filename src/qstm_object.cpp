@@ -12,13 +12,15 @@
 
 namespace PrivateOrm {
 Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,__static_uuid_base_data,(QUuid::createUuid().toString().toUtf8()));
+Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,__static_uuid_delimer,("|"));
+Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,__static_md5_delimer,("."));
 }
 
 namespace QStm {
 
 static const auto&__static_uuid_base_data =*PrivateOrm::__static_uuid_base_data;
-static const auto __static_uuid_delimer=qbl("|");
-static const auto __static_md5_delimer=qbl(".");
+static const auto&__static_uuid_delimer=*PrivateOrm::__static_uuid_delimer;
+static const auto&__static_md5_delimer=*PrivateOrm::__static_md5_delimer;
 
 
 #define dPvt()\
@@ -192,13 +194,13 @@ const QByteArray Object::toMd5(const QVariant&value)
 
 const QUuid Object::uuidGenerator()
 {
-    auto __uuid_base_bytes=__static_uuid_base_data+__static_uuid_delimer+randomGenerator()+__static_uuid_delimer+QString::number(QDateTime::currentDateTimeUtc().toTime_t()).toUtf8()+__static_uuid_delimer;
+    auto __uuid_base_bytes=__static_uuid_base_data+__static_uuid_delimer+randomGenerator()+__static_uuid_delimer+QString::number(QDateTime::currentDateTimeUtc().toMSecsSinceEpoch()).toUtf8()+__static_uuid_delimer;
     return QUuid::createUuidV5(QUuid::createUuid(), __uuid_base_bytes);
 }
 
 const QUuid Object::uuidGenerator(const QString &uuidBase)
 {
-    auto __uuid_base_bytes=__static_uuid_base_data+__static_uuid_delimer+randomGenerator()+__static_uuid_delimer+QString::number(QDateTime::currentDateTimeUtc().toTime_t()).toUtf8()+__static_uuid_delimer+uuidBase;
+    auto __uuid_base_bytes=__static_uuid_base_data+__static_uuid_delimer+randomGenerator()+__static_uuid_delimer+QString::number(QDateTime::currentDateTimeUtc().toMSecsSinceEpoch()).toUtf8()+__static_uuid_delimer+uuidBase;
     return QUuid::createUuidV5(QUuid::createUuid(), __uuid_base_bytes);
 }
 
@@ -221,14 +223,14 @@ const QByteArray Object::hashGenerator()
 const QString Object::makeObjectName(const QVariant &v)
 {
     static int seedRandon=1;
-    static const auto listChar=QStringList()<<QStringLiteral("(")<<QStringLiteral(")")<<QStringLiteral(".")<<QStringLiteral(" ")<<QStringLiteral("{")<<QStringLiteral("}")<<QStringLiteral("-");
+    static const auto listChar=QStringList{qsl("("),qsl(")"),qsl("."),qsl(" "),qsl("{"),qsl("}"),qsl("-")};
     QString name=v.toString();
-    if(name.contains(QStringLiteral("_QMLTYPE_")))
-        name=name.split(QStringLiteral("_QMLTYPE_")).first().trimmed();
+    if(name.contains(qsl("_QMLTYPE_")))
+        name=name.split(qsl("_QMLTYPE_")).first().trimmed();
 
     if(name.isEmpty())
-        name=QStringLiteral("obj");
-    name+=QStringLiteral("_");
+        name=qsl("obj");
+    name+=qsl("_");
     {
         QRandomGenerator r;
         r.seed(++seedRandon);
@@ -236,10 +238,10 @@ const QString Object::makeObjectName(const QVariant &v)
         name+=QString::number(v);
     }
     for(auto&v:listChar){
-        name=name.replace(v,QStringLiteral("_"));
+        name=name.replace(v,qsl("_"));
     }
-    while(name.contains(QStringLiteral("__")))
-        name=name.replace(QStringLiteral("__"),QStringLiteral("_"));
+    while(name.contains(qsl("__")))
+        name=name.replace(qsl("__"),qsl("_"));
     return name;
 }
 
@@ -258,7 +260,12 @@ QVariantMap Object::toMap()const
     auto&metaObject = *this->metaObject();
     for(int col = 0; col < metaObject.propertyCount(); ++col) {
         auto property = metaObject.property(col);
-        __return.insert(property.name(), property.read(this));
+        QVariant value;
+        if(qTypeId(property)>=QMetaType_User)
+            value=property.read(this).toInt();
+        else
+            value=property.read(this);
+        __return.insert(property.name(), value);
     }
     return __return;
 }
@@ -269,7 +276,12 @@ QVariantHash Object::toHash() const
     auto&metaObject = *this->metaObject();
     for(int col = 0; col < metaObject.propertyCount(); ++col) {
         auto property = metaObject.property(col);
-        __return.insert(property.name(), property.read(this));
+        QVariant value;
+        if(qTypeId(property)>=QMetaType_User)
+            value=property.read(this).toInt();
+        else
+            value=property.read(this);
+        __return.insert(property.name(), value);
     }
     return __return;
 }
@@ -277,6 +289,18 @@ QVariantHash Object::toHash() const
 QVariant Object::toVar()const
 {
     return this->toHash();
+}
+
+bool Object::fromVar(const QVariant &v)
+{
+    QVariantHash vHash;
+    if(qTypeId(v)==QMetaType_QString || qTypeId(v)==QMetaType_QByteArray)
+        vHash=QJsonDocument::fromJson(v.toByteArray()).toVariant().toHash();
+
+    if(qTypeId(v)==QMetaType_QVariantHash || qTypeId(v)==QMetaType_QVariantMap)
+        vHash=v.toHash();
+
+    return this->fromHash(vHash);
 }
 
 bool Object::fromMap(const QVariantMap&map)
@@ -292,7 +316,7 @@ bool Object::fromMap(const QVariantMap&map)
     return __return;
 }
 
-bool Object::fromMap(const QVariantHash &map)
+bool Object::fromHash(const QVariantHash &map)
 {
     bool __return=false;
     auto&metaObject = *this->metaObject();

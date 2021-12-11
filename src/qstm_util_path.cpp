@@ -73,8 +73,7 @@ bool PathUtil::exists(const QVariant&v) const
     dPvt();
     if(v.isValid())
         return QDir(v.toString()).exists();
-    else
-        return QDir(p.v).exists();
+    return QDir(p.v).exists();
 }
 
 bool PathUtil::isValid(const QVariant &v) const
@@ -82,8 +81,7 @@ bool PathUtil::isValid(const QVariant &v) const
     dPvt();
     if(v.isValid())
         return v.toString().trimmed().isEmpty();
-    else
-        return p.v.isEmpty();
+    return p.v.isEmpty();
 }
 
 PathUtil &PathUtil::clear()
@@ -120,8 +118,7 @@ bool PathUtil::mkPath(const QVariant &v)
     dPvt();
     if(v.isValid())
         return QDir().mkpath(v.toString());
-    else
-        return QDir(p.v).mkpath(p.v);
+    return QDir(p.v).mkpath(p.v);
 }
 
 QString PathUtil::toLower() const

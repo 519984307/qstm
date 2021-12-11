@@ -6,162 +6,279 @@
 
 namespace QStm {
 
-    class Q_STM_EXPORT Object: public QObject
-    {
-        Q_OBJECT
-    public:
-        Q_INVOKABLE explicit Object(QObject*parent=nullptr);
-        Q_INVOKABLE ~Object();
+//!
+//! \brief The Object class
+//!
+//! basic object class
+class Q_STM_EXPORT Object: public QObject
+{
+    Q_OBJECT
+public:
+    Q_INVOKABLE explicit Object(QObject*parent=nullptr);
+    Q_INVOKABLE ~Object();
 
 
-        /**
-         * @brief operator =
-         * @param value
-         */
-        void operator=( ResultValue&value);
+    //!
+    //! \brief operator =
+    //! \param value
+    //!
+    void operator=( ResultValue&value);
 
-        /**
-         * @brief operator =
-         * @param value
-         */
-        void operator=( QSqlError&value);
+    //!
+    //! \brief operator =
+    //! \param value
+    //!
+    void operator=( QSqlError&value);
 
-        /**
-         * @brief operator =
-         * @param value
-         */
-        void operator=( QVariant&value);
+    //!
+    //! \brief operator =
+    //! \param value
+    //!
+    void operator=( QVariant&value);
 
-        /**
-         * @brief cachePool
-         * @return
-         */
-        CachePool&cachePool();
+    //!
+    //! \brief cachePool
+    //! \return
+    //!
+    CachePool&cachePool();
 
-        /**
-         * @brief lastResult
-         * @return
-         */
-        virtual ResultValue &lr();
-        virtual ResultValue &lr(const ResultValue&value);
-        virtual ResultValue &lr(const QSqlError&value);
-        virtual ResultValue &lr(const QVariant&value);
-        virtual ResultValue &lr(const QString&value);
+    //!
+    //! \brief lr
+    //! \return
+    //! result value class
+    virtual ResultValue &lr();
 
-        virtual ResultValue &lastResult();
-        virtual ResultValue &lastResult(const ResultValue&value);
-        virtual ResultValue &lastResult(const QSqlError&value);
-        virtual ResultValue &lastResult(const QVariant&value);
-        virtual ResultValue &lastResult(const QString&value);
+    //!
+    //! \brief lr
+    //! \param value
+    //! \return
+    //!result value class
+    virtual ResultValue &lr(const ResultValue&value);
 
-        virtual ResultValue &setResult(const ResultValue&value);
-        virtual ResultValue &setResult(const QSqlError&value);
-        virtual ResultValue &setResult(const QVariant&value);
-        virtual ResultValue &setResult(const QString&value);
+    //!
+    //! \brief lr
+    //! \param value
+    //! \return
+    //!result value class
+    virtual ResultValue &lr(const QSqlError&value);
 
-        /**
-         * @brief now
-         * @return
-         */
-        static const QDateTime now();
+    //!
+    //! \brief lr
+    //! \param value
+    //! \return
+    //!result value class
+    virtual ResultValue &lr(const QVariant&value);
 
-        /**
-         * @brief toMd5
-         * @param value
-         * @return
-         */
-        static const QByteArray toMd5(const QByteArray&value);
-        static const QByteArray toMd5(const QString&value);
-        static const QByteArray toMd5(const QVariant&value);
+    //!
+    //! \brief lr
+    //! \param value
+    //! \return
+    //!result value class
+    virtual ResultValue &lr(const QString&value);
 
-        /**
-         * @brief uuidGenerator
-         * @return
-         */
-        static const QUuid uuidGenerator();
-        static const QUuid uuidGenerator(const QString&uuidBase);
-        static const QUuid uuidGenCheck(const QUuid&uuid);
-        static const QUuid uuidGenCheck(const QUuid&uuid, const QUuid&uuidDefault);
+    //!
+    //! \brief lastResult
+    //! \return
+    //!result value class
+    virtual ResultValue &lastResult();
 
-        /**
-         * @brief hashGenerator
-         * @return
-         */
-        static const QByteArray hashGenerator();
+    //!
+    //! \brief lastResult
+    //! \param value
+    //! \return
+    //!result value class
+    virtual ResultValue &lastResult(const ResultValue&value);
 
-        /**
-         * @brief randomGenerator
-         * @return
-         */
-        static const QByteArray randomGenerator();
+    //!
+    //! \brief lastResult
+    //! \param value
+    //! \return
+    //!result value class
+    virtual ResultValue &lastResult(const QSqlError&value);
 
-        /**
-         * @brief makeObjectName
-         * @param v
-         * @return
-         */
-        static const QString makeObjectName(const QVariant &v);
+    //!
+    //! \brief lastResult
+    //! \param value
+    //! \return
+    //!result value class
+    virtual ResultValue &lastResult(const QVariant&value);
 
-        /**
-         * @brief toMap
-         * @return
-         */
-        Q_INVOKABLE virtual QVariantMap toMap() const;
+    //!
+    //! \brief lastResult
+    //! \param value
+    //! \return
+    //!result value class
+    virtual ResultValue &lastResult(const QString&value);
 
-        /**
-         * @brief toHash
-         * @return
-         */
-        Q_INVOKABLE virtual QVariantHash toHash() const;
+    //!
+    //! \brief setResult
+    //! \param value
+    //! \return
+    //!result value class
+    virtual ResultValue &setResult(const ResultValue&value);
 
-        /**
-         * @brief toVar
-         * @return
-         */
-        Q_INVOKABLE virtual QVariant toVar() const;
+    //!
+    //! \brief setResult
+    //! \param value
+    //! \return
+    //!result value class
+    virtual ResultValue &setResult(const QSqlError&value);
 
-        /**
-         * @brief fromMap
-         * @param map
-         * @return
-         */
-        Q_INVOKABLE virtual bool fromMap(const QVariantMap &map);
+    //!
+    //! \brief setResult
+    //! \param value
+    //! \return
+    //!result value class
+    virtual ResultValue &setResult(const QVariant&value);
 
-        /**
-         * @brief fromMap
-         * @param hash
-         * @return
-         */
-        Q_INVOKABLE virtual bool fromMap(const QVariantHash &map);
+    //!
+    //! \brief setResult
+    //! \param value
+    //! \return
+    //!result value class
+    virtual ResultValue &setResult(const QString&value);
 
-        /**
-         * @brief storedProperty
-         * @return
-         */
-        virtual ResultValue &storedProperty();
+    //!
+    //! \brief now
+    //! \return
+    //!
+    static const QDateTime now();
 
-        /**
-         * @brief storedIsChanged
-         * @return
-         */
-        Q_INVOKABLE virtual bool storedIsChanged() const;
+    //!
+    //! \brief toMd5
+    //! \param value
+    //! \return
+    //!
+    static const QByteArray toMd5(const QByteArray&value);
 
-        /**
-         * @brief storedMd5
-         * @return
-         */
-        Q_INVOKABLE virtual QByteArray &storedMd5() const;
+    //!
+    //! \brief toMd5
+    //! \param value
+    //! \return
+    //!
+    static const QByteArray toMd5(const QString&value);
 
-        /**
-         * @brief storedMd5Make
-         * @return
-         */
-        Q_INVOKABLE virtual QByteArray storedMd5Make() const;
+    //!
+    //! \brief toMd5
+    //! \param value
+    //! \return
+    //!
+    static const QByteArray toMd5(const QVariant&value);
+
+    //!
+    //! \brief uuidGenerator
+    //! \return
+    //!
+    static const QUuid uuidGenerator();
+
+    //!
+    //! \brief uuidGenerator
+    //! \param uuidBase
+    //! \return
+    //!
+    static const QUuid uuidGenerator(const QString&uuidBase);
+
+    //!
+    //! \brief uuidGenCheck
+    //! \param uuid
+    //! \return
+    //!
+    static const QUuid uuidGenCheck(const QUuid&uuid);
+
+    //!
+    //! \brief uuidGenCheck
+    //! \param uuid
+    //! \param uuidDefault
+    //! \return
+    //!
+    static const QUuid uuidGenCheck(const QUuid&uuid, const QUuid&uuidDefault);
+
+    //!
+    //! \brief hashGenerator
+    //! \return
+    //!
+    static const QByteArray hashGenerator();
+
+    //!
+    //! \brief randomGenerator
+    //! \return
+    //!
+    static const QByteArray randomGenerator();
+
+    //!
+    //! \brief makeObjectName
+    //! \param v
+    //! \return
+    //!
+    static const QString makeObjectName(const QVariant &v);
+
+    //!
+    //! \brief toMap
+    //! \return
+    //!
+    Q_INVOKABLE virtual QVariantMap toMap() const;
+
+    //!
+    //! \brief toHash
+    //! \return
+    //!
+    Q_INVOKABLE virtual QVariantHash toHash() const;
+
+    //!
+    //! \brief toVar
+    //! \return
+    //!
+    Q_INVOKABLE virtual QVariant toVar() const;
+
+    //!
+    //! \brief fromVar
+    //! \param map
+    //! \return
+    //!
+    Q_INVOKABLE virtual bool fromVar(const QVariant &v);
+
+    //!
+    //! \brief fromMap
+    //! \param map
+    //! \return
+    //!
+    Q_INVOKABLE virtual bool fromMap(const QVariantMap &map);
+
+    //!
+    //! \brief fromMap
+    //! \param map
+    //! \return
+    //!
+    Q_INVOKABLE virtual bool fromHash(const QVariantHash &map);
+
+    //!
+    //! \brief storedProperty
+    //! \return
+    //!
+    virtual ResultValue &storedProperty();
+
+    //!
+    //! \brief storedIsChanged
+    //! \return
+    //!
+    Q_INVOKABLE virtual bool storedIsChanged() const;
+
+    //!
+    //! \brief storedMd5
+    //! \return
+    //!
+    Q_INVOKABLE virtual QByteArray &storedMd5() const;
+
+    //!
+    //! \brief storedMd5Make
+    //! \return
+    //!
+    Q_INVOKABLE virtual QByteArray storedMd5Make() const;
 
 
-    private:
-        void*p=nullptr;
-    };
+private:
+    void*p=nullptr;
+};
 
 }
 

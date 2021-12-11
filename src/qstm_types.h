@@ -4,17 +4,79 @@
 #include <QMap>
 #include <QVariant>
 #include <QString>
+#include <QMetaProperty>
 #include <QTemporaryFile>
+#include <QMutex>
+#include <QMutexLocker>
+
+int qTypeId(const QVariant&v);
+int qTypeId(const QMetaProperty&p);
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+typedef QMutexLocker<QMutex> QMutexLOCKER;
+#else
+typedef QMutexLocker QMutexLOCKER;
+#endif
 
 typedef QVector<int> QStmVTypesList;
-
-static const QStmVTypesList QStmTypesListString=QStmVTypesList()<<QVariant::Uuid<<QVariant::String<<QVariant::ByteArray<<QVariant::Char<<QVariant::BitArray;
-static const QStmVTypesList QStmTypesListNumeric=QStmVTypesList()<<QVariant::LongLong<<QVariant::Int<<QVariant::UInt<<QVariant::ULongLong<<QVariant::Double;
-static const QStmVTypesList QStmTypesListIntergers=QStmVTypesList()<<QVariant::LongLong<<QVariant::Int<<QVariant::UInt<<QVariant::ULongLong<<QVariant::Double;
-static const QStmVTypesList QStmTypesListClass=QStmVTypesList()<<QVariant::Url<<QVariant::Map<<QVariant::Hash<<QVariant::List<<QVariant::StringList;
-static const QStmVTypesList QStmTypesListObjects=QStmVTypesList()<<QVariant::Map<<QVariant::Hash<<QVariant::List<<QVariant::StringList;
-static const QStmVTypesList QStmTypesListDates=QStmVTypesList()<<QVariant::Date<<QVariant::DateTime<<QVariant::Time;
-static const QStmVTypesList QStmTypesListBool=QStmVTypesList()<<QVariant::Bool;
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+typedef QMetaType::Type QMetaTypeType;
+static const int QMetaType_UnknownType  = QMetaType::UnknownType   ;
+static const int QMetaType_Void         = QMetaType::Void          ;
+static const int QMetaType_Bool         = QMetaType::Bool          ;
+static const int QMetaType_User         = QMetaType::User          ;
+static const int QMetaType_Double       = QMetaType::Double        ;
+static const int QMetaType_Int          = QMetaType::Int           ;
+static const int QMetaType_UInt         = QMetaType::UInt          ;
+static const int QMetaType_LongLong     = QMetaType::LongLong      ;
+static const int QMetaType_ULongLong    = QMetaType::ULongLong     ;
+static const int QMetaType_QBitArray    = QMetaType::QBitArray     ;
+static const int QMetaType_QByteArray   = QMetaType::QByteArray    ;
+static const int QMetaType_QChar        = QMetaType::QChar         ;
+static const int QMetaType_QDate        = QMetaType::QDate         ;
+static const int QMetaType_QDateTime    = QMetaType::QDateTime     ;
+static const int QMetaType_QString      = QMetaType::QString       ;
+static const int QMetaType_QStringList  = QMetaType::QStringList   ;
+static const int QMetaType_QTime        = QMetaType::QTime         ;
+static const int QMetaType_QUrl         = QMetaType::QUrl          ;
+static const int QMetaType_QUuid        = QMetaType::QUuid         ;
+static const int QMetaType_QVariantHash = QMetaType::QVariantHash  ;
+static const int QMetaType_QVariantList = QMetaType::QVariantList  ;
+static const int QMetaType_QVariantMap  = QMetaType::QVariantMap   ;
+#else
+typedef QVariant::Type QMetaTypeType;
+static const int QMetaType_UnknownType  = QMetaType::UnknownType   ;
+static const int QMetaType_Void         = QMetaType::Void          ;
+static const int QMetaType_Bool         = QMetaType::Bool          ;
+static const int QMetaType_User         = QMetaType::User          ;
+static const int QMetaType_Double       = QMetaType::Double        ;
+static const int QMetaType_Int          = QMetaType::Int           ;
+static const int QMetaType_UInt         = QMetaType::UInt          ;
+static const int QMetaType_LongLong     = QMetaType::LongLong      ;
+static const int QMetaType_ULongLong    = QMetaType::ULongLong     ;
+static const int QMetaType_QBitArray    = QMetaType::QBitArray     ;
+static const int QMetaType_QByteArray   = QMetaType::QByteArray    ;
+static const int QMetaType_QChar        = QMetaType::QChar         ;
+static const int QMetaType_QDate        = QMetaType::QDate         ;
+static const int QMetaType_QDateTime    = QMetaType::QDateTime     ;
+static const int QMetaType_QString      = QMetaType::QString       ;
+static const int QMetaType_QStringList  = QMetaType::QStringList   ;
+static const int QMetaType_QTime        = QMetaType::QTime         ;
+static const int QMetaType_QUrl         = QMetaType::QUrl          ;
+static const int QMetaType_QUuid        = QMetaType::QUuid         ;
+static const int QMetaType_QVariantHash = QMetaType::QVariantHash  ;
+static const int QMetaType_QVariantList = QMetaType::QVariantList  ;
+static const int QMetaType_QVariantMap  = QMetaType::QVariantMap   ;
+#endif
+static const QStmVTypesList QStmTypesListString=QStmVTypesList{QMetaType_QUuid,QMetaType_QString,QMetaType_QByteArray,QMetaType_QChar,QMetaType_QBitArray};
+static const QStmVTypesList QStmTypesListMetaString=QStmVTypesList{QMetaType_QUuid, QMetaType_QString, QMetaType_QByteArray, QMetaType_QChar, QMetaType_QBitArray};
+static const QStmVTypesList QStmTypesListNumeric=QStmVTypesList{QMetaType_LongLong,QMetaType_Int,QMetaType_UInt,QMetaType_ULongLong,QMetaType_Double};
+static const QStmVTypesList QStmTypesListDoubles=QStmVTypesList{QMetaType_Double};
+static const QStmVTypesList QStmTypesListIntergers=QStmVTypesList{QMetaType_LongLong,QMetaType_Int,QMetaType_UInt,QMetaType_ULongLong,QMetaType_Double};
+static const QStmVTypesList QStmTypesListClass=QStmVTypesList{QMetaType_QUrl,QMetaType_QVariantMap,QMetaType_QVariantHash,QMetaType_QVariantList,QMetaType_QStringList};
+static const QStmVTypesList QStmTypesListObjects=QStmVTypesList{QMetaType_QVariantMap,QMetaType_QVariantHash,QMetaType_QVariantList,QMetaType_QStringList};
+static const QStmVTypesList QStmTypesListDates=QStmVTypesList{QMetaType_QDate,QMetaType_QDateTime,QMetaType_QTime};
+static const QStmVTypesList QStmTypesListBool=QStmVTypesList{QMetaType_Bool};
 
 enum QStmRequestMethod {Head=1, Get=2, Post=4, Put=8, Delete=16, Options=32, MaxMethod=Options};
 
@@ -50,8 +112,8 @@ static const QHash<QString,QStmRequestMethod> ___QStmRequestMethodType(){
 }
 static const auto QStmRequestMethodType=___QStmRequestMethodType();
 enum QStmProtocol {TcpSocket=1, UdpSocket=2, WebSocket=4, Mqtt=8, Amqp=16, Http=32, Https=64};
-static const QHash<QString,QStmProtocol> ___QStmProtocolType(){
-    QHash<QString,QStmProtocol> r;
+static const QHash<QString,int> ___QStmProtocolType(){
+    QHash<QString,int> r;
 
     r.insert(QT_STRINGIFY2(TcpSocket),TcpSocket  );
     r.insert(QT_STRINGIFY2(UdpSocket),UdpSocket  );
@@ -71,8 +133,8 @@ static const QHash<QString,QStmProtocol> ___QStmProtocolType(){
     return r;
 }
 
-static const QMap<QStmProtocol, QString> ___QStmProtocolName(){
-    QMap<QStmProtocol, QString> r;
+static const QHash<int, QString> ___QStmProtocolName(){
+    QHash<int, QString> r;
     r.insert(TcpSocket , QT_STRINGIFY2(tcpsocket));
     r.insert(UdpSocket , QT_STRINGIFY2(udpsocket));
     r.insert(WebSocket , QT_STRINGIFY2(websocket));
@@ -83,10 +145,10 @@ static const QMap<QStmProtocol, QString> ___QStmProtocolName(){
     return r;
 }
 
-static const QMap<QStmProtocol, QString> QStmProtocolName=___QStmProtocolName();
-static const QHash<QString,QStmProtocol> QStmProtocolType=___QStmProtocolType();
-static const QStmProtocol rpcProtocolMin=QStmProtocol(1);
-static const QStmProtocol rpcProtocolMax=Https;
+static const auto QStmProtocolName=___QStmProtocolName();
+static const auto qStmProtocolType=___QStmProtocolType();
+static const auto rpcProtocolMin=QStmProtocol(1);
+static const auto rpcProtocolMax=Https;
 class QStmListen;
 class QStmListenProtocol;
 
@@ -97,30 +159,30 @@ static bool ___registerMetaType(){
 
 static const auto registerMetaType=___registerMetaType();
 
-static const auto vGET=/*QVariant*/("get");
-static const auto vPOST=/*QVariant*/("post");
-static const auto vPUT=/*QVariant*/("put");
-static const auto vDELETE=/*QVariant*/("delete");
+static const auto vGET="get";
+static const auto vPOST="post";
+static const auto vPUT="put";
+static const auto vDELETE="delete";
 
-static const auto vObject=/*QVariant*/("object");
-static const auto vList=/*QVariant*/("list");
+static const auto vObject="object";
+static const auto vList="list";
 
-static const auto vActions=/*QVariant*/("actions");
-static const auto vAuto=/*QVariant*/"auto";
-static const auto vText=/*QVariant*/("text");
-static const auto vNumber=/*QVariant*/("number");
-static const auto vNumeric=/*QVariant*/("numeric");
-static const auto vInt=/*QVariant*/("int");
-static const auto vDate=/*QVariant*/("date");
-static const auto vTime=/*QVariant*/("time");
-static const auto vDatetime=/*QVariant*/("datetime");
-static const auto vCurrency=/*QVariant*/("currency");
-static const auto vDouble=/*QVariant*/("double");
-static const auto vBool=/*QVariant*/("bool");
+static const auto vActions="actions";
+static const auto vAuto="auto";
+static const auto vText="text";
+static const auto vNumber="number";
+static const auto vNumeric="numeric";
+static const auto vInt="int";
+static const auto vDate="date";
+static const auto vTime="time";
+static const auto vDatetime="datetime";
+static const auto vCurrency="currency";
+static const auto vDouble="double";
+static const auto vBool="bool";
 
-static const auto vaStart=/*QVariant*/("start");
-static const auto vaCenter=/*QVariant*/("center");
-static const auto vaEnd=/*QVariant*/("end");
+static const auto vaStart="start";
+static const auto vaCenter="center";
+static const auto vaEnd="end";
 
 static const auto vpId="id";
 static const auto vpName="name";
@@ -129,6 +191,7 @@ static const auto vpHeaders="headers";
 static const auto vpFilters="filters";
 static const auto vpItems="items";
 static const auto vpLinks="links";
+static const auto vpResultInfo="resultInfo";
 static const auto vpFlags="flags";
 static const auto vpEdit="edit";
 static const auto vpPerfumery="perfumerys";
@@ -183,8 +246,8 @@ static const auto vtInputAddress="inputaddress";
 static const auto vpOutput="output";
 static const auto vpRoute="route";
 
-static const auto driver_QODBC=("QODBC");
-static const auto driver_QSQLITE=("QSQLITE");
-static const auto driver_QPSQL=("QPSQL");
-static const auto driver_QOIC=("QOIC");
-static const auto driver_QMYSQL=("QMYSQL");
+static const auto driver_QODBC="QODBC";
+static const auto driver_QSQLITE="QSQLITE";
+static const auto driver_QPSQL="QPSQL";
+static const auto driver_QOIC="QOIC";
+static const auto driver_QMYSQL="QMYSQL";

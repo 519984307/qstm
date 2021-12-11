@@ -17,11 +17,10 @@ QSVM::~QSVM()
 
 QSVM &QSVM::operator=(const QVariant &v)
 {
-    QStm::VariantUtil vu;
+    Q_DECLARE_VU;
     auto vMap=vu.toHash(v);
     QVariantHash::clear();
-    QHashIterator<QString, QVariant> i(vMap);
-    while (i.hasNext()) {
+    Q_V_HASH_ITERATOR (vMap){
         i.next();
         this->insert(i.key(), i.value());
     }
@@ -30,10 +29,9 @@ QSVM &QSVM::operator=(const QVariant &v)
 
 QSVM &QSVM::operator+=(const QVariant &v)
 {
-    QStm::VariantUtil vu;
+    Q_DECLARE_VU;
     auto vMap=vu.toHash(v);
-    QHashIterator<QString, QVariant> i(vMap);
-    while (i.hasNext()) {
+    Q_V_HASH_ITERATOR (vMap){
         i.next();
         this->insert(i.key(), i.value());
     }
@@ -48,10 +46,9 @@ QSVM &QSVM::operator+=(const QPair<QString,QVariant> &v)
 
 QSVM &QSVM::operator-=(const QVariant &v)
 {
-    QStm::VariantUtil vu;
+    Q_DECLARE_VU;
     auto vMap=vu.toHash(v);
-    QHashIterator<QString, QVariant> i(vMap);
-    while (i.hasNext()) {
+    Q_V_HASH_ITERATOR (vMap){
         i.next();
         QVariantHash::remove(i.key());
     }
@@ -60,10 +57,9 @@ QSVM &QSVM::operator-=(const QVariant &v)
 
 QSVM &QSVM::operator<<(const QVariant &v)
 {
-    QStm::VariantUtil vu;
+    Q_DECLARE_VU;
     auto vMap=vu.toHash(v);
-    QHashIterator<QString, QVariant> i(vMap);
-    while (i.hasNext()) {
+    Q_V_HASH_ITERATOR (vMap){
         i.next();
         if(QVariantHash::contains(i.key()))
             this->insert(i.key(), i.value());

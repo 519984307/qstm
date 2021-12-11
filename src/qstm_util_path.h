@@ -8,39 +8,128 @@
 
 namespace QStm {
 
-    class Q_STM_EXPORT PathUtil{
-    public:
-        explicit PathUtil(Q_CONST_V);
-        virtual ~PathUtil();
+class Q_STM_EXPORT PathUtil{
+public:
+    explicit PathUtil(Q_CONST_V);
+    virtual ~PathUtil();
 
-        PathUtil&operator=(const QVariant&v);
-        PathUtil&operator+=(const QVariant&v);
-        PathUtil&operator-=(const QVariant&v);
-        PathUtil&operator<<(const QVariant&v);
+    PathUtil&operator=(const QVariant&v);
+    PathUtil&operator+=(const QVariant&v);
+    PathUtil&operator-=(const QVariant&v);
+    PathUtil&operator<<(const QVariant&v);
 
-        bool exists()const;
-        bool exists(Q_CONST_V)const;
-        bool isValid(Q_CONST_V)const;
-        PathUtil&clear();
-        PathUtil&setPath(Q_CONST_V);
-        PathUtil&append(Q_CONST_V);
-        PathUtil&remove(Q_CONST_V);
-        bool mkPath(Q_CONST_V);
+    //!
+    //! \brief exists
+    //! \return
+    //!
+    bool exists()const;
 
-        QString toLower()const;
-        QString toString()const;
-        QByteArray toByteArray()const;
-        QVariantList toList()const;
-        QStringList toStringList()const;
-        QByteArray toMd5()const;
-        QUuid toUuid()const;
-        QUrl toUrl();
+    //!
+    //! \brief exists
+    //! \param v
+    //! \return
+    //!
+    bool exists(Q_CONST_V)const;
 
-        QString arg(const QVariant&v);
+    //!
+    //! \brief isValid
+    //! \param v
+    //! \return
+    //!
+    bool isValid(Q_CONST_V)const;
 
-    private:
-        void*p=nullptr;
-    };
+    //!
+    //! \brief clear
+    //! \return
+    //!
+    PathUtil&clear();
+
+    //!
+    //! \brief setPath
+    //! \param v
+    //! \return
+    //!
+    PathUtil&setPath(Q_CONST_V);
+
+    //!
+    //! \brief append
+    //! \param v
+    //! \return
+    //!
+    PathUtil&append(Q_CONST_V);
+
+    //!
+    //! \brief remove
+    //! \param v
+    //! \return
+    //!
+    PathUtil&remove(Q_CONST_V);
+
+    //!
+    //! \brief mkPath
+    //! \param v
+    //! \return
+    //!
+    bool mkPath(Q_CONST_V);
+
+    //!
+    //! \brief toLower
+    //! \return
+    //!
+    QString toLower()const;
+
+    //!
+    //! \brief toString
+    //! \return
+    //!
+    QString toString()const;
+
+    //!
+    //! \brief toByteArray
+    //! \return
+    //!
+    QByteArray toByteArray()const;
+
+    //!
+    //! \brief toList
+    //! \return
+    //!
+    QVariantList toList()const;
+
+    //!
+    //! \brief toStringList
+    //! \return
+    //!
+    QStringList toStringList()const;
+
+    //!
+    //! \brief toMd5
+    //! \return
+    //!
+    QByteArray toMd5()const;
+
+    //!
+    //! \brief toUuid
+    //! \return
+    //!
+    QUuid toUuid()const;
+
+    //!
+    //! \brief toUrl
+    //! \return
+    //!
+    QUrl toUrl();
+
+    //!
+    //! \brief arg
+    //! \param v
+    //! \return
+    //!
+    QString arg(const QVariant&v);
+
+private:
+    void*p=nullptr;
+};
 
 }
 

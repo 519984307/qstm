@@ -8,45 +8,164 @@
 #include "./qstm_global.h"
 
 namespace QStm {
-    class Q_STM_EXPORT QCurrency:public QVariant{
-    public:
-        explicit QCurrency(const QVariant&v=QVariant(), const QVariant&precision=QVariant());
-        virtual ~QCurrency();
+//!
+//! \brief The QCurrency class
+//!
+class Q_STM_EXPORT QCurrency:public QVariant{
+public:
+    explicit QCurrency(const QVariant&v=QVariant(), const QVariant&precision=QVariant());
+    virtual ~QCurrency();
 
-        /**
-         * @brief operator =
-         * @param value
-         */
-        QCurrency&operator = (const QVariant&v);
-        QCurrency&operator = (const qlonglong&v);
-        QCurrency&operator = (const int&v);
-        QCurrency&operator = (const double&v);
+    //!
+    //! \brief operator =
+    //! \param v
+    //! \return
+    //! operator to calc
+    QCurrency&operator = (const QVariant&v);
 
-        QCurrency&operator + (const QCurrency&o);
-        QCurrency&operator - (const QCurrency&o);
-        QCurrency&operator * (const QCurrency&o);
-        QCurrency&operator / (const QCurrency&o);
-        QCurrency&operator % (const QCurrency&o);
-        QCurrency&operator ^ (const QCurrency&o);
+    //!
+    //! \brief operator =
+    //! \param v
+    //! \return
+    //!operator to calc
+    QCurrency&operator = (const qlonglong&v);
 
-        void operator += (const QVariant&o);
-        void operator -= (const QVariant&o);
-        void operator *= (const QVariant&o);
-        void operator /= (const QVariant&o);
-        void operator ^= (const QVariant&o);
+    //!
+    //! \brief operator =
+    //! \param v
+    //! \return
+    //!operator to calc
+    QCurrency&operator = (const int&v);
 
-        bool operator > (const QCurrency&o);
-        bool operator >= (const QCurrency&o);
-        bool operator == (const QCurrency&o);
-        bool operator < (const QCurrency&o);
-        bool operator <= (const QCurrency&o);
+    //!
+    //! \brief operator =
+    //! \param v
+    //! \return
+    //!operator to calc
+    QCurrency&operator = (const double&v);
 
-        virtual QCurrency &setValue(const QVariant&value);
+    //!
+    //! \brief operator +
+    //! \param o
+    //! \return
+    //!operator to calc
+    QCurrency&operator + (const QCurrency&o);
 
-        double toDouble()const;
-    private:
-        void*p=nullptr;
-    };
+    //!
+    //! \brief operator -
+    //! \param o
+    //! \return
+    //!operator to calc
+    QCurrency&operator - (const QCurrency&o);
+
+    //!
+    //! \brief operator *
+    //! \param o
+    //! \return
+    //!
+    QCurrency&operator * (const QCurrency&o);
+
+    //!
+    //! \brief operator /
+    //! \param o
+    //! \return
+    //!operator to calc
+    QCurrency&operator / (const QCurrency&o);
+
+    //!
+    //! \brief operator %
+    //! \param o
+    //! \return
+    //!operator to calc
+    QCurrency&operator % (const QCurrency&o);
+
+    //!
+    //! \brief operator ^
+    //! \param o
+    //! \return
+    //!operator to calc
+    QCurrency&operator ^ (const QCurrency&o);
+
+    //!
+    //! \brief operator +=
+    //! \param o
+    //!operator to calc
+    void operator += (const QVariant&o);
+
+    //!
+    //! \brief operator -=
+    //! \param o
+    //!operator to calc
+    void operator -= (const QVariant&o);
+
+    //!
+    //! \brief operator *=
+    //! \param o
+    //!operator to calc
+    void operator *= (const QVariant&o);
+
+    //!
+    //! \brief operator /=
+    //! \param o
+    //!operator to calc
+    void operator /= (const QVariant&o);
+
+    //!
+    //! \brief operator ^=
+    //! \param o
+    //!operator to calc
+    void operator ^= (const QVariant&o);
+
+    //!
+    //! \brief operator >
+    //! \param o
+    //! \return
+    //!operator to calc
+    bool operator > (const QCurrency&o);
+
+    //!
+    //! \brief operator >=
+    //! \param o
+    //! \return
+    //!operator to calc
+    bool operator >= (const QCurrency&o);
+
+    //!
+    //! \brief operator ==
+    //! \param o
+    //! \return
+    //!
+    bool operator == (const QCurrency&o);
+
+    //!
+    //! \brief operator <
+    //! \param o
+    //! \return
+    //!operator to calc
+    bool operator < (const QCurrency&o);
+
+    //!
+    //! \brief operator <=
+    //! \param o
+    //! \return
+    //!operator to calc
+    bool operator <= (const QCurrency&o);
+
+    //!
+    //! \brief setValue
+    //! \param value
+    //! \return
+    //!operator to calc
+    virtual QCurrency &setValue(const QVariant&value);
+
+    //!
+    //! \brief toDouble
+    //! \return
+    //! conversao para do double
+    double toDouble()const;
+private:
+    void*p=nullptr;
+};
 
 }
 

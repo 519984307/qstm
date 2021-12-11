@@ -4,14 +4,16 @@
 
 const static QString toBytes(const QVariant &v)
 {
-    if(v.type()==QVariant::List || v.type()==QVariant::StringList || v.type()==QVariant::Map || v.type()==QVariant::Hash)
+    if(qTypeId(v)==QMetaType_QVariantList || qTypeId(v)==QMetaType_QStringList || qTypeId(v)==QMetaType_QVariantMap || qTypeId(v)==QMetaType_QVariantHash)
         return QJsonDocument::fromVariant(v).toJson(QJsonDocument::Compact);
-    else if(v.type()==QVariant::Uuid)
+    
+    if(qTypeId(v)==QMetaType_QUuid)
         return v.toUuid().toString();
-    else if(v.type()==QVariant::Url)
+    
+    if(qTypeId(v)==QMetaType_QUrl)
         return v.toUrl().toString();
-    else
-        return v.toByteArray();
+
+    return v.toByteArray();
 }
 
 QVVM::QVVM():QVariantHash()

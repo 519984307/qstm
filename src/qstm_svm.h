@@ -14,11 +14,26 @@ Q_DECLARE_METATYPE(QVM)
 Q_DECLARE_METATYPE(QVL*)
 Q_DECLARE_METATYPE(QVM*)
 
+//!
+//! \brief The QSVM class
+//!
 class Q_STM_EXPORT QSVM:public QVariantHash
 {
 public:
+    //!
+    //! \brief QSVM
+    //!
     explicit QSVM();
+
+    //!
+    //! \brief QSVM
+    //! \param other
+    //!
     explicit QSVM(const QVariant &other);
+
+    //!
+    //! \brief ~QSVM
+    //!
     virtual ~QSVM();
 
     /**

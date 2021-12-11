@@ -39,6 +39,7 @@ public:
         StringStringMap  map;
         map.insert(qsl("date"), qsl("dd/MM/yyyy"));
         map.insert(qsl("time"), qsl("hh:mm:ss"));
+        map.insert(qsl("timeShort"), qsl("hh:mm"));
         map.insert(qsl("dateTime"), qsl("dd/MM/yyyy hh:mm:ss"));
         map.insert(qsl("currency"), qsl_null);
         map.insert(qsl("number"), qsl_null);
@@ -47,7 +48,7 @@ public:
         map.insert(qsl("boolean")+keyTrue,qtr("Sim"));
         map.insert(qsl("boolean")+keyFalse,qtr("Não"));
 
-        StringStringStringMap __staticMaskMap;
+            StringStringStringMap __staticMaskMap;
         __staticMaskMap.insert(brz.nativeCountryName(), map);
         __staticMaskMap.insert(sys.nativeCountryName(), map);
         __staticMaskMap.insert(loc.nativeLanguageName(), map);
@@ -61,10 +62,10 @@ Q_GLOBAL_STATIC(FormattingUtilStruct,___formattingUtilStruct)
 
 
 #define dPvt()\
-    auto&p = *reinterpret_cast<FormattingUtilPvt*>(this->p)
+auto&p = *reinterpret_cast<FormattingUtilPvt*>(this->p)
 
 
-auto&consts=*___formattingUtilStruct;
+          auto&consts=*___formattingUtilStruct;
 
 void init(){
     consts.init();
@@ -106,6 +107,12 @@ QString &FormattingUtil::Masks::date() const
 }
 
 QString &FormattingUtil::Masks::time() const
+{
+    dPvt();
+    return p.maskMap[__func__];
+}
+
+QString &FormattingUtil::Masks::timeShort() const
 {
     dPvt();
     return p.maskMap[__func__];
@@ -183,6 +190,12 @@ const QString FormattingUtil::toTime(const QVariant &v)
     return QVariant::toTime().toString(this->masks().time());
 }
 
+const QString FormattingUtil::toTimeShort(const QVariant &v)
+{
+    set_v;
+    return QVariant::toTime().toString(this->masks().timeShort());
+}
+
 const QString FormattingUtil::toDateTime(const QVariant &v)
 {
     set_v;
@@ -240,30 +253,33 @@ const QString FormattingUtil::toString()
 const QString FormattingUtil::v(const QVariant &v, int prec)
 {
     set_v;
-    auto t=this->type();
+    auto t=qTypeId(*this);
     auto tn=QByteArray(this->typeName());
-    if(t==QVariant::Int || t==QVariant::UInt || t==QVariant::LongLong || t==QVariant::ULongLong)
+
+    if(t==QMetaType_Int || t==QMetaType_UInt || t==QMetaType_LongLong || t==QMetaType_ULongLong)
         return this->toInt(v);
-    else if(tn==consts.QCurrency_class_name || tn==consts.QCurrency_class_name_short || tn==consts.qcurrency_class_name_short)
+
+    if(tn==consts.QCurrency_class_name || tn==consts.QCurrency_class_name_short || tn==consts.qcurrency_class_name_short)
         return this->toCurrency(v, prec);
-    else if(tn==consts.qpercent_class_name)
+
+    if(tn==consts.qpercent_class_name)
         return this->toPercent(v, prec);
-    else if(t==QVariant::Double)
+    if(t==QMetaType_Double)
         return this->toDouble(v, prec);
-    else if(t==QVariant::Date)
+    if(t==QMetaType_QDate)
         return this->toDate(v);
-    else if(t==QVariant::Time)
+    if(t==QMetaType_QTime)
         return this->toTime(v);
-    else if(t==QVariant::DateTime)
+    if(t==QMetaType_QDateTime)
         return this->toDateTime(v);
-    else if(t==QVariant::Bool)
+    if(t==QMetaType_Bool)
         return this->toBool(v);
-    else if(t==QVariant::Uuid)
+    if(t==QMetaType_QUuid)
         return this->toUuid().toString();
-    else if(t==QVariant::Url)
+    if(t==QMetaType_QUrl)
         return this->toUrl().toString();
-    else
-        return QVariant::toString();
+
+    return QVariant::toString();
 
 }
 

@@ -1,10 +1,10 @@
 #ifndef Q_STM_FormattingUtilTestUnit_H
 #define Q_STM_FormattingUtilTestUnit_H
 
-#include "./qorm_test_unit.h"
+#include "./qstm_test_unit.h"
 #include "./qstm_util_formatting.h"
 
-namespace QOrm {
+namespace QStm {
 
     class Q_STM_FormattingUtilTestUnit : public SDKGoogleTestUnit {
     public:

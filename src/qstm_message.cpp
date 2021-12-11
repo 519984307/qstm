@@ -6,7 +6,7 @@
 namespace QStm {
 
 #define dPvt()\
-    auto&p =*reinterpret_cast<MessagePvt*>(this->p)
+auto&p =*reinterpret_cast<MessagePvt*>(this->p)
 
 class MessagePvt{
 public:
@@ -37,9 +37,9 @@ public:
     }
 
     static QVariant staticReplaceVar(const QVariantHash&static_variables, const QVariant&v){
-        VariantUtil vu;
+        Q_DECLARE_VU;
         QString value;
-        if(v.type()==v.Map || v.type()==v.Hash || v.type()==v.List || v.type()==v.StringList){
+        if(qTypeId(v)==QMetaType_QVariantMap || qTypeId(v)==QMetaType_QVariantHash || qTypeId(v)==QMetaType_QVariantList || qTypeId(v)==QMetaType_QStringList){
             value=QJsonDocument::fromVariant(v).toJson(QJsonDocument::Compact);
         }
         else{
@@ -67,7 +67,7 @@ public:
             }
         }
 
-        if(v.type()==v.Map || v.type()==v.Hash || v.type()==v.List || v.type()==v.StringList){
+        if(qTypeId(v)==QMetaType_QVariantMap || qTypeId(v)==QMetaType_QVariantHash || qTypeId(v)==QMetaType_QVariantList || qTypeId(v)==QMetaType_QStringList){
             auto v=QJsonDocument::fromJson(value.toUtf8()).toVariant();
             return v;
         }
@@ -83,17 +83,17 @@ public:
     }
 
     QString parserText(const QVariant&v){
-        VariantUtil vu;
+        Q_DECLARE_VU;
         return vu.toStr(v);
     }
 
     QString parserTextHtml(const QVariant&v){
-        VariantUtil vu;
+        Q_DECLARE_VU;
         return vu.toStr(v);
     }
 
     QString parserTextLine(const QVariant&v){
-        VariantUtil vu;
+        Q_DECLARE_VU;
         QVariantList vl;
         if(vu.vIsObject(v))
             vl=v.toList();
@@ -143,7 +143,7 @@ public:
 
 
     Message&setVar(const QVariant &v){
-        VariantUtil vu;
+        Q_DECLARE_VU;
         QVariantHash vBody=v.toHash();
         this->uuid      =vu.toUuid(vBody[qsl_fy(uuid)]);
         this->name      =vBody[qsl_fy(name)].toString();
@@ -272,7 +272,7 @@ QVariantHash Message::toHash() const
 QString Message::toString() const
 {
     dPvt();
-    VariantUtil vu;
+    Q_DECLARE_VU;
     return vu.toStr(p.body);
 }
 
@@ -316,13 +316,13 @@ Message &Message::setAttachmentName(const QVariant &value)
     return*this;
 }
 
-QString Message::type() const
+QString Message::typeId() const
 {
     dPvt();
     return p.parserVariable(p.type).toString();
 }
 
-Message &Message::type(const QVariant &value)
+Message &Message::typeId(const QVariant &value)
 {
     dPvt();
     p.type = value.toString();
@@ -345,7 +345,7 @@ QUuid Message::uuid() const
 Message &Message::uuid(const QVariant &value)
 {
     dPvt();
-    VariantUtil vu;
+    Q_DECLARE_VU;
     p.uuid = vu.toUuid(value);
     return p.setMap();
 }
@@ -353,7 +353,7 @@ Message &Message::uuid(const QVariant &value)
 Message &Message::setUuid(const QVariant &value)
 {
     dPvt();
-    VariantUtil vu;
+    Q_DECLARE_VU;
     p.uuid = vu.toUuid(value);
     return p.setMap();
 }

@@ -1,21 +1,23 @@
-#ifndef Q_ORM_ResultValueTestUnit_H
-#define Q_ORM_ResultValueTestUnit_H
+#ifndef Q_STM_ResultValueTestUnit_H
+#define Q_STM_ResultValueTestUnit_H
 
-#include "./qorm_test_unit.h"
-#include "./qorm_object.h"
+#include "./qstm_test_unit.h"
+#include "./qstm_object.h"
+#include "./qstm_currency.h"
+#include "./qstm_util_variant.h"
 
-namespace QOrm {
+namespace QStm {
 
-    class Q_ORM_ResultValueTestUnit : public SDKGoogleTestUnit {
+    class Q_STM_ResultValueTestUnit : public SDKGoogleTestUnit {
     public:
     };
 
-    TEST_F(Q_ORM_ResultValueTestUnit, serviceStart)
+    TEST_F(Q_STM_ResultValueTestUnit, serviceStart)
     {
         EXPECT_EQ(this->serviceStart(),true)<<"fail: service start";
     }
 
-    TEST_F(Q_ORM_ResultValueTestUnit, operatorBool)
+    TEST_F(Q_STM_ResultValueTestUnit, operatorBool)
     {
         QStm::Object objectA;
         QStm::Object objectB;
@@ -40,7 +42,7 @@ namespace QOrm {
         EXPECT_EQ(objectA.lr().isOk(),true)<<"fail: error on check isOK";
     }
 
-    TEST_F(Q_ORM_ResultValueTestUnit, checkOperatorResultValue)
+    TEST_F(Q_STM_ResultValueTestUnit, checkOperatorResultValue)
     {
         QStm::Object objectA;
         QStm::Object objectB;
@@ -51,7 +53,7 @@ namespace QOrm {
         EXPECT_EQ(objectA.lr()==objectB.lr(),true)<<"fail: error on check operatorBool";
     }
 
-    TEST_F(Q_ORM_ResultValueTestUnit, checkToString)
+    TEST_F(Q_STM_ResultValueTestUnit, checkToString)
     {
         QStm::Object objectA;
         QStm::Object objectB;
@@ -65,7 +67,7 @@ namespace QOrm {
 
 
 
-    TEST_F(Q_ORM_ResultValueTestUnit, checkResult)
+    TEST_F(Q_STM_ResultValueTestUnit, checkResult)
     {
         QStm::Object objectA;
         QStm::Object objectB;
@@ -84,8 +86,8 @@ namespace QOrm {
         vListValues<<QCurrency(1.2);
         vListValues<<qbl("bytearray");
         vListValues<<qsl("string");
-        vListValues<<QVariantList()<<1<<2<<3;
-        vListValues<<QVariantHash({{"A",QDate::currentDate()}, {"B",QDateTime::currentDateTime()}});
+        vListValues<<QVariantList{1,2,3};
+        vListValues<<QVariantHash{{qsl("A"),QDate::currentDate()}, {"B",QDateTime::currentDateTime()}};
         vListValues<<QDate::currentDate();
 
         VariantUtil vu;
@@ -101,7 +103,7 @@ namespace QOrm {
         }
     }
 
-    TEST_F(Q_ORM_ResultValueTestUnit, serviceStop)
+    TEST_F(Q_STM_ResultValueTestUnit, serviceStop)
     {
         EXPECT_EQ(this->serviceStop(),true)<<"fail: service stop";
     }

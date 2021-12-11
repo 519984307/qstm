@@ -13,197 +13,497 @@
 
 namespace QStm {
 
-    class Q_STM_EXPORT VariantUtil:public QVariant{
-    public:
-        explicit VariantUtil(Q_CONST_V);
-        virtual ~VariantUtil();
+//!
+//! \brief The VariantUtil class
+//!
+class Q_STM_EXPORT VariantUtil:public QVariant{
+public:
+    explicit VariantUtil(Q_CONST_V);
+    virtual ~VariantUtil();
 
-        const QStmVTypesList&typesListString     = QStmTypesListString   ;
-        const QStmVTypesList&typesListNumeric    = QStmTypesListNumeric  ;
-        const QStmVTypesList&typesListIntergers  = QStmTypesListIntergers;
-        const QStmVTypesList&typesListClass      = QStmTypesListClass    ;
-        const QStmVTypesList&typesListObjects    = QStmTypesListObjects  ;
-        const QStmVTypesList&typesListDates      = QStmTypesListDates    ;
-        const QStmVTypesList&typesListBool       = QStmTypesListBool     ;
+    //!
+    //! \brief typesListString
+    //!
+    const QStmVTypesList&typesListString     = QStmTypesListMetaString   ;
 
-        VariantUtil&operator=(const QVariant&v);
+    //!
+    //! \brief typesListNumeric
+    //!
+    const QStmVTypesList&typesListNumeric    = QStmTypesListNumeric  ;
 
-        virtual bool isHex(Q_CONST_V) const;
-        virtual bool isBase64(Q_CONST_V) const;
+    //!
+    //! \brief typesListIntergers
+    //!
+    const QStmVTypesList&typesListIntergers  = QStmTypesListIntergers;
 
-        virtual const QString toStr(Q_CONST_V);
-        virtual const QByteArray toByteArray(Q_CONST_V);
-        virtual const QChar toChar(Q_CONST_V);
-        virtual int toInt(Q_CONST_V);
-        virtual qlonglong toLongLong(Q_CONST_V);
-        virtual const QDate toDate(Q_CONST_V);
-        virtual const QTime toTime(Q_CONST_V);
-        virtual const QDateTime toDateTime(Q_CONST_V);
-        virtual double toDouble(Q_CONST_V);
-        virtual bool toBool(Q_CONST_V);
+    //!
+    //! \brief typesListClass
+    //!
+    const QStmVTypesList&typesListClass      = QStmTypesListClass    ;
 
-        virtual bool canConvertJson(Q_CONST_V)const;
-        virtual bool canConvertJson(const QVariant &v, QVariant &vOut)const;
+    //!
+    //! \brief typesListObjects
+    //!
+    const QStmVTypesList&typesListObjects    = QStmTypesListObjects  ;
 
-        /**
-         * @brief toMd5
-         * @param v
-         * @return
-         *
-         * se for um QVariantHash ou QVariantList convertera para json para entao tirar o md5
-         * se nao for md5 sera tirado o md5 dos bytes
-         * se nao for uuid um md5 sera convertido em string para md5
-         * se a string enviada for um md ou md5uui entao nada ocorrera retornando o md5 ja existe nao gerando outro
-         *
-         */
-        virtual const QByteArray toMd5(Q_CONST_V);
-        virtual const QByteArray toHex(Q_CONST_V);
+    //!
+    //! \brief typesListDates
+    //!
+    const QStmVTypesList&typesListDates      = QStmTypesListDates    ;
 
-        /**
-         * @brief toMd5
-         * @param v
-         * @return
-         *
-         * se for md5 sera convertido para uuidMd5
-         * se for uuid nada ocorrera retornando o uuid
-         */
-        virtual const QUuid toUuid(Q_CONST_V);
+    //!
+    //! \brief typesListBool
+    //!
+    const QStmVTypesList&typesListBool       = QStmTypesListBool     ;
 
-        /**
-         * @brief toMd5
-         * @param v
-         * @return
-         *
-         * se a string enviada for um md ou mduui entao nada ocorrera retornando o md5 ja existe nao gerando outro
-         */
-        virtual const QUuid toMd5Uuid(Q_CONST_V);
+    //!
+    //! \brief operator =
+    //! \param v
+    //! \return
+    //!
+    VariantUtil&operator=(const QVariant&v);
 
-        /**
-         * @brief toVVM
-         * @param v
-         * @return
-         */
-        virtual QVVM toVVM()const;
-        virtual const QVVM toVVM(const QVariant&v);
-        virtual const QVVM toVVM(const QVariant&key, const QVariant &value);
+    //!
+    //! \brief isHex
+    //! \param v
+    //! \return
+    //!
+    virtual bool isHex(Q_CONST_V) const;
 
-        /**
-         * @brief takeList
-         * @param keyName
-         * @return
-         */
-        virtual const QVariantList takeList(const QByteArray &keyName);
+    //!
+    //! \brief isBase64
+    //! \param v
+    //! \return
+    //!
+    virtual bool isBase64(Q_CONST_V) const;
 
-        /**
-         * @brief type
-         * @return
-         */
-        virtual QVariant::Type type() const;
-        virtual const QStringList toStringList();
-        virtual const QStringList toStringList(const QVariant&v);
+    //!
+    //! \brief toStr
+    //! \param v
+    //! \return
+    //!
+    virtual const QString toStr(Q_CONST_V);
 
-        /**
-         * @brief toList
-         * @param v
-         * @return
-         */
-        virtual const QVariantList toList(const QVariant&v=QVariant());
+    //!
+    //! \brief toByteArray
+    //! \param v
+    //! \return
+    //!
+    virtual const QByteArray toByteArray(Q_CONST_V);
 
-        /**
-         * @brief toMap
-         * @return
-         */
-        virtual QVariantMap toMap()const;
-        virtual QVariantMap toMap(const QVariant&v) const;
-        virtual const QVariantMap toMap(const QVariant&key, const QVariant&value);
+    //!
+    //! \brief toChar
+    //! \param v
+    //! \return
+    //!
+    virtual const QChar toChar(Q_CONST_V);
 
-        /**
-         * @brief toHash
-         * @return
-         */
-        virtual QVariantHash toHash() const;
-        virtual const QVariantHash toHash(const QVariant&v);
-        virtual const QVariantHash toHash(const QVariant&key, const QVariant&value);
+    //!
+    //! \brief toInt
+    //! \param v
+    //! \return
+    //!
+    virtual int toInt(Q_CONST_V);
 
-        /**
-         * @brief toType
-         * @param type
-         * @param v
-         * @return
-         */
-        virtual const QVariant toType(const QVariant::Type&type, const QVariant&v=QVariant());
-        virtual const QVariant toVariant(const QVariant&v);
-        virtual const QVariant toVariantObject(const QVariant&v);
-        virtual const QVariant toVariantJson(const QVariant&v);
-        virtual const QVariant toVariantCBor(const QVariant&v);
+    //!
+    //! \brief toLongLong
+    //! \param v
+    //! \return
+    //!
+    virtual qlonglong toLongLong(Q_CONST_V);
 
-        /**
-         * @brief toUrl
-         * @param v
-         * @return
-         */
-        virtual const QUrl toUrl(Q_CONST_V);
+    //!
+    //! \brief toDate
+    //! \param v
+    //! \return
+    //!
+    virtual const QDate toDate(Q_CONST_V);
 
-        /**
-         * @brief makeVVM
-         * @param key
-         * @param value
-         * @return
-         */
-        virtual VariantUtil &makeVVM(const QVariant&key, const QVariant &value);
-        virtual VariantUtil &mVVM(const QVariant&key, const QVariant&value);
-        virtual VariantUtil &makeMap(const QVariant&key, const QVariant&value);
-        virtual VariantUtil &mMap(const QVariant&key, const QVariant&value);
-        virtual VariantUtil &makeHash(const QVariant&key, const QVariant&value);
-        virtual VariantUtil &mHash(const QVariant&key, const QVariant&value);
-        virtual VariantUtil &makeList(const QVariant&value);
-        virtual VariantUtil &mList(const QVariant&value);
-        virtual VariantUtil &clear();
-        virtual VariantUtil &vUnion(const QVariant&v);
-        virtual VariantUtil &vUnion(const QVariant&vDestine, const QVariant&vSource);
-        virtual VariantUtil &vMerge(const QVariant&v);
-        virtual VariantUtil &vMerge(const QVariant &vDestine, const QVariant&vSource);
-        virtual VariantUtil &vDeduplicate(const QVariant&v);
+    //!
+    //! \brief toTime
+    //! \param v
+    //! \return
+    //!
+    virtual const QTime toTime(Q_CONST_V);
 
+    //!
+    //! \brief toDateTime
+    //! \param v
+    //! \return
+    //!
+    virtual const QDateTime toDateTime(Q_CONST_V);
 
-        /**
-         * @brief vIsEmpty
-         * @param v
-         * @return
-         */
-        virtual bool vIsEmpty(Q_CONST_V);
+    //!
+    //! \brief toDouble
+    //! \param v
+    //! \return
+    //!
+    virtual double toDouble(Q_CONST_V);
 
-        /**
-         * @brief vIsObject
-         * @param v
-         * @return
-         */
-        virtual bool vIsObject(Q_CONST_V);
+    //!
+    //! \brief toBool
+    //! \param v
+    //! \return
+    //!
+    virtual bool toBool(Q_CONST_V);
 
-        /**
-         * @brief vIsList
-         * @param v
-         * @return
-         */
-        virtual bool vIsList(Q_CONST_V);
+    //!
+    //! \brief canConvertJson
+    //! \param v
+    //! \return
+    //!
+    virtual bool canConvertJson(Q_CONST_V)const;
 
-        /**
-         * @brief vIsMap
-         * @param v
-         * @return
-         */
-        virtual bool vIsMap(Q_CONST_V);
+    //!
+    //! \brief canConvertJson
+    //! \param v
+    //! \param vOut
+    //! \return
+    //!
+    virtual bool canConvertJson(const QVariant &v, QVariant &vOut)const;
 
-        /**
-         * @brief vIsString
-         * @param v
-         * @return
-         */
-        virtual bool vIsString(Q_CONST_V);
+    //!
+    //! \brief toMd5
+    //! \param v
+    //! \return
+    //! se for um QVariantHash ou QVariantList convertera para json para entao tirar o md5
+    //! se nao for md5 sera tirado o md5 dos bytes
+    //! se nao for uuid um md5 sera convertido em string para md5
+    //! se a string enviada for um md ou md5uui entao nada ocorrera retornando o md5 ja existe nao gerando outro
+    virtual const QByteArray toMd5(Q_CONST_V);
 
-    private:
-        void*p=nullptr;
-    };
+    //!
+    //! \brief toHex
+    //! \param v
+    //! \return
+    //!
+    virtual const QByteArray toHex(Q_CONST_V);
+
+    //!
+    //! \brief toUuid
+    //! \param v
+    //! \return
+    //! se for md5 sera convertido para uuidMd5
+    //! se for uuid nada ocorrera retornando o uuid
+    virtual const QUuid toUuid(Q_CONST_V);
+
+    //!
+    //! \brief toUuidSimple
+    //! \param v
+    //! \return
+    //! remove {} do uuid gerado pelo qt
+    virtual const QString toUuidSimple(Q_CONST_V);
+
+    //!
+    //! \brief toMd5Uuid
+    //! \param v
+    //! \return
+    //!se a string enviada for um md ou mduui entao nada ocorrera retornando o md5 ja existe nao gerando outro
+    virtual const QUuid toMd5Uuid(Q_CONST_V);
+
+    //!
+    //! \brief toVVM
+    //! \return
+    //!
+    virtual QVVM toVVM()const;
+
+    //!
+    //! \brief toVVM
+    //! \param v
+    //! \return
+    //!
+    virtual const QVVM toVVM(const QVariant&v);
+
+    //!
+    //! \brief toVVM
+    //! \param key
+    //! \param value
+    //! \return
+    //!
+    virtual const QVVM toVVM(const QVariant&key, const QVariant &value);
+
+    //!
+    //! \brief takeList
+    //! \param keyName
+    //! \return
+    //!
+    virtual const QVariantList takeList(const QByteArray &keyName);
+
+    //!
+    //! \brief type
+    //! \return
+    //!
+    virtual int typeId() const;
+
+    //!
+    //! \brief toStringList
+    //! \return
+    //!
+    virtual const QStringList toStringList();
+
+    //!
+    //! \brief toStringList
+    //! \param v
+    //! \return
+    //!
+    virtual const QStringList toStringList(const QVariant&v);
+
+    //!
+    //! \brief toList
+    //! \param v
+    //! \return
+    //!
+    virtual const QVariantList toList(const QVariant&v=QVariant());
+
+    //!
+    //! \brief toMap
+    //! \return
+    //!
+    virtual QVariantMap toMap()const;
+
+    //!
+    //! \brief toMap
+    //! \param v
+    //! \return
+    //!
+    virtual QVariantMap toMap(const QVariant&v) const;
+
+    //!
+    //! \brief toMap
+    //! \param key
+    //! \param value
+    //! \return
+    //!
+    virtual const QVariantMap toMap(const QVariant&key, const QVariant&value);
+
+    //!
+    //! \brief toHash
+    //! \return
+    //!
+    virtual QVariantHash toHash() const;
+
+    //!
+    //! \brief toHash
+    //! \param v
+    //! \return
+    //!
+    virtual const QVariantHash toHash(const QVariant&v);
+
+    //!
+    //! \brief toHash
+    //! \param key
+    //! \param value
+    //! \return
+    //!
+    virtual const QVariantHash toHash(const QVariant&key, const QVariant&value);
+
+    //!
+    //! \brief toMultiHash
+    //! \return
+    //!
+    virtual QMultiHash<QString, QVariant> toMultiHash() const;
+
+    //!
+    //! \brief toMultiHash
+    //! \param v
+    //! \return
+    //!
+    const virtual QMultiHash<QString, QVariant> toMultiHash(const QVariant &v);
+
+    //!
+    //! \brief toMultiHash
+    //! \param key
+    //! \param value
+    //! \return
+    //!
+    const virtual QMultiHash<QString, QVariant> toMultiHash(const QVariant &key, const QVariant &value);
+
+    //!
+    //! \brief toType
+    //! \param type
+    //! \param v
+    //! \return
+    //!
+    const QVariant toType(int type, const QVariant &v=QVariant());
+
+    //!
+    //! \brief toVariant
+    //! \param v
+    //! \return
+    //!
+    virtual const QVariant toVariant(const QVariant&v);
+
+    //!
+    //! \brief toVariantObject
+    //! \param v
+    //! \return
+    //!
+    virtual const QVariant toVariantObject(const QVariant&v);
+
+    //!
+    //! \brief toVariantJson
+    //! \param v
+    //! \return
+    //!
+    virtual const QVariant toVariantJson(const QVariant&v);
+
+    //!
+    //! \brief toVariantCBor
+    //! \param v
+    //! \return
+    //!
+    virtual const QVariant toVariantCBor(const QVariant&v);
+
+    //!
+    //! \brief toUrl
+    //! \param v
+    //! \return
+    //!
+    virtual const QUrl toUrl(Q_CONST_V);
+
+    //!
+    //! \brief makeVVM
+    //! \param key
+    //! \param value
+    //! \return
+    //!
+    virtual VariantUtil &makeVVM(const QVariant&key, const QVariant &value);
+
+    //!
+    //! \brief mVVM
+    //! \param key
+    //! \param value
+    //! \return
+    //!
+    virtual VariantUtil &mVVM(const QVariant&key, const QVariant&value);
+
+    //!
+    //! \brief makeMap
+    //! \param key
+    //! \param value
+    //! \return
+    //!
+    virtual VariantUtil &makeMap(const QVariant&key, const QVariant&value);
+
+    //!
+    //! \brief mMap
+    //! \param key
+    //! \param value
+    //! \return
+    //!
+    virtual VariantUtil &mMap(const QVariant&key, const QVariant&value);
+
+    //!
+    //! \brief makeHash
+    //! \param key
+    //! \param value
+    //! \return
+    //!
+    virtual VariantUtil &makeHash(const QVariant&key, const QVariant&value);
+
+    //!
+    //! \brief mHash
+    //! \param key
+    //! \param value
+    //! \return
+    //!
+    virtual VariantUtil &mHash(const QVariant&key, const QVariant&value);
+
+    //!
+    //! \brief makeList
+    //! \param value
+    //! \return
+    //!
+    virtual VariantUtil &makeList(const QVariant&value);
+
+    //!
+    //! \brief mList
+    //! \param value
+    //! \return
+    //!
+    virtual VariantUtil &mList(const QVariant&value);
+
+    //!
+    //! \brief clear
+    //! \return
+    //!
+    virtual VariantUtil &clear();
+
+    //!
+    //! \brief vUnion
+    //! \param v
+    //! \return
+    //!
+    virtual VariantUtil &vUnion(const QVariant&v);
+
+    //!
+    //! \brief vUnion
+    //! \param vDestine
+    //! \param vSource
+    //! \return
+    //!
+    virtual VariantUtil &vUnion(const QVariant&vDestine, const QVariant&vSource);
+
+    //!
+    //! \brief vMerge
+    //! \param v
+    //! \return
+    //!
+    virtual VariantUtil &vMerge(const QVariant&v);
+
+    //!
+    //! \brief vMerge
+    //! \param vDestine
+    //! \param vSource
+    //! \return
+    //!
+    virtual VariantUtil &vMerge(const QVariant &vDestine, const QVariant&vSource);
+
+    //!
+    //! \brief vDeduplicate
+    //! \param v
+    //! \return
+    //!
+    virtual VariantUtil &vDeduplicate(const QVariant&v);
+
+    //!
+    //! \brief vIsEmpty
+    //! \param v
+    //! \return
+    //!
+    virtual bool vIsEmpty(Q_CONST_V);
+
+    //!
+    //! \brief vIsObject
+    //! \param v
+    //! \return
+    //!
+    virtual bool vIsObject(Q_CONST_V);
+
+    //!
+    //! \brief vIsList
+    //! \param v
+    //! \return
+    //!
+    virtual bool vIsList(Q_CONST_V);
+
+    //!
+    //! \brief vIsMap
+    //! \param v
+    //! \return
+    //!
+    virtual bool vIsMap(Q_CONST_V);
+
+    //!
+    //! \brief vIsString
+    //! \param v
+    //! \return
+    //!
+    virtual bool vIsString(Q_CONST_V);
+
+private:
+    void*p=nullptr;
+};
 
 }
 
