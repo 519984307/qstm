@@ -17,14 +17,3 @@ int qTypeId(const QMetaProperty &v)
     return v.type();
 #endif
 }
-
-bool qIsNumeric(const QVariant &v)
-{
-    auto __qtype=qTypeId(v);
-    auto s=v.toString().trimmed();
-    if(QStmTypesListNumeric.contains(__qtype))
-        return true;
-    if(v.toDouble()>0)
-        return true;
-    return false;
-}

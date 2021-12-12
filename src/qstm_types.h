@@ -9,26 +9,8 @@
 #include <QMutex>
 #include <QMutexLocker>
 
-//!
-//! \brief qTypeId
-//! \param v
-//! \return
-//!
 int qTypeId(const QVariant&v);
-
-//!
-//! \brief qTypeId
-//! \param p
-//! \return
-//!
 int qTypeId(const QMetaProperty&p);
-
-//!
-//! \brief qIsNumeric
-//! \param v
-//! \return
-//!
-bool qIsNumeric(const QVariant&v);
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 typedef QMutexLocker<QMutex> QMutexLOCKER;
