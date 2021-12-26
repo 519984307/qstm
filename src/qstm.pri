@@ -35,6 +35,7 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/private/p_qstm_base_setting.cpp \
+    $$PWD/private/p_qstm_setting_manager.cpp \
     $$PWD/qstm_result_info.cpp \
     $$PWD/qstm_util_path.cpp \
     $$PWD/qstm_result.cpp \

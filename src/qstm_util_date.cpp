@@ -8,9 +8,9 @@ namespace QStm {
 auto&p = *reinterpret_cast<DateUtilPvt*>(this->p)
 
 namespace QStmPvt {
-    Q_GLOBAL_STATIC_WITH_ARGS(QTime         , static_minTime        , (QTime(00,00,00,000))             );//
-    Q_GLOBAL_STATIC_WITH_ARGS(QTime         , static_maxTime        , (QTime(23,59,59,999))             );//
-    Q_GLOBAL_STATIC_WITH_ARGS(QStringList   , static_paramDelimiter , (qvsl_null<<","<<"|")             );//
+    Q_GLOBAL_STATIC_WITH_ARGS(QTime         , static_minTime        , (QTime(00,00,00,000)))//
+    Q_GLOBAL_STATIC_WITH_ARGS(QTime         , static_maxTime        , (QTime(23,59,59,999)))//
+    Q_GLOBAL_STATIC_WITH_ARGS(QStringList   , static_paramDelimiter , (qvsl_null<<","<<"|"))//
 }
 
 static const auto&static_minTime=*QStmPvt::static_minTime;
@@ -27,10 +27,12 @@ public:
     QVVM vvm;
     FormattingUtil formatting;
     DateUtil*parent=nullptr;
-    explicit DateUtilPvt(DateUtil*v):QObject(nullptr){
+    explicit DateUtilPvt(DateUtil*v):QObject(nullptr)
+    {
         this->parent=v;
     }
-    virtual ~DateUtilPvt(){
+    virtual ~DateUtilPvt()
+    {
     }
 
     void clear(){

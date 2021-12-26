@@ -1,8 +1,8 @@
 set(qstm_SRCS
     # cmake-format: sortable
     private/p_qstm_base_setting.cpp
-    private/p_qstm_service_manager.cpp
     private/p_qstm_setting_manager.cpp
+    private/p_qstm_base_setting.cpp
     qstm_cache_pool.cpp
     qstm_currency.cpp
     qstm_message.cpp
@@ -21,7 +21,6 @@ set(qstm_SRCS
     qstm_util_path.cpp
     qstm_util_variant.cpp
     qstm_vvm.cpp
-
 )
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Emscripten")
@@ -35,5 +34,5 @@ target_link_libraries(
 )
 
 install(TARGETS qstm
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/qt/plugins/qstm
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/qt/plugins/qstm
 )
