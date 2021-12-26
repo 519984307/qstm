@@ -13,15 +13,9 @@ namespace QStm {
 class Q_STM_EXPORT Message: public QVariant
 {
 public:
-
-    //!
-    //! \brief Message
-    //! \param v
-    //! \param settingName
-    //!
-    explicit Message(const QVariant&v=QVariantHash(), const QString&settingName=QString());
-    explicit Message(const ResultValue &v);
-    virtual ~Message();
+    Q_INVOKABLE explicit Message(const QVariant&v=QVariantHash(), const QString&settingName=QString());
+    Q_INVOKABLE explicit Message(const ResultValue &v);
+    Q_INVOKABLE virtual ~Message();
 
     //!
     //! \brief operator =
@@ -56,12 +50,6 @@ public:
     //! \return
     //! write variabled
     Message &variables(const QVariant&v);
-
-    //!
-    //! \brief setVariables
-    //! \param v
-    //! \return
-    //!
     Message &setVariables(const QVariant&v);
 
     //!
@@ -106,19 +94,7 @@ public:
     //! \return
     //! name
     QString name() const;
-
-    //!
-    //! \brief name
-    //! \param value
-    //! \return
-    //!
     Message&name(const QVariant &value);
-
-    //!
-    //! \brief setName
-    //! \param value
-    //! \return
-    //!
     Message&setName(const QVariant &value);
 
     //!
@@ -126,19 +102,7 @@ public:
     //! \return
     //! attachment of message
     QString attachmentName() const;
-
-    //!
-    //! \brief attachmentName
-    //! \param value
-    //! \return
-    //!
     Message&attachmentName(const QVariant &value);
-
-    //!
-    //! \brief setAttachmentName
-    //! \param value
-    //! \return
-    //!
     Message&setAttachmentName(const QVariant &value);
 
     //!
@@ -146,19 +110,7 @@ public:
     //! \return
     //! type of message
     QString typeId() const;
-
-    //!
-    //! \brief typeId
-    //! \param value
-    //! \return
-    //!
     Message&typeId(const QVariant &value);
-
-    //!
-    //! \brief setType
-    //! \param value
-    //! \return
-    //!
     Message&setType(const QVariant &value);
 
     //!
@@ -166,19 +118,7 @@ public:
     //! \return
     //! identification of message
     QUuid uuid() const;
-
-    //!
-    //! \brief uuid
-    //! \param value
-    //! \return
-    //!
     Message&uuid(const QVariant &value);
-
-    //!
-    //! \brief setUuid
-    //! \param value
-    //! \return
-    //!
     Message&setUuid(const QVariant &value);
 
     //!
@@ -186,19 +126,7 @@ public:
     //! \return
     //!read sender from to message
     QString from() const;
-
-    //!
-    //! \brief from
-    //! \param value
-    //! \return
-    //!
     Message&from(const QVariant &value);
-
-    //!
-    //! \brief setFrom
-    //! \param value
-    //! \return
-    //!
     Message&setFrom(const QVariant &value);
 
     //!
@@ -206,19 +134,7 @@ public:
     //! \return
     //!read value destinatary to message
     QString to() const;
-
-    //!
-    //! \brief to
-    //! \param value
-    //! \return
-    //!
     Message &to(const QVariant &value) const;
-
-    //!
-    //! \brief setTo
-    //! \param value
-    //! \return
-    //!
     Message &setTo(const QVariant &value);
 
     //!
@@ -226,19 +142,7 @@ public:
     //! \return
     //!read value subject to message
     QString subject() const;
-
-    //!
-    //! \brief subject
-    //! \param value
-    //! \return
-    //!
     Message&subject(const QVariant &value);
-
-    //!
-    //! \brief setSubject
-    //! \param value
-    //! \return
-    //!
     Message&setSubject(const QVariant &value);
 
     //!
@@ -246,19 +150,7 @@ public:
     //! \return
     //!read value body to message
     QString bodyText() const;
-
-    //!
-    //! \brief bodyText
-    //! \param value
-    //! \return
-    //!
     Message&bodyText(const QVariant &value);
-
-    //!
-    //! \brief setBodyText
-    //! \param value
-    //! \return
-    //!
     Message&setBodyText(const QVariant &value);
 
     //!
@@ -266,19 +158,7 @@ public:
     //! \return
     //!read value html body to message
     QByteArray bodyHtml() const;
-
-    //!
-    //! \brief bodyHtml
-    //! \param value
-    //! \return
-    //!
     Message&bodyHtml(const QVariant &value);
-
-    //!
-    //! \brief setBodyHtml
-    //! \param value
-    //! \return
-    //!
     Message&setBodyHtml(const QVariant &value);
 
     //!

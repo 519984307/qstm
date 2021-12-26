@@ -48,22 +48,9 @@ public:
     //! \param parent
     //!
     Q_INVOKABLE explicit SettingManager(QObject *parent = nullptr);
-
-    //!
-    //! \brief SettingManager
-    //! \param settingFileName
-    //! \param parent
-    //!
-    explicit SettingManager(const QStringList&settingFileName, QObject *parent = nullptr);
-
-    //!
-    //! \brief SettingManager
-    //! \param settingFileName
-    //! \param parent
-    //!
-    explicit SettingManager(const QString&settingFileName, QObject *parent = nullptr);
-
-    ~SettingManager();
+    Q_INVOKABLE explicit SettingManager(const QStringList&settingFileName, QObject *parent = nullptr);
+    Q_INVOKABLE explicit SettingManager(const QString&settingFileName, QObject *parent = nullptr);
+    Q_INVOKABLE ~SettingManager();
 
     //!
     //! \brief clear

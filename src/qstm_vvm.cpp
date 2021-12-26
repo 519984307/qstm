@@ -4,19 +4,16 @@
 
 const static QString toBytes(const QVariant &v)
 {
-    switch (qTypeId(v)) {
-    case QMetaType_QVariantList:
-    case QMetaType_QStringList:
-    case QMetaType_QVariantHash:
-    case QMetaType_QVariantMap:
+    if(qTypeId(v)==QMetaType_QVariantList || qTypeId(v)==QMetaType_QStringList || qTypeId(v)==QMetaType_QVariantMap || qTypeId(v)==QMetaType_QVariantHash)
         return QJsonDocument::fromVariant(v).toJson(QJsonDocument::Compact);
-    case QMetaType_QUuid:
+    
+    if(qTypeId(v)==QMetaType_QUuid)
         return v.toUuid().toString();
-    case QMetaType_QUrl:
+    
+    if(qTypeId(v)==QMetaType_QUrl)
         return v.toUrl().toString();
-    default:
-        return v.toByteArray();
-    }
+
+    return v.toByteArray();
 }
 
 QVVM::QVVM():QVariantHash()
@@ -39,7 +36,7 @@ QVVM::~QVVM()
 
 QVVM &QVVM::operator=(const QVariant &v)
 {
-    Q_DECLARE_VU;
+    QStm::VariantUtil vu;
     auto vMap=vu.toHash(v);
     QVariantHash::clear();
     QHashIterator<QString, QVariant> i(vMap);
@@ -52,7 +49,7 @@ QVVM &QVVM::operator=(const QVariant &v)
 
 QVVM &QVVM::operator+=(const QVariantHash &v)
 {
-    Q_DECLARE_VU;
+    QStm::VariantUtil vu;
     QHashIterator<QString, QVariant> i(v);
     while (i.hasNext()) {
         i.next();

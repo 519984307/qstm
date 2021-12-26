@@ -9,7 +9,7 @@ namespace QStm {
 class UrlPvt{
 public:
     Url*parent=nullptr;
-    Q_DECLARE_VU;
+    VariantUtil vu;
     QString name;
     QString outPutName;
     QVariant body;
@@ -22,7 +22,7 @@ public:
     virtual ~UrlPvt(){
     }
 
-    Url&setData(){
+    Url&setMap(){
         this->body.clear();
         QVariantHash vBody;
         if(!this->name.isEmpty())
@@ -43,30 +43,26 @@ public:
         if(!v.isValid() || v.isNull()){
             this->url.clear();
             this->headers.clear();
-            this->setData();
-            return;
         }
-        if(qTypeId(v)==QMetaType_QUrl){
+        else if(qTypeId(v)==QMetaType_QUrl)
             this->url=v.toUrl();
-            this->setData();
-            return;
+        else{
+            auto vMap=this->vu.toHash(v);
+            this->name=vMap[qsl("name")].toString().trimmed();
+            this->outPutName=vMap[qsl("outPutName")].toString().trimmed();
+            if(this->outPutName.isEmpty())
+                this->outPutName=vMap[qsl("outputname")].toString().trimmed();
+            if(vMap.contains(qsl_fy(url))){
+                this->url=this->vu.toUrl(vMap[qsl_fy(url)]);
+                if(vMap.contains(qsl_fy(headers)))
+                    this->headers=this->vu.toHash(vMap[qsl_fy(headers)]);
+            }
+            else if(v.toString().toLower().startsWith(qsl("http")))
+                this->url=this->vu.toUrl(v);
+            else if(v.toString().toLower().startsWith(qsl("http")))
+                this->url=this->vu.toUrl(v);
         }
-
-        auto vMap=this->vu.toHash(v);
-        this->name=vMap[qsl("name")].toString().trimmed();
-        this->outPutName=vMap[qsl("outPutName")].toString().trimmed();
-        if(this->outPutName.isEmpty())
-            this->outPutName=vMap[qsl("outputname")].toString().trimmed();
-        if(vMap.contains(qsl_fy(url))){
-            this->url=this->vu.toUrl(vMap[qsl_fy(url)]);
-            if(vMap.contains(qsl_fy(headers)))
-                this->headers=this->vu.toHash(vMap[qsl_fy(headers)]);
-        }
-        else if(v.toString().toLower().startsWith(qsl("http")))
-            this->url=this->vu.toUrl(v);
-        else if(v.toString().toLower().startsWith(qsl("http")))
-            this->url=this->vu.toUrl(v);
-        this->setData();
+        this->setMap();
     }
 
 };
@@ -120,14 +116,14 @@ Url &Url::header(const QVariant &value)
 {
     dPvt();
     p.headers=p.vu.toHash(value);
-    return p.setData();
+    return p.setMap();
 }
 
 Url &Url::setHeader(const QVariant &value)
 {
     dPvt();
     p.headers=p.vu.toHash(value);
-    return p.setData();
+    return p.setMap();
 }
 
 QString &Url::name() const
@@ -140,14 +136,14 @@ Url &Url::name(const QVariant &value)
 {
     dPvt();
     p.name=value.toString();
-    return p.setData();
+    return p.setMap();
 }
 
 Url &Url::setName(const QVariant &value)
 {
     dPvt();
     p.name=value.toString();
-    return p.setData();
+    return p.setMap();
 }
 
 QString &Url::outPutName() const
@@ -160,14 +156,14 @@ Url &Url::outPutName(const QVariant &value)
 {
     dPvt();
     p.outPutName=value.toString();
-    return p.setData();
+    return p.setMap();
 }
 
 Url &Url::setOutPutName(const QVariant &value)
 {
     dPvt();
     p.outPutName=value.toString();
-    return p.setData();
+    return p.setMap();
 }
 
 QUrl &Url::url() const
@@ -180,14 +176,14 @@ Url &Url::url(const QVariant &value)
 {
     dPvt();
     p.url=p.vu.toUrl(value);
-    return p.setData();
+    return p.setMap();
 }
 
 Url&Url::setUrl(const QVariant &value)
 {
     dPvt();
     p.url=p.vu.toUrl(value);
-    return p.setData();
+    return p.setMap();
 }
 
 bool Url::isValid() const
@@ -233,14 +229,14 @@ QVariantHash Url::toHash() const
 
 QByteArray Url::readBody() const
 {
-    if(!this->isLocalFile())
-        return {};
     QByteArray __return;
-    QFile file(this->url().toLocalFile());
-    if(!file.open(file.ReadOnly))
-        return {};
-    __return=file.readAll();
-    file.close();
+    if(this->isLocalFile()){
+        QFile file(this->url().toLocalFile());
+        if(file.open(file.ReadOnly)){
+            __return=file.readAll();
+            file.close();
+        }
+    }
     return __return;
 }
 

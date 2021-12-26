@@ -20,16 +20,13 @@ public :
     int total_count=0;
     int total_pages=0;
 
-    explicit ResultInfoPvt(ResultInfo *parent)
-    {
+    explicit ResultInfoPvt(ResultInfo *parent){
         this->parent=parent;
     }
-    virtual ~ResultInfoPvt()
-    {
+    virtual ~ResultInfoPvt(){
     }
 
-    void clear()
-    {
+    void clear(){
         success=false;
         page=0;
         per_page=9999999;
@@ -40,8 +37,7 @@ public :
         this->clearErrors();
     }
 
-    void clearErrors()
-    {
+    void clearErrors(){
         this->errors.clear();
         this->success=true;
     }
@@ -181,8 +177,8 @@ void ResultInfo::setTotal_pages(int value)
 const QVariantHash ResultInfo::toRequestHash() const
 {
     QVariantHash v;
-    v[qsl_fy(page)]=this->page();
-    v[qsl_fy(per_page)]=this->per_page();
+    v[QT_STRINGIFY2(page)]=this->page();
+    v[QT_STRINGIFY2(per_page)]=this->per_page();
     return v;
 }
 
@@ -217,16 +213,12 @@ QVariant ResultInfo::toVar()const
 
 bool ResultInfo::fromVar(const QVariant &v)
 {
-    switch (qTypeId(v)) {
-    case QMetaType_QString:
-    case QMetaType_QByteArray:
-        return this->fromHash(QJsonDocument::fromJson(v.toByteArray()).toVariant().toHash());
-    case QMetaType_QVariantHash:
-    case QMetaType_QVariantMap:
-        return this->fromHash(v.toHash());
-    default:
-        return false;
-    }
+    QVariantHash vHash;
+    if(qTypeId(v)==QMetaType_QString || qTypeId(v)==QMetaType_QByteArray || qTypeId(v)==QMetaType_QChar || qTypeId(v)==QMetaType_QBitArray)
+        vHash=QJsonDocument::fromJson(v.toByteArray()).toVariant().toHash();
+    else if(qTypeId(v)==v.Hash || qTypeId(v)==v.Map)
+        vHash=v.toHash();
+    return this->fromHash(vHash);
 }
 
 bool ResultInfo::fromMap(const QVariantMap&map)
@@ -251,18 +243,6 @@ bool ResultInfo::fromHash(const QVariantHash &map)
         if(property.write(this, map.value(property.name()))){
             __return=true;
         }
-    }
-    return __return;
-}
-
-bool ResultInfo::fromResultInfo(const ResultInfo &resultInfo)
-{
-    bool __return=false;
-    auto&metaObject = *this->metaObject();
-    for(int col = 0; col < metaObject.propertyCount(); ++col) {
-        auto property = metaObject.property(col);
-        if(property.write(this, property.read(&resultInfo)))
-            __return=true;
     }
     return __return;
 }

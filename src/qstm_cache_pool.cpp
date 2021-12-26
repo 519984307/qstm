@@ -26,31 +26,21 @@ class CachePoolPrv:public QObject{
 public:
     QMutex cacheMutex;
     QHash<QByteArray, CacheItem> cache;
-    explicit CachePoolPrv(QObject*parent):QObject(parent)
-    {
+    explicit CachePoolPrv(QObject*parent):QObject(parent){
     }
-    virtual ~CachePoolPrv()
-    {
+    virtual ~CachePoolPrv(){
     }
 
-    QByteArray toMd5(const QVariant&value)const
-    {
+    QByteArray toMd5(const QVariant&value)const{
         QByteArray bytes;
-        switch (qTypeId(value)) {
-        case QMetaType_QVariantMap:
-        case QMetaType_QVariantHash:
-        case QMetaType_QVariantList:
-        case QMetaType_QStringList:
+        if(qTypeId(value)==QMetaType_QVariantMap || qTypeId(value)==QMetaType_QVariantHash || qTypeId(value)==QMetaType_QVariantList)
             bytes = QJsonDocument::fromVariant(value).toJson(QJsonDocument::Compact);
-            break;
-        default:
+        else
             bytes = value.toByteArray();
-        }
         return QCryptographicHash::hash(bytes, QCryptographicHash::Md5).toHex();
     }
 
-    void clear()
-    {
+    void clear(){
         QMutexLOCKER locker(&cacheMutex);
         this->cache.clear();
     }
@@ -104,60 +94,61 @@ bool CachePool::get(const QVariant &key, QVariant&value) const
 
 QVariant CachePool::get(const QVariant &key) const
 {
-    if(!key.isValid())
-        return {};
-    dPvt();
-    QMutexLOCKER locker(&p.cacheMutex);
-    auto hshMd5 = p.toMd5(key);
-    return p.cache.value(hshMd5).second;
+    if(key.isValid()){
+        dPvt();
+        QMutexLOCKER locker(&p.cacheMutex);
+        auto hshMd5 = p.toMd5(key);
+        return p.cache.value(hshMd5).second;
+    }
+    return {};
 }
 
 QByteArray CachePool::set(QVariant &value) const
 {
-    if(!value.isValid())
-        return {};
-    dPvt();
-    QMutexLOCKER locker(&p.cacheMutex);
-    auto hshMd5 = p.toMd5(value);
-    if(this->set(hshMd5, value))
-        return hshMd5;
+    if(value.isValid()){
+        dPvt();
+        QMutexLOCKER locker(&p.cacheMutex);
+        auto hshMd5 = p.toMd5(value);
+        if(this->set(hshMd5, value))
+            return hshMd5;
+    }
     return {};
 }
 
 bool CachePool::set(const QVariant &key, const QVariant &value) const
 {
-    if(!key.isValid() && !value.isValid())
-        return false;
-
-    dPvt();
-    auto hshMd5 = p.toMd5(key);
-    QMutexLOCKER locker(&p.cacheMutex);
-    auto pair=CacheItem(QDateTime::currentDateTime(), value);
-    p.cache.insert(hshMd5, pair);
-    return true;
+    if(key.isValid() || value.isValid()){
+        dPvt();
+        auto hshMd5 = p.toMd5(key);
+        QMutexLOCKER locker(&p.cacheMutex);
+        auto pair=CacheItem(QDateTime::currentDateTime(), value);
+        p.cache.insert(hshMd5, pair);
+        return true;
+    }
+    return false;
 }
 
 QVariant CachePool::take(const QVariant &key) const
 {
-    if(!key.isValid())
-        return {};
-    dPvt();
-    QMutexLOCKER locker(&p.cacheMutex);
-    auto hshMd5 = p.toMd5(key);
-    if(p.cache.contains(hshMd5))
-        return p.cache.take(hshMd5).second;
+    if(key.isValid()){
+        dPvt();
+        QMutexLOCKER locker(&p.cacheMutex);
+        auto hshMd5 = p.toMd5(key);
+        if(p.cache.contains(hshMd5))
+            return p.cache.take(hshMd5).second;
+    }
     return {};
 }
 
 QVariant CachePool::remove(const QVariant &key) const
 {
-    if(!key.isValid())
-        return {};
-    dPvt();
-    QMutexLOCKER locker(&p.cacheMutex);
-    auto hshMd5 = p.toMd5(key);
-    if(p.cache.contains(hshMd5))
-        return p.cache.take(hshMd5).second;
+    if(key.isValid()){
+        dPvt();
+        QMutexLOCKER locker(&p.cacheMutex);
+        auto hshMd5 = p.toMd5(key);
+        if(p.cache.contains(hshMd5))
+            return p.cache.take(hshMd5).second;
+    }
     return {};
 }
 

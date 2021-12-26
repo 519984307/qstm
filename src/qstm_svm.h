@@ -36,75 +36,81 @@ public:
     //!
     virtual ~QSVM();
 
-    //!
-    //! \brief operator =
-    //! \param v
-    //! \return
-    //!
+    /**
+     * @brief operator =
+     * @param v
+     * @return
+     */
     QSVM&operator=(const QVariant&v);
 
-    //!
-    //! \brief operator +=
-    //! \param v
-    //! \return
-    //!replace map
+    /**
+     * @brief operator +=
+     * @param v
+     * @return
+     *
+     * replace map
+     */
     QSVM&operator+=(const QVariant&v);
 
-    //!
-    //! \brief operator +=
-    //! \param v
-    //! \return
-    //!
+    /**
+     * @brief operator +=
+     * @param v
+     * @return
+     */
     QSVM&operator+=(const QPair<QString, QVariant> &v);
 
-    //!
-    //! \brief operator -=
-    //! \param v
-    //! \return
-    //!insert key if not contains
+    /**
+     * @brief operator -=
+     * @param v
+     * @return
+     *
+     * insert key if not contains
+     */
     QSVM&operator-=(const QVariant&v);
 
-    //!
-    //! \brief operator <<
-    //! \param v
-    //! \return
-    //!replace key
+    /**
+     * @brief operator <<
+     * @param v
+     * @return
+     *
+     * replace key
+     */
     QSVM&operator<<(const QVariant&v);
 
-    //!
-    //! \brief operator <<
-    //! \param v
-    //! \return
-    //!insert ou replace key
+
+    /**
+     * @brief operator <<
+     * @param v
+     * @return
+     *
+     * insert ou replace key
+     */
     QSVM&operator<<(const QPair<QString,QVariant>&v);
 
-    //!
-    //! \brief insert
-    //! \param key
-    //! \param value
-    //! \return
-    //!
+    /**
+     * @brief insert
+     * @param key
+     * @param value
+     */
     virtual QSVM &insert(const QVariant&key, const QVariant&value);
 
-    //!
-    //! \brief remove
-    //! \param key
-    //! \return
-    //!
+    /**
+     * @brief remove
+     * @param key
+     */
     virtual QVariant remove(const QVariant&key);
 
-    //!
-    //! \brief take
-    //! \param key
-    //! \return
-    //!
+    /**
+     * @brief remove
+     * @param key
+     */
     virtual QVariant take(const QVariant&key);
 
-    //!
-    //! \brief value
-    //! \param key
-    //! \return
-    //!
+    /**
+     * @brief value
+     * @param key
+     * @return
+     */
     virtual QVariant value(const QVariant&key)const;
 };
 

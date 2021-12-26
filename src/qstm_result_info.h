@@ -12,18 +12,17 @@ namespace QStm {
 //! \brief The ResultInfo class
 //!
 //! class page navigator
-class Q_STM_EXPORT ResultInfo:public QObject
-{
+class Q_STM_EXPORT ResultInfo:public QObject{
     Q_OBJECT
 
-    Q_PROPERTY(QVariantList errors READ errors WRITE setErrors)
-    Q_PROPERTY(QVariantList messages READ messages WRITE setMessages)
-    Q_PROPERTY(bool success READ success WRITE setSuccess)
-    Q_PROPERTY(int page READ page WRITE setPage)
-    Q_PROPERTY(int per_page READ per_page WRITE setPer_page)
-    Q_PROPERTY(int count READ count WRITE setCount)
-    Q_PROPERTY(int total_count READ total_count WRITE setTotal_count)
-    Q_PROPERTY(int total_pages READ total_pages WRITE setTotal_pages)
+    Q_PROPERTY(QVariantList errors      READ errors      WRITE setErrors      )
+    Q_PROPERTY(QVariantList messages    READ messages    WRITE setMessages    )
+    Q_PROPERTY(bool         success     READ success     WRITE setSuccess     )
+    Q_PROPERTY(int          page        READ page        WRITE setPage        )
+    Q_PROPERTY(int          per_page    READ per_page    WRITE setPer_page    )
+    Q_PROPERTY(int          count       READ count       WRITE setCount       )
+    Q_PROPERTY(int          total_count READ total_count WRITE setTotal_count )
+    Q_PROPERTY(int          total_pages READ total_pages WRITE setTotal_pages )
 
 public:
     //!
@@ -56,11 +55,6 @@ public:
     //! \return
     //! activity resource
     virtual bool enabled();
-
-    //!
-    //! \brief setEnabled
-    //! \param value
-    //!
     virtual void setEnabled(bool value);
 
     //!
@@ -68,11 +62,6 @@ public:
     //! \return
     //! return errors to server
     virtual QVariantList&errors();
-
-    //!
-    //! \brief setErrors
-    //! \param value
-    //!
     virtual void setErrors(const QVariantList&value);
 
     //!
@@ -82,11 +71,6 @@ public:
     //!
     //! return message to server
     virtual QVariantList&messages();
-
-    //!
-    //! \brief setMessages
-    //! \param value
-    //!
     void setMessages(const QVariantList&value);
 
     //!
@@ -95,11 +79,6 @@ public:
     //!
     //! return success true ou false to request
     int success() const;
-
-    //!
-    //! \brief setSuccess
-    //! \param value
-    //!
     void setSuccess(bool value);
 
     //!
@@ -108,11 +87,6 @@ public:
     //!
     //! currenty page
     int page() const;
-
-    //!
-    //! \brief setPage
-    //! \param value
-    //!
     void setPage(int value);
 
     //!
@@ -121,11 +95,6 @@ public:
     //!
     //! rows per page
     int per_page() const;
-
-    //!
-    //! \brief setPer_page
-    //! \param value
-    //!
     void setPer_page(int value);
 
     //!
@@ -134,11 +103,6 @@ public:
     //!
     //! returneds row per page
     int count() const;
-
-    //!
-    //! \brief setCount
-    //! \param value
-    //!
     void setCount(int value);
 
     //!
@@ -147,11 +111,6 @@ public:
     //!
     //! total rows to all pages
     int total_count() const;
-
-    //!
-    //! \brief setTotal_count
-    //! \param value
-    //!
     void setTotal_count(int value);
 
     //!
@@ -206,13 +165,6 @@ public:
     //! \return
     //!
     virtual bool fromHash(const QVariantHash &map);
-
-    //!
-    //! \brief fromResultInfo
-    //! \param map
-    //! \return
-    //!
-    virtual bool fromResultInfo(const ResultInfo &resultInfo);
 
 private:
     void*p=nullptr;

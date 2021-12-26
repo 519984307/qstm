@@ -14,16 +14,7 @@ class Q_STM_EXPORT CachePool : public QObject
 {
     Q_OBJECT
 public:
-
-    //!
-    //! \brief CachePool
-    //! \param parent
-    //!
     Q_INVOKABLE explicit CachePool(QObject *parent = nullptr);
-
-    //!
-    //! \brief ~CachePool
-    //!
     Q_INVOKABLE ~CachePool();
 
     //!

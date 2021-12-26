@@ -13,16 +13,8 @@ class Q_STM_EXPORT SettingBase:public QStm::BaseSetting{
     Q_OBJECT
     SETTING_OBJECT(SettingBase)
 public:
-    //!
-    //! \brief SettingBase
-    //! \param parent
-    //!
     Q_INVOKABLE explicit SettingBase(QObject*parent=nullptr);
-
-    //!
-    //! \brief ~SettingBase
-    //!
-    ~SettingBase();
+    Q_INVOKABLE ~SettingBase();
 public:
 
     //!
@@ -36,11 +28,6 @@ public:
     //! \return
     //!
     virtual QString service() const;
-
-    //!
-    //! \brief setService
-    //! \param value
-    //!
     virtual void setService(const QString &value);
 
 

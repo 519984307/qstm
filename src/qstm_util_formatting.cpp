@@ -82,13 +82,11 @@ public:
     FormattingUtil*parent=nullptr;
     QHash<QString,QString> maskMap=consts.staticMaskMap[nativeCountryName()];
     FormattingUtil::Masks masks;
-    explicit FormattingUtilPvt(FormattingUtil*parent):masks()
-    {
+    explicit FormattingUtilPvt(FormattingUtil*parent):masks(){
         this->parent=parent;
         this->maskMap=consts.staticMaskMap[nativeCountryName()];
     }
-    virtual ~FormattingUtilPvt()
-    {
+    virtual ~FormattingUtilPvt(){
     }
 };
 
@@ -255,34 +253,34 @@ const QString FormattingUtil::toString()
 const QString FormattingUtil::v(const QVariant &v, int prec)
 {
     set_v;
-    switch (qTypeId(*this)) {
-    case QMetaType_Int:
-    case QMetaType_UInt:
-    case QMetaType_LongLong:
-    case QMetaType_ULongLong:
+    auto t=qTypeId(*this);
+    auto tn=QByteArray(this->typeName());
+
+    if(t==QMetaType_Int || t==QMetaType_UInt || t==QMetaType_LongLong || t==QMetaType_ULongLong)
         return this->toInt(v);
-    case QMetaType_Double:
+
+    if(tn==consts.QCurrency_class_name || tn==consts.QCurrency_class_name_short || tn==consts.qcurrency_class_name_short)
+        return this->toCurrency(v, prec);
+
+    if(tn==consts.qpercent_class_name)
+        return this->toPercent(v, prec);
+    if(t==QMetaType_Double)
         return this->toDouble(v, prec);
-    case QMetaType_QDate:
+    if(t==QMetaType_QDate)
         return this->toDate(v);
-    case QMetaType_QTime:
+    if(t==QMetaType_QTime)
         return this->toTime(v);
-    case QMetaType_QDateTime:
+    if(t==QMetaType_QDateTime)
         return this->toDateTime(v);
-    case QMetaType_Bool:
+    if(t==QMetaType_Bool)
         return this->toBool(v);
-    case QMetaType_QUuid:
+    if(t==QMetaType_QUuid)
         return this->toUuid().toString();
-    case QMetaType_QUrl:
+    if(t==QMetaType_QUrl)
         return this->toUrl().toString();
-    default:
-        auto tn=QByteArray(this->typeName());
-        if(tn==consts.QCurrency_class_name || tn==consts.QCurrency_class_name_short || tn==consts.qcurrency_class_name_short)
-            return this->toCurrency(v, prec);
-        if(tn==consts.qpercent_class_name)
-            return this->toPercent(v, prec);
-    }
+
     return QVariant::toString();
+
 }
 
 const QString FormattingUtil::currencySymbol(const QVariant&v)

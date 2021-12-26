@@ -13,172 +13,109 @@ namespace QStm {
 #define dPvt()\
 auto&p = *reinterpret_cast<MetaObjectUtilPvt*>(this->p)
 
-class MetaObjectUtilPvt{
+          class MetaObjectUtilPvt{
 public:
     MetaObjectUtil*parent=nullptr;
     QList<const QMetaObject*> metaObjectList;
-    explicit MetaObjectUtilPvt(MetaObjectUtil*parent)
-    {
+    explicit MetaObjectUtilPvt(MetaObjectUtil*parent){
         this->parent=parent;
     }
-    virtual ~MetaObjectUtilPvt()
-    {
+    virtual ~MetaObjectUtilPvt(){
     }
 
-    bool writeProperty(QObject*object, const QMetaProperty&property, const QVariant&value)
-    {
+    bool writeProperty(QObject*object, const QMetaProperty&property, const QVariant&value){
         auto type = qTypeId(property);
         QVariant vValue=value;
 
         if(property.write(object, vValue))
             return true;
 
-        if(QStmTypesListString.contains(type)){
+        static const auto listString=QList<int>{QMetaType_QUuid, QMetaType_QString, QMetaType_QByteArray, QMetaType_QChar, QMetaType_QBitArray};
+        static const auto listNumber=QList<int>{QMetaType_LongLong, QMetaType_Int, QMetaType_UInt, QMetaType_ULongLong, QMetaType_Double};
+        static const auto listClass=QList<int>{QMetaType_QUrl, QMetaType_QVariantMap, QMetaType_QVariantHash, QMetaType_QVariantList, QMetaType_QStringList};
+        static const auto listJson=QList<int>{QMetaType_QVariantMap, QMetaType_QVariantHash, QMetaType_QVariantList, QMetaType_QStringList};
+        static const auto listDates=QList<int>{QMetaType_QDate, QMetaType_QDateTime, QMetaType_QTime};
+        static const auto listBool=QList<int>{QMetaType_Bool};
+
+        if(listString.contains(type)){
             QVariant v;
-            if(QStmTypesListObjects.contains(qTypeId(value)))
+            if(listJson.contains(qTypeId(value)))
                 v=QJsonDocument::fromVariant(vValue).toJson(QJsonDocument::Compact);
             else
                 v=vValue.toByteArray();
 
-            switch (type) {
-            case QMetaType_QUuid:
-                if(property.write(object, vValue.toUuid()))
-                    return true;
-                break;
-            case QMetaType_QString:
-                if(property.write(object, v.toString()))
-                    return true;
-                break;
-            case QMetaType_QByteArray:
-                if(property.write(object, v.toByteArray()))
-                    return true;
-                break;
-            case QMetaType_QChar:
-                if(property.write(object, v.toChar()))
-                    return true;
-                break;
-            case QMetaType_QBitArray:
-                if(property.write(object, v.toBitArray()))
-                    return true;
-                break;
-            default:
-                return false;
-            }
+
+            if((type==QMetaType_QUuid) && (property.write(object, vValue.toUuid())))
+                return true;
+            if((type==QMetaType_QString) && (property.write(object, v.toString())))
+                return true;
+            if((type==QMetaType_QByteArray) && (property.write(object, v.toByteArray())))
+                return true;
+            if((type==QMetaType_QChar) && (property.write(object, v.toChar())))
+                return true;
+            if((type==QMetaType_QBitArray) && (property.write(object, v.toBitArray())))
+                return true;
+
         }
-
-        if(QStmTypesListIntegers.contains(type)){//ints
-
-            switch (type) {
-            case QMetaType_LongLong:
-            case QMetaType_ULongLong:
-                if(property.write(object, static_cast<qlonglong>(QLocale::c().toDouble(vValue.toString()))))
-                    return true;
-                if(property.write(object, QLocale::c().toLongLong(vValue.toString())))
-                    return true;
-                break;
-            case QMetaType_Int:
-            case QMetaType_UInt:
-                if(property.write(object, QLocale::c().toInt(vValue.toString())))
-                    return true;
-                if(property.write(object, QLocale::c().toInt(vValue.toString())))
-                    return true;
-                if(property.write(object, QLocale::c().toUInt(vValue.toString())))
-                    return true;
-                break;
-            case QMetaType_Double:
-                if(property.write(object, QLocale::c().toDouble(vValue.toString())))
-                    return true;
-                break;
-            default:
-                return false;
-            }
+        else if(listNumber.contains(type)){//ints
+            if((type==QMetaType_LongLong) && (property.write(object, static_cast<qlonglong>(QLocale::c().toDouble(vValue.toString())))))
+                return true;
+            if((type==QMetaType_Int) && (property.write(object, QLocale::c().toInt(vValue.toString()))))
+                return true;
+            if((type==QMetaType_UInt) && (property.write(object, QLocale::c().toInt(vValue.toString()))))
+                return true;
+            if((type==QMetaType_UInt) && (property.write(object, QLocale::c().toUInt(vValue.toString()))))
+                return true;
+            if((type==QMetaType_ULongLong) && (property.write(object, QLocale::c().toLongLong(vValue.toString()))))
+                return true;
+            if((type==QMetaType_ULongLong) && (property.write(object, QLocale::c().toLongLong(vValue.toString()))))
+                return true;
+            if((type==QMetaType_Double) && (property.write(object, QLocale::c().toDouble(vValue.toString()))))
+                return true;
         }
-
-        if(QStmTypesListClass.contains(type)){
-            switch (type) {
-            case QMetaType_QUrl:
-                if(property.write(object, vValue.toUrl()))
-                    return true;
-                break;
-            case QMetaType_QVariantMap:
-                if(property.write(object, vValue.toHash()))
-                    return true;
-                break;
-            case QMetaType_QVariantHash:
-                if(property.write(object, vValue.toHash()))
-                    return true;
-                break;
-            case QMetaType_QVariantList:
-                if(property.write(object, vValue.toList()))
-                    return true;
-                break;
-            case QMetaType_QStringList:
-                if(property.write(object, vValue.toStringList()))
-                    return true;
-                break;
-            default:
-                return false;
-            }
+        else if(listClass.contains(type)){
+            if((type==QMetaType_QUrl) && (property.write(object, vValue.toUrl())))
+                return true;
+            if((type==QMetaType_QVariantMap) && (property.write(object, vValue.toHash())))
+                return true;
+            if((type==QMetaType_QVariantHash) && (property.write(object, vValue.toHash())))
+                return true;
+            if((type==QMetaType_QVariantList) && (property.write(object, vValue.toList())))
+                return true;
+            if((type==QMetaType_QStringList) && (property.write(object, vValue.toStringList())))
+                return true;
         }
-        else if(QStmTypesListDates.contains(type)){
-            switch (type) {
-            case QMetaType_QDate:
-                if(property.write(object, vValue.toDate()))
-                    return true;
-                break;
-            case QMetaType_QDateTime:
-                if(property.write(object, vValue.toDateTime()))
-                    return true;
-                break;
-            case QMetaType_QTime:
-                if(property.write(object, vValue.toTime()))
-                    return true;
-                break;
-            default:
-                return false;
-            }
+        else if(listDates.contains(type)){
+            if((type==QMetaType_QDate) && (property.write(object, vValue.toDate())))
+                return true;
+            if((type==QMetaType_QDateTime) && (property.write(object, vValue.toDateTime())))
+                return true;
+            if((type==QMetaType_QTime) && (property.write(object, vValue.toTime())))
+                return true;
         }
-
-        if(QStmTypesListBool.contains(type) || QStmTypesListBool.contains(qTypeId(value))){
-
-            switch (type) {
-            case QMetaType_Bool:
-                if(property.write(object, vValue.toBool()))
+        else if(listBool.contains(type) || listBool.contains(qTypeId(value))){
+            auto&v=vValue;
+            if((type==QMetaType_Bool) && (property.write(object, vValue.toBool())))
+                return true;
+            if(qTypeId(v)==QMetaType_Bool){
+                if(qTypeId(v)==QMetaType_Bool && property.write(object, vValue.toBool()))
                     return true;
-                break;
-            default:
-                break;
+                if(qTypeId(v)==QMetaType_Int || qTypeId(v)==QMetaType_UInt || qTypeId(v)==QMetaType_ULongLong || qTypeId(v)==QMetaType_LongLong || qTypeId(v)==QMetaType_Double){
+                    if(property.write(object, (vValue.toInt()==1)))
+                        return true;
+                }
             }
-
-            switch (qTypeId(vValue)){
-            case QMetaType_Bool:
-                if(property.write(object, vValue.toBool()))
-                    return true;
-                break;
-            case QMetaType_Int:
-            case QMetaType_UInt:
-            case QMetaType_ULongLong:
-            case QMetaType_LongLong:
-            case QMetaType_Double:
-                if(property.write(object, (vValue.toInt()==1)))
-                    return true;
-                break;
-            case QMetaType_QString:
-            case QMetaType_QByteArray:
-            case QMetaType_QChar:
-            {
+            if(qTypeId(v)==QMetaType_QString || qTypeId(v)==QMetaType_QByteArray || qTypeId(v)==QMetaType_QChar){
                 auto vv=vValue.toString().toLower();
                 bool vBool=(vv==qsl("true"));
                 if(property.write(object, vBool))
                     return true;
-                break;
-            }
-            default:
-                return false;
             }
         }
         return false;
     }
+
+
 };
 
 MetaObjectUtil::MetaObjectUtil()

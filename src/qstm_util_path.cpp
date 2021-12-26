@@ -153,14 +153,14 @@ QStringList PathUtil::toStringList() const
 QByteArray PathUtil::toMd5() const
 {
     dPvt();
-    Q_DECLARE_VU;
+    VariantUtil vu;
     return vu.toMd5(p.v);
 }
 
 QUuid PathUtil::toUuid() const
 {
     dPvt();
-    Q_DECLARE_VU;
+    VariantUtil vu;
     return vu.toMd5Uuid(p.v);
 }
 
