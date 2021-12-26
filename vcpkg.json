@@ -1,0 +1,5 @@
+{
+  "dependencies": ["libmemcached-1.0"],
+  "name": "QCrossCache",
+  "version-string": "0.1.0"
+}
