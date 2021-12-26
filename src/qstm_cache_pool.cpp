@@ -10,7 +10,7 @@
 
 namespace PrivateQStm {
 typedef QMap <QThread*,QStm::CachePool*> ThreadCachePool;
-    Q_GLOBAL_STATIC(ThreadCachePool, instancesMap);
+    Q_GLOBAL_STATIC(ThreadCachePool, instancesMap)
 }
 
 namespace QStm {

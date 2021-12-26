@@ -1,14 +1,14 @@
 #include "./qstm_currency.h"
-#include "./bcmath.h"
+#include "../3rdparty/bcmath/bcmath.h"
 #include <QLocale>
 
 namespace PrivateQStm {
 typedef QHash<QString, QHash<QString,QString>> StringStringStringMap;
-Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,  qcurrency_class_name_short, (QT_STRINGIFY2(qcurrency)));
-Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,  QCurrency_class_name_short, (QT_STRINGIFY2(QCurrency)));
-Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,  QCurrency_class_name, (QT_STRINGIFY2(QStm::QCurrency)));
-Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,  qpercent_class_name, (QT_STRINGIFY2(qpercent)));
-Q_GLOBAL_STATIC(StringStringStringMap, staticMaskMap);
+Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,  qcurrency_class_name_short, (QT_STRINGIFY2(qcurrency)))
+Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,  QCurrency_class_name_short, (QT_STRINGIFY2(QCurrency)))
+Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,  QCurrency_class_name, (QT_STRINGIFY2(QStm::QCurrency)))
+Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,  qpercent_class_name, (QT_STRINGIFY2(qpercent)))
+Q_GLOBAL_STATIC(StringStringStringMap, staticMaskMap)
 }
 
 namespace QStm {

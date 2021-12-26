@@ -3,7 +3,7 @@
 #include "./qstm_result_info.h"
 #include "./qstm_global.h"
 #include "./qstm_types.h"
-#include <QSqlError>
+#include <QtSql/QSqlError>
 
 //!
 //! \brief The ResultValue class

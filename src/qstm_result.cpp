@@ -22,7 +22,7 @@ static const MakeArStats &__makeArStats()
                                             {ResultValue::Unauthorized, 401},
                                             {ResultValue::BadRequest, 400}});
     return __makeArStats;
-};
+}
 
 static const auto&__makeStatusCodeSuccessList()
 {
@@ -40,7 +40,7 @@ public:
     QMutex staticThreadLocker;
 };
 
-Q_GLOBAL_STATIC(QStmConstsResult, ___consts);
+Q_GLOBAL_STATIC(QStmConstsResult, ___consts)
 auto &qapp = *QCoreApplication::instance();
 
 static auto &consts = *___consts;

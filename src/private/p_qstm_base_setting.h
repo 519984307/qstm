@@ -1,6 +1,6 @@
 #pragma once
 
-#include "./qstm_object.h"
+#include "../qstm_object.h"
 #include <QVariant>
 #include <QVariantHash>
 

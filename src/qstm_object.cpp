@@ -11,9 +11,9 @@
 
 
 namespace PrivateOrm {
-Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,__static_uuid_base_data,(QUuid::createUuid().toString().toUtf8()));
-Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,__static_uuid_delimer,("|"));
-Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,__static_md5_delimer,("."));
+Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,__static_uuid_base_data,(QUuid::createUuid().toString().toUtf8()))
+Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,__static_uuid_delimer,("|"))
+Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,__static_md5_delimer,("."))
 }
 
 namespace QStm {

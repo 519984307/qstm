@@ -1,10 +1,13 @@
 set(qstm_SRCS
     # cmake-format: sortable
     private/p_qstm_base_setting.cpp
-    private/p_qstm_setting_manager.cpp
-    private/p_qstm_base_setting.cpp
+    private/p_qstm_service_manager.h
+    private/p_qstm_setting_manager.h
     qstm_cache_pool.cpp
+    qstm_const.h
     qstm_currency.cpp
+    qstm_global.h
+    qstm_macro.h
     qstm_message.cpp
     qstm_object.cpp
     qstm_result.cpp
@@ -22,6 +25,8 @@ set(qstm_SRCS
     qstm_util_variant.cpp
     qstm_vvm.cpp
 )
+
+include_directories(${CMAKE_SOURCE_DIR}/src)
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Emscripten")
     add_library(qstm STATIC ${qstm_SRCS})

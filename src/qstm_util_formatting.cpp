@@ -71,7 +71,7 @@ void init(){
     consts.init();
 }
 
-Q_COREAPP_STARTUP_FUNCTION(init);
+Q_COREAPP_STARTUP_FUNCTION(init)
 
 class FormattingUtilPvt{
 public:
