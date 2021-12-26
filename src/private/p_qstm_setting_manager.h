@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../qstm_setting_manager.h"
-#include "./qstm_util_variant.h"
+#include "../qstm_util_variant.h"
 #include <QDebug>
 #include <QFile>
 #include <QSettings>

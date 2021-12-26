@@ -3,14 +3,11 @@ QT += network
 QT += websockets
 QT += sql
 
-INCLUDEPATH+=$$PWD
+#INCLUDEPATH+=$$PWD
 
 HEADERS += \
-#    $$PWD/private/p_qstm_types_qt5.h \
-#    $$PWD/private/p_qstm_types_qt6.h \
     $$PWD/private/p_qstm_base_setting.h \
     $$PWD/private/p_qstm_setting_manager.h \
-    #$$PWD/private/p_qstm_service_manager.h \
     $$PWD/qstm_const.h \
     $$PWD/qstm_global.h \
     $$PWD/qstm_macro.h \
