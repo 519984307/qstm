@@ -15,6 +15,9 @@ namespace QStm {
 class Q_STM_EXPORT FormattingUtil:public QVariant{
 public:
 
+    //!
+    //! \brief The Masks class
+    //!
     class Masks{
         friend class FormattingUtil;
     public:

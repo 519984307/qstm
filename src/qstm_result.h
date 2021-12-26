@@ -155,10 +155,16 @@ public:
     virtual QVariant &resultVariant() const;
 
     //!
+    //! \brief resultVariantInfo
+    //! \return
+    //!
+    Q_INVOKABLE virtual QVariant resultVariantInfo() const;
+
+    //!
     //! \brief resultMap
     //! \return
     //!
-    virtual QVariantHash resultMap() const;
+    virtual QVariantMap resultMap() const;
 
     //!
     //! \brief resultHash
@@ -366,6 +372,13 @@ public:
     //! \return
     //!
     ResultValue &setValidation(const ResultValue &lr);
+
+    //!
+    //! \brief setResponse
+    //! \param value
+    //! \return
+    //!
+    ResultValue &setResponse(const QVariant &value);
 
     //!
     //! \brief setUnauthorized

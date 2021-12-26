@@ -13,6 +13,7 @@ namespace QStm {
 class Q_STM_EXPORT Url: public QVariant
 {
 public:
+
     //!
     //! \brief Url
     //! \param v

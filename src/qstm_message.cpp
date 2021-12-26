@@ -29,70 +29,97 @@ public:
     QString bodyText;
     QString bodyHtml;
     QVariantList attachment;
-    explicit MessagePvt(Message*parent){
+    explicit MessagePvt(Message*parent)
+    {
         this->parent=parent;
     }
 
-    virtual ~MessagePvt(){
+    virtual ~MessagePvt()
+    {
     }
 
-    static QVariant staticReplaceVar(const QVariantHash&static_variables, const QVariant&v){
+    static QVariant staticReplaceVar(const QVariantHash&static_variables, const QVariant&v)
+    {
         Q_DECLARE_VU;
         QString value;
-        if(qTypeId(v)==QMetaType_QVariantMap || qTypeId(v)==QMetaType_QVariantHash || qTypeId(v)==QMetaType_QVariantList || qTypeId(v)==QMetaType_QStringList){
+        auto typeId=qTypeId(v);
+        switch (typeId) {
+        case QMetaType_QVariantList:
             value=QJsonDocument::fromVariant(v).toJson(QJsonDocument::Compact);
-        }
-        else{
+            break;
+        case QMetaType_QStringList:
+            value=QJsonDocument::fromVariant(v).toJson(QJsonDocument::Compact);
+            break;
+        case QMetaType_QVariantHash:
+            value=QJsonDocument::fromVariant(v).toJson(QJsonDocument::Compact);
+            break;
+        case QMetaType_QVariantMap:
+            value=QJsonDocument::fromVariant(v).toJson(QJsonDocument::Compact);
+            break;
+        case QMetaType_QUuid:
+            value=v.toUuid().toString();
+            break;
+        case QMetaType_QUrl:
+            value=v.toUrl().toString();
+            break;
+        default:
             value=v.toByteArray();
+            break;
         }
 
-        if(value.contains(qsl("$"))){
-            {//static dir
-                QHashIterator<QString, QVariant> i(static_variables);
-                while (i.hasNext()) {
-                    i.next();
-                    auto key=i.key();
-                    key=key.replace(qsl("$"),qsl_null).replace(qsl("{"),qsl_null).replace(qsl("]"),qsl_null);
-                    const auto k1=QString(qsl("$")+key).replace(qsl("$$"),qsl("$"));
-                    const auto k2=qsl("${%1}").arg(key);
 
-                    auto v0=i.value();
-                    QString vv;
-                    if(vu.vIsList(i.value()))
-                        vv=v0.toStringList().join(qsl_key_return);
-                    else
-                        vv=v0.toString().trimmed();
-                    value=value.replace(k1,vv).replace(k2,vv);
-                }
-            }
-        }
-
-        if(qTypeId(v)==QMetaType_QVariantMap || qTypeId(v)==QMetaType_QVariantHash || qTypeId(v)==QMetaType_QVariantList || qTypeId(v)==QMetaType_QStringList){
-            auto v=QJsonDocument::fromJson(value.toUtf8()).toVariant();
+        if(!value.contains(qsl("$")))
             return v;
+
+        QHashIterator<QString, QVariant> i(static_variables);
+        while (i.hasNext()) {
+            i.next();
+            auto key=i.key();
+            key=key.replace(qsl("$"),qsl_null).replace(qsl("{"),qsl_null).replace(qsl("]"),qsl_null);
+            const auto k1=QString(qsl("$")+key).replace(qsl("$$"),qsl("$"));
+            const auto k2=qsl("${%1}").arg(key);
+
+            auto v0=i.value();
+            QString vv;
+            if(vu.vIsList(i.value()))
+                vv=v0.toStringList().join(qsl_key_return);
+            else
+                vv=v0.toString().trimmed();
+            value=value.replace(k1,vv).replace(k2,vv);
         }
-        else{
+
+        switch (typeId) {
+        case QMetaType_QVariantList:
+        case QMetaType_QStringList:
+        case QMetaType_QVariantHash:
+        case QMetaType_QVariantMap:
+            return QJsonDocument::fromJson(value.toUtf8()).toVariant();
+        default:
             return value;
         }
     }
 
 
-    QVariant parserVariable(const QVariant&v){
+    QVariant parserVariable(const QVariant&v)
+    {
         auto __return=staticReplaceVar(this->variables, v).toString();
         return __return;
     }
 
-    QString parserText(const QVariant&v){
+    QString parserText(const QVariant&v)
+    {
         Q_DECLARE_VU;
         return vu.toStr(v);
     }
 
-    QString parserTextHtml(const QVariant&v){
+    QString parserTextHtml(const QVariant&v)
+    {
         Q_DECLARE_VU;
         return vu.toStr(v);
     }
 
-    QString parserTextLine(const QVariant&v){
+    QString parserTextLine(const QVariant&v)
+    {
         Q_DECLARE_VU;
         QVariantList vl;
         if(vu.vIsObject(v))
@@ -110,7 +137,8 @@ public:
     }
 
 
-    Message&setMap(){
+    Message&setMap()
+    {
         if(this->uuid.isNull())
             this->uuid=QUuid::createUuidV3(QUuid::createUuid(), base());
         QVariantHash vBody;
@@ -129,42 +157,46 @@ public:
         return*this->parent;
     }
 
-    QString getStr(const QStringList &keys, const QVariantHash&vBody){
+    QString getStr(const QStringList &keys, const QVariantHash&vBody)
+    {
         for(auto&v:keys){
             auto s=vBody.value(v).toString().trimmed();
             if(s.isEmpty())
                 continue;
-            else
-                return s;
+            return s;
         }
         return QString();
     }
 
 
 
-    Message&setVar(const QVariant &v){
+    Message&setVar(const QVariant &v)
+    {
         Q_DECLARE_VU;
         QVariantHash vBody=v.toHash();
-        this->uuid      =vu.toUuid(vBody[qsl_fy(uuid)]);
-        this->name      =vBody[qsl_fy(name)].toString();
-        this->attachmentName=getStr(qvsl_null<<qsl_fy(attachmentName)<<qsl_fy(attachmentname)<<qsl_fy(outPutName)<<qsl_fy(outputname)<<qsl_fy(outPutFileName)<<qsl_fy(outputfilename), vBody);
-        this->type      =parserText(vBody[qsl_fy(type)      ]);
-        this->from      =parserText(vBody[qsl_fy(from)      ]);
-        this->to        =parserText(vBody[qsl_fy(to)        ]);
-        this->subject   =parserText(vBody[qsl_fy(subject)   ]);
-        this->bodyText  =parserTextLine(vBody[qsl_fy(bodyText)  ]);
-        this->bodyHtml  =parserTextHtml(vBody[qsl_fy(bodyHtml)  ]);
+
+        static auto keys=qvsl{qsl_fy(attachmentName),qsl_fy(attachmentname),qsl_fy(outPutName),qsl_fy(outputname),qsl_fy(outPutFileName),qsl_fy(outputfilename)};
+
+        this->uuid=vu.toUuid(vBody[qsl_fy(uuid)]);
+        this->name=vBody[qsl_fy(name)].toString();
+        this->attachmentName=getStr(keys, vBody);
+        this->type=parserText(vBody[qsl_fy(type)]);
+        this->from=parserText(vBody[qsl_fy(from)]);
+        this->to=parserText(vBody[qsl_fy(to)]);
+        this->subject=parserText(vBody[qsl_fy(subject)]);
+        this->bodyText=parserTextLine(vBody[qsl_fy(bodyText)]);
+        this->bodyHtml=parserTextHtml(vBody[qsl_fy(bodyHtml)]);
         this->attachment=vBody[qsl_fy(attachment)].toList();
 
         if(!this->variables.isEmpty()){
-            this->attachmentName=this->parserVariable(this->attachmentName  ).toString();
-            this->name          =this->parserVariable(this->name            ).toString();
-            this->type          =this->parserVariable(this->type            ).toString();
-            this->from          =this->parserVariable(this->from            ).toString();
-            this->to            =this->parserVariable(this->to              ).toString();
-            this->subject       =this->parserVariable(this->subject         ).toString();
-            this->bodyText      =this->parserVariable(this->bodyText        ).toString();
-            this->bodyHtml      =this->parserVariable(this->bodyHtml        ).toString();
+            this->attachmentName=this->parserVariable(this->attachmentName).toString();
+            this->name=this->parserVariable(this->name).toString();
+            this->type=this->parserVariable(this->type).toString();
+            this->from=this->parserVariable(this->from).toString();
+            this->to=this->parserVariable(this->to).toString();
+            this->subject=this->parserVariable(this->subject).toString();
+            this->bodyText=this->parserVariable(this->bodyText).toString();
+            this->bodyHtml=this->parserVariable(this->bodyHtml).toString();
         }
 
         return this->setMap();

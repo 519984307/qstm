@@ -32,25 +32,29 @@ public:
     QByteArray storedMd5;
     ResultValue _result;
     QObject*parent=nullptr;
-    explicit ObjectPrv(QObject*parent){
+    explicit ObjectPrv(QObject*parent)
+    {
         this->parent=parent;
         _result.setParent(parent);
     }
     virtual ~ObjectPrv(){
     }
 
-    CachePool&cachePool(){
+    CachePool&cachePool()
+    {
         if(this->_cachePool==nullptr)
             this->_cachePool=&CachePool::instance();
         return*this->_cachePool;
     }
 
-    static const QByteArray toMd5(const QVariant&value){
-        VariantUtil vu;
+    static const QByteArray toMd5(const QVariant&value)
+    {
+        Q_DECLARE_VU;
         return vu.toMd5(value);
     }
 
-    QByteArray storedMd5Make() const{
+    QByteArray storedMd5Make() const
+    {
         auto&metaObject = *this->parent->metaObject();
         QVariantHash vBody;
         for(int col = 0; col < metaObject.propertyCount(); ++col) {
@@ -261,10 +265,13 @@ QVariantMap Object::toMap()const
     for(int col = 0; col < metaObject.propertyCount(); ++col) {
         auto property = metaObject.property(col);
         QVariant value;
-        if(qTypeId(property)>=QMetaType_User)
+        switch (qTypeId(property)) {
+        case QMetaType_User:
             value=property.read(this).toInt();
-        else
+            break;
+        default:
             value=property.read(this);
+        }
         __return.insert(property.name(), value);
     }
     return __return;
@@ -277,10 +284,13 @@ QVariantHash Object::toHash() const
     for(int col = 0; col < metaObject.propertyCount(); ++col) {
         auto property = metaObject.property(col);
         QVariant value;
-        if(qTypeId(property)>=QMetaType_User)
+        switch (qTypeId(property)) {
+        case QMetaType_User:
             value=property.read(this).toInt();
-        else
+            break;
+        default:
             value=property.read(this);
+        }
         __return.insert(property.name(), value);
     }
     return __return;
@@ -294,12 +304,18 @@ QVariant Object::toVar()const
 bool Object::fromVar(const QVariant &v)
 {
     QVariantHash vHash;
-    if(qTypeId(v)==QMetaType_QString || qTypeId(v)==QMetaType_QByteArray)
+    switch (qTypeId(v)) {
+    case QMetaType_QString:
+    case QMetaType_QByteArray:
         vHash=QJsonDocument::fromJson(v.toByteArray()).toVariant().toHash();
-
-    if(qTypeId(v)==QMetaType_QVariantHash || qTypeId(v)==QMetaType_QVariantMap)
+        break;
+    case QMetaType_QVariantHash:
+    case QMetaType_QVariantMap:
         vHash=v.toHash();
-
+        break;
+    default:
+        break;
+    }
     return this->fromHash(vHash);
 }
 
@@ -309,9 +325,9 @@ bool Object::fromMap(const QVariantMap&map)
     auto&metaObject = *this->metaObject();
     for(int col = 0; col < metaObject.propertyCount(); ++col) {
         auto property = metaObject.property(col);
-        if(property.write(this, map.value(property.name()))){
-            __return=true;
-        }
+        if(!property.write(this, map.value(property.name())))
+            continue;
+        __return=true;
     }
     return __return;
 }
@@ -322,9 +338,9 @@ bool Object::fromHash(const QVariantHash &map)
     auto&metaObject = *this->metaObject();
     for(int col = 0; col < metaObject.propertyCount(); ++col) {
         auto property = metaObject.property(col);
-        if(property.write(this, map.value(property.name()))){
-            __return=true;
-        }
+        if(!property.write(this, map.value(property.name())))
+            continue;
+        __return=true;
     }
     return __return;
 }
@@ -342,8 +358,7 @@ bool Object::storedIsChanged()const
     auto v2=this->storedMd5Make();
     if(v1==v2)
         return false;
-    else
-        return true;
+    return true;
 }
 
 QByteArray&Object::storedMd5()const

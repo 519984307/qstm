@@ -13,7 +13,17 @@ namespace QStm {
 //!
 class Q_STM_EXPORT QCurrency:public QVariant{
 public:
+
+    //!
+    //! \brief QCurrency
+    //! \param v
+    //! \param precision
+    //!
     explicit QCurrency(const QVariant&v=QVariant(), const QVariant&precision=QVariant());
+
+    //!
+    //! \brief ~QCurrency
+    //!
     virtual ~QCurrency();
 
     //!

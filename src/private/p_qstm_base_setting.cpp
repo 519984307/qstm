@@ -92,52 +92,73 @@ public:
     QVariant activityThread=0;
     QVariant memoryLimit=0;
 
-    static QVariant staticReplaceString(const QVariantHash&static_variables, const QVariant&v){
+    static QVariant staticReplaceString(const QVariantHash&static_variables, const QVariant&v)
+    {
         QString value;
-        if(qTypeId(v)==QMetaType_QVariantMap || qTypeId(v)==QMetaType_QVariantHash || qTypeId(v)==QMetaType_QVariantList || qTypeId(v)==QMetaType_QStringList){
+        auto typeId=qTypeId(v);
+        switch (typeId) {
+        case QMetaType_QVariantMap:
             value=QJsonDocument::fromVariant(v).toJson(QJsonDocument::Compact);
-        }
-        else{
+            break;
+        case QMetaType_QVariantHash:
+            value=QJsonDocument::fromVariant(v).toJson(QJsonDocument::Compact);
+            break;
+        case QMetaType_QVariantList:
+            value=QJsonDocument::fromVariant(v).toJson(QJsonDocument::Compact);
+            break;
+        case QMetaType_QStringList:
+            value=QJsonDocument::fromVariant(v).toJson(QJsonDocument::Compact);
+            break;
+        default:
             value=v.toByteArray();
         }
 
-        if(value.contains(qsl("$"))){
-            {//static dir
-                QHashIterator<QString, QVariant> i(static_variables);
-                while (i.hasNext()) {
-                    i.next();
-                    auto key=i.key();
-                    const auto k=QString(qsl("$")+key)
-                                       .replace(qsl("$$"),qsl("$"))
-                                       .replace(qsl("${%1}").arg(key), qsl("$%1").arg(key));
-                    const auto v=i.value().toString().trimmed();
-                    value=value.replace(k,v);
-                }
-            }
-        }
-
-        if(qTypeId(v)==QMetaType_QVariantMap || qTypeId(v)==QMetaType_QVariantHash || qTypeId(v)==QMetaType_QVariantList || qTypeId(v)==QMetaType_QStringList){
-            auto v=QJsonDocument::fromJson(value.toUtf8()).toVariant();
+        if(!value.contains(qsl("$")))
             return v;
+
+        QHashIterator<QString, QVariant> i(static_variables);
+        while (i.hasNext()) {
+            i.next();
+            auto key=i.key();
+            const auto k=QString(qsl("$")+key)
+                               .replace(qsl("$$"),qsl("$"))
+                               .replace(qsl("${%1}").arg(key), qsl("$%1").arg(key));
+            const auto v=i.value().toString().trimmed();
+            value=value.replace(k,v);
         }
 
-        return value;
+        switch (typeId) {
+        case QMetaType_QVariantMap:
+            return QJsonDocument::fromJson(value.toUtf8()).toVariant();
+        case QMetaType_QVariantHash:
+            return QJsonDocument::fromJson(value.toUtf8()).toVariant();
+        case QMetaType_QVariantList:
+            return QJsonDocument::fromJson(value.toUtf8()).toVariant();
+        case QMetaType_QStringList:
+            return QJsonDocument::fromJson(value.toUtf8()).toVariant();
+        default:
+            return value;
+        }
+
     }
 
-    static const QVariant replaceEnvStatic(const QVariant&v){
+    static const QVariant replaceEnvStatic(const QVariant&v)
+    {
         auto value=v;
         value=staticReplaceString(static_variables, value);
         return value;
     }
 
-    QVariant replaceEnv(const QVariant&v)const{
+    QVariant replaceEnv(const QVariant&v)const
+    {
         auto value=v;
         value=staticReplaceString(static_variables, value);
         value=staticReplaceString(variables, value);
         return value;
     }
 
-    static const QVariant getAlpha(const QVariant&v){
+    static const QVariant getAlpha(const QVariant&v)
+    {
         auto num=qsl("0123456789,.");
         QString r;
         auto ss=v.toString();
@@ -148,7 +169,8 @@ public:
         return r;
     }
 
-    static const QVariant getNumber(const QVariant&v){
+    static const QVariant getNumber(const QVariant&v)
+    {
         auto num=qsl("0123456789,.");
         QString r,ss;
         if(qTypeId(v)==QMetaType_Double)
@@ -165,12 +187,14 @@ public:
         return r;
     }
 
-    static QVariant getInterval(const QVariant&v, const QVariant&defaultV=QVariant()){
+    static QVariant getInterval(const QVariant&v, const QVariant&defaultV=QVariant())
+    {
         Q_DECLARE_DU;
         return du.parseInterval(v,defaultV);
     }
 
-    QVariant getMemoryBytes(const QVariant&v, const QVariant&defaultV=QVariant()){
+    QVariant getMemoryBytes(const QVariant&v, const QVariant&defaultV=QVariant())
+    {
         if(v.isNull() || !v.isValid() || v.toLongLong()<0)
             return defaultV;
 
@@ -211,7 +235,8 @@ public:
     }
 
 
-    explicit BaseSettingPrv(QObject*parent){
+    explicit BaseSettingPrv(QObject*parent)
+    {
         this->parent=parent;
     }
     virtual ~BaseSettingPrv(){
@@ -229,7 +254,7 @@ BaseSetting::~BaseSetting(){
 
 void BaseSetting::print()const
 {
-    VariantUtil vu;
+    Q_DECLARE_VU;
     auto vMap=toHash();
     if(!vMap.isEmpty()){
         sInfo()<<qsl_fy(settings);
@@ -430,7 +455,7 @@ bool BaseSetting::fromSetting(const BaseSetting &v)
 bool BaseSetting::fromHash(const QVariantHash &v)
 {
     this->clear();
-    VariantUtil vu;
+    Q_DECLARE_VU;
     QVariantHash vMap;
     QHashIterator<QString, QVariant> i(v);
     while (i.hasNext()){
@@ -480,7 +505,7 @@ bool BaseSetting::fromMap(const QVariantMap &v)
 
 bool BaseSetting::fromVariant(const QVariant&v)
 {
-    VariantUtil vu;
+    Q_DECLARE_VU;
     auto vv=vu.toVariantObject(v);
     if((qTypeId(vv)==QMetaType_QVariantHash) || (qTypeId(vv)==QMetaType_QVariantMap)){
         return this->fromHash(vv.toHash());
@@ -497,7 +522,7 @@ bool BaseSetting::fromVariant(const QVariant&v)
 
 bool BaseSetting::mergeHash(const QVariantHash &v)
 {
-    VariantUtil vu;
+    Q_DECLARE_VU;
     QVariantHash vMap;
     QHashIterator<QString, QVariant> i(v);
     while (i.hasNext()){
@@ -548,7 +573,7 @@ bool BaseSetting::mergeMap(const QVariantMap &v)
 
 bool BaseSetting::mergeVariant(const QVariant &v)
 {
-    VariantUtil vu;
+    Q_DECLARE_VU;
     auto vv=vu.toVariantObject(v);
     if((qTypeId(vv)==QMetaType_QVariantHash) || (qTypeId(vv)==QMetaType_QVariantMap)){
         return this->mergeHash(vv.toHash());

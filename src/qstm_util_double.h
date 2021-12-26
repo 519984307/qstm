@@ -6,7 +6,6 @@
 #include <QVariantList>
 #include <QVariantHash>
 #include "./qstm_global.h"
-#include "./qstm_util_formatting.h"
 
 namespace QStm {
 
@@ -39,7 +38,7 @@ public:
     //! \param vMax
     //! \return
     //!
-    bool checkBetween(double &vMin, double &vMax);
+    static bool checkBetween(double &vMin, double &vMax);
 
     //!
     //! \brief checkBetween
@@ -47,7 +46,7 @@ public:
     //! \param vMax
     //! \return
     //!
-    bool checkBetween(qlonglong &vMin, qlonglong &vMax);
+    static bool checkBetween(qlonglong &vMin, qlonglong &vMax);
 
     //!
     //! \brief checkBetween
@@ -55,20 +54,8 @@ public:
     //! \param vMax
     //! \return
     //!
-    bool checkBetween(int &vMin, int &vMax);
+    static bool checkBetween(int &vMin, int &vMax);
 
-    //!
-    //! \brief formatting
-    //! \return
-    //!
-    virtual FormattingUtil&formatting();
-
-    //!
-    //! \brief formatting
-    //! \param v
-    //! \return
-    //!
-    virtual FormattingUtil&formatting(Q_CONST_V);
 private:
     void*p=nullptr;
 };

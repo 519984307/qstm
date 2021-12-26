@@ -1,7 +1,10 @@
 #pragma once
 
 #include "./qstm_global.h"
-#include "./qstm_util_formatting.h"
+#include <QDateTime>
+#include <QDate>
+#include <QTime>
+#include <QVariant>
 
 namespace QStm {
 
@@ -209,6 +212,13 @@ public:
     //! \return
     //!set Max and Minimal datetime
     bool setMax(QTime &vA, QTime &vB);
+
+    //!
+    //! \brief setMax
+    //! \param vA
+    //! \param vB
+    //! \return
+    //!
     bool setMax(QDateTime &vA, QDateTime &vB);
 
     //!
@@ -242,6 +252,22 @@ public:
     //! \return
     //!set minimal/maximum year date/time
     bool setYearRange(QDateTime &vA, QDateTime &vB);
+
+    //!
+    //! \brief setDistantRange
+    //! \param vA
+    //! \param vB
+    //! \return
+    //!
+    bool setDistantRange(QDate &vA, QDate &vB);
+
+    //!
+    //! \brief setDistantRange
+    //! \param vA
+    //! \param vB
+    //! \return
+    //!
+    bool setDistantRange(QDateTime &vA, QDateTime &vB);
 
     //!
     //! \brief validBetween
@@ -279,17 +305,12 @@ public:
     bool checkBetween(QDate &vMin, QDate &vMax);
 
     //!
-    //! \brief formatting
+    //! \brief checkBetween
+    //! \param vMin
+    //! \param vMax
     //! \return
-    //!cosnts to forma date/time
-    virtual FormattingUtil&formatting();
-
-    //!
-    //! \brief formatting
-    //! \param v
-    //! \return
-    //!cosnts to forma date/time
-    virtual FormattingUtil&formatting(Q_CONST_V);
+    //!check em fix minimal/maximum date/time
+    bool checkBetween(QTime &vMin, QTime &vMax);
 
     //!
     //! \brief parseInterval

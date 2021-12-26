@@ -28,13 +28,14 @@ public:
     QBCMath qbcmath;
     QCurrency*parent=nullptr;
     int precision=2;
-    explicit QCurrencyPvt(QCurrency*parent){
+    explicit QCurrencyPvt(QCurrency*parent)
+    {
         this->parent=parent;
     }
-    virtual ~QCurrencyPvt(){
+    virtual ~QCurrencyPvt()
+    {
 
     }
-
     auto&setValue(const QVariant &value)
     {
         auto&v=*dynamic_cast<QVariant*>(this->parent);

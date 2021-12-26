@@ -34,7 +34,7 @@ public:
     //!
     //! \brief typesListIntergers
     //!
-    const QStmVTypesList&typesListIntergers  = QStmTypesListIntergers;
+    const QStmVTypesList&typesListIntergers  = QStmTypesListIntegers;
 
     //!
     //! \brief typesListClass
@@ -64,6 +64,21 @@ public:
     VariantUtil&operator=(const QVariant&v);
 
     //!
+    //! \brief isUuid
+    //! \param v
+    //! \return
+    //!
+    virtual bool isUuid(Q_CONST_V) const;
+
+    //!
+    //! \brief isUuid
+    //! \param v
+    //! \param uuidSet
+    //! \return
+    //!
+    virtual bool isUuid(const QVariant&v, QUuid&uuidSet) const;
+
+    //!
     //! \brief isHex
     //! \param v
     //! \return
@@ -83,6 +98,28 @@ public:
     //! \return
     //!
     virtual const QString toStr(Q_CONST_V);
+
+    //!
+    //! \brief toAlphaNumber
+    //! \param v
+    //! \return
+    //!
+    virtual const QByteArray toAlphaNumber(Q_CONST_V);
+
+    //!
+    //! \brief toAlphaNumeric
+    //! \param v
+    //! \return
+    //!
+    virtual const QByteArray toAlphaNumeric(Q_CONST_V);
+
+
+    //!
+    //! \brief toAlphaNumeric
+    //! \param v
+    //! \return
+    //!
+    virtual const QString toAlphaText(Q_CONST_V);
 
     //!
     //! \brief toByteArray
@@ -266,7 +303,7 @@ public:
     //! \param v
     //! \return
     //!
-    virtual QVariantMap toMap(const QVariant&v) const;
+    virtual const QVariantMap toMap(const QVariant&v);
 
     //!
     //! \brief toMap
@@ -324,7 +361,7 @@ public:
     //! \param v
     //! \return
     //!
-    const QVariant toType(int type, const QVariant &v=QVariant());
+    const QVariant toType(int typeId, const QVariant &v=QVariant());
 
     //!
     //! \brief toVariant
@@ -424,6 +461,13 @@ public:
     virtual VariantUtil &mList(const QVariant&value);
 
     //!
+    //! \brief toUuidCompuser
+    //! \param value
+    //! \return
+    //!
+    virtual const QUuid toUuidCompuser(const QVariant&value);
+
+    //!
     //! \brief clear
     //! \return
     //!
@@ -500,6 +544,14 @@ public:
     //! \return
     //!
     virtual bool vIsString(Q_CONST_V);
+
+    //!
+    //! \brief convertTo
+    //! \param v
+    //! \param typeId
+    //! \return
+    //!
+    virtual QVariant convertTo(const QVariant&v, int typeId);
 
 private:
     void*p=nullptr;
