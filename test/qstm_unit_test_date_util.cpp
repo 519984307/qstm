@@ -2,7 +2,7 @@
 #define Q_STM_DateUtilTestUnit_H
 
 #include "./qstm_test_unit.h"
-#include "./qstm_util_date.h"
+#include "../src/qstm_util_date.h"
 
 namespace QStm {
 

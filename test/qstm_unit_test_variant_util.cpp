@@ -2,7 +2,7 @@
 #define Q_STM_VariantUtilUnit_H
 
 #include "./qstm_test_unit.h"
-#include "./qstm_util_variant.h"
+#include "../src/qstm_util_variant.h"
 #include <QCryptographicHash>
 
 namespace QStm {

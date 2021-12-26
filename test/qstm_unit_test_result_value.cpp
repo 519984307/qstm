@@ -2,9 +2,9 @@
 #define Q_STM_ResultValueTestUnit_H
 
 #include "./qstm_test_unit.h"
-#include "./qstm_object.h"
-#include "./qstm_currency.h"
-#include "./qstm_util_variant.h"
+#include "../src/qstm_object.h"
+#include "../src/qstm_currency.h"
+#include "../src/qstm_util_variant.h"
 
 namespace QStm {
 

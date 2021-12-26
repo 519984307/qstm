@@ -2,7 +2,7 @@
 #define Q_STM_FormattingUtilTestUnit_H
 
 #include "./qstm_test_unit.h"
-#include "./qstm_util_formatting.h"
+#include "../src/qstm_util_formatting.h"
 
 namespace QStm {
 

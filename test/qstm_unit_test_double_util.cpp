@@ -2,7 +2,7 @@
 #define Q_STM_DoubleUtilTestUnit_H
 
 #include "./qstm_test_unit.h"
-#include "./qstm_util_double.h"
+#include "../src/qstm_util_double.h"
 
 namespace QStm {
 
