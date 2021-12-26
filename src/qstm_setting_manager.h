@@ -17,7 +17,7 @@ public:                                                                         
     Q_INVOKABLE explicit Manager(const QString&settingFileName, QObject *parent = nullptr):QStm::SettingManager(settingFileName, parent)            \
     {                                                                                                                                               \
     }                                                                                                                                               \
-    Q_INVOKABLE ~Manager()                                                                                                                          \
+    ~Manager()                                                                                                                          \
     {                                                                                                                                               \
     }                                                                                                                                               \
     Setting &setting(){                                                                                                                             \

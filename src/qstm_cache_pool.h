@@ -24,7 +24,7 @@ public:
     //!
     //! \brief ~CachePool
     //!
-    Q_INVOKABLE ~CachePool();
+    ~CachePool();
 
     //!
     //! \brief i

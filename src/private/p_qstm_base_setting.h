@@ -63,7 +63,7 @@ class Q_STM_EXPORT BaseSetting:public QStm::Object{
     SETTING_OBJECT(BaseSetting)
 public:
     Q_INVOKABLE explicit BaseSetting(QObject*parent=nullptr);
-    Q_INVOKABLE ~BaseSetting();
+    ~BaseSetting();
 
     /**
      * @brief print
