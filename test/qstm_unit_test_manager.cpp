@@ -10,12 +10,12 @@ public:
 
 TEST_F(Q_STM_ServiceManagerUnit, serviceStart)
 {
-    EXPECT_EQ(this->serviceStart(),true)<<"fail: service start";
+    EXPECT_TRUE(this->serviceStart())<<"fail: service start";
 }
 
 TEST_F(Q_STM_ServiceManagerUnit, serviceStop)
 {
-    EXPECT_EQ(this->serviceStop(),true)<<"fail: service stop";
+    EXPECT_TRUE(this->serviceStop())<<"fail: service stop";
 }
 
 }

@@ -79,13 +79,12 @@ SettingBase *SettingManager::settingClone(const QString &value)
     dPvt();
     const auto name=value.toUtf8();
     auto&setting=p.settingGetCheck(name);
-    if(setting.isValid()){
-        auto _parent=(QThread::currentThread()==this->thread())?this:nullptr;
-        auto newSetting=p.settingCreate(_parent);
-        newSetting->fromHash(setting.toHash());
-        return newSetting;
-    }
-    return nullptr;
+    if(!setting.isValid())
+        return nullptr;
+    auto _parent=(QThread::currentThread()==this->thread())?this:nullptr;
+    auto newSetting=p.settingCreate(_parent);
+    newSetting->fromHash(setting.toHash());
+    return newSetting;
 }
 
 QObject *SettingManager::settingCreate(QObject *parent)

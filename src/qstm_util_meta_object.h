@@ -4,9 +4,9 @@
 #include <QList>
 #include <QMetaProperty>
 #include <QMetaMethod>
-#include "./qstm_global.h"
 #include <QMetaMethod>
 #include <QMetaProperty>
+#include "./qstm_global.h"
 
 namespace QStm {
 
