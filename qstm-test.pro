@@ -18,6 +18,5 @@ QMAKE_CXXFLAGS += -DQSTM_TEST_MODE=\\\"$$QSTM_TEST_MODE\\\"
 LIBS += -lgmock
 LIBS += -lgtest
 
-include($$PWD/qstm.pri)
 include($$PWD/test/qstm-test.pri)
 
