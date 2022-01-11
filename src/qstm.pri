@@ -20,6 +20,7 @@ HEADERS += \
     $$PWD/qstm_setting_base.h \
     $$PWD/qstm_svm.h \
     $$PWD/qstm_types.h \
+    $$PWD/qstm_fileinfo.h \
     $$PWD/qstm_currency.h \
     $$PWD/qstm_vvm.h \
     $$PWD/qstm_url.h \
@@ -41,6 +42,7 @@ SOURCES += \
     $$PWD/qstm_setting_base.cpp \
     $$PWD/qstm_svm.cpp \
     $$PWD/qstm_types.cpp \
+    $$PWD/qstm_fileinfo.cpp \
     $$PWD/qstm_currency.cpp \
     $$PWD/qstm_vvm.cpp \
     $$PWD/qstm_url.cpp \
