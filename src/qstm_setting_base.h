@@ -9,7 +9,8 @@ namespace QStm {
 //! \brief The SettingBase class
 //!
 //! basic class to configuration
-class Q_STM_EXPORT SettingBase:public QStm::BaseSetting{
+class Q_STM_EXPORT SettingBase:public QStm::BaseSetting
+{
     Q_OBJECT
     SETTING_OBJECT(SettingBase)
 public:
