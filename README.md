@@ -132,7 +132,6 @@
 >     ...more
 >}
 >```
->```
 >## QStm::DateUtil
 >Based on ***QVariant***, use to manipulate then types ***QDateTime, QDate, QTime***, contains functions to calculate datestime, ex: months, years, ranges and others. 
 >```c++
@@ -152,4 +151,4 @@
 >{
 >     ...more
 >}
->``` 
+>```
