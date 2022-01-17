@@ -495,6 +495,42 @@ QVariantList ResultValue::resultList() const
     }
 }
 
+QStringList ResultValue::resultStringList() const
+{
+    dPvt();
+    auto&v=p.resultVariant;
+    switch (qTypeId(v)) {
+    case QMetaType_QStringList:
+        return v.toStringList();
+    case QMetaType_QVariantList:
+    {
+        Q_DECLARE_VU;
+        QStringList __return;
+        for(auto&row:v.toList()){
+            switch (qTypeId(row)) {
+            case QMetaType_QVariantHash:
+            case QMetaType_QVariantMap:
+            case QMetaType_QVariantList:
+            case QMetaType_QStringList:
+                __return<<vu.toStr(row);
+                break;
+            case QMetaType_QUrl:
+                __return<<row.toUrl().toString();
+                break;
+            case QMetaType_QUuid:
+                __return<<row.toUuid().toString();
+                break;
+            default:
+                __return<<row.toString();
+            }
+        }
+        return __return;
+    }
+    default:
+        return {};
+    }
+}
+
 QVariantList ResultValue::resultToList() const
 {
     dPvt();
@@ -532,6 +568,20 @@ qlonglong ResultValue::resultInt() const
 {
     dPvt();
     auto r = p.resultVariant.toLongLong();
+    return r;
+}
+
+qlonglong ResultValue::resultLongLong() const
+{
+    dPvt();
+    auto r = p.resultVariant.toLongLong();
+    return r;
+}
+
+double ResultValue::resultDouble() const
+{
+    dPvt();
+    auto r = p.resultVariant.toDouble();
     return r;
 }
 

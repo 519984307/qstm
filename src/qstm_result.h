@@ -4,6 +4,7 @@
 #include "./qstm_global.h"
 #include "./qstm_types.h"
 #include <QtSql/QSqlError>
+#include <QStringList>
 
 //!
 //! \brief The ResultValue class
@@ -179,6 +180,12 @@ public:
     virtual QVariantList resultList() const;
 
     //!
+    //! \brief resultStringList
+    //! \return
+    //!
+    virtual QStringList resultStringList() const;
+
+    //!
     //! \brief resultToList
     //! \return
     //!
@@ -207,6 +214,18 @@ public:
     //! \return
     //!
     virtual qlonglong resultInt() const;
+
+    //!
+    //! \brief resultLongLong
+    //! \return
+    //!
+    virtual qlonglong resultLongLong() const;
+
+    //!
+    //! \brief resultDouble
+    //! \return
+    //!
+    virtual double resultDouble() const;
 
     //!
     //! \brief resultDate
@@ -242,7 +261,7 @@ public:
     //! \brief resultObject
     //! \return
     //!
-    template<class T>
+    template<class T=void*>
     T resultObject()
     {
         auto p = reinterpret_cast<T>(this->resultPointer());

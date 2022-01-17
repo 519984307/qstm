@@ -3,6 +3,7 @@
 
 #include "./qstm_test_unit.h"
 #include "../src/qstm_object.h"
+#include "../src/qstm_object.h"
 #include "../src/qstm_currency.h"
 #include "../src/qstm_util_variant.h"
 
