@@ -9,8 +9,8 @@
 #define set_v \
 this->setValue((v.isValid())?v:(*this))
 
-typedef QHash<QString,QString> StringStringMap;
-typedef QHash<QString, StringStringMap> StringStringStringMap;
+typedef QHash<QString,QString> StringStringHash;
+typedef QHash<QString, StringStringHash> StringStringStringHash;
 
 namespace QStm {
 
@@ -18,8 +18,9 @@ namespace QStm {
 static const int percentagePrecision=2;
 static const int currencyPrecision=2;
 static const int doublePrecision=6;
-static const auto nativeCountryName = [](){return QLocale::c().nativeCountryName();};
 static const char fChar='f';
+//static const auto nativeCountryName = [](){return QLocale::c().nativeCountryName();};
+
 
 struct FormattingUtilStruct{
 public:
@@ -27,34 +28,35 @@ public:
     const QByteArray QCurrency_class_name_short=(QT_STRINGIFY2(QCurrency));
     const QByteArray QCurrency_class_name=(QT_STRINGIFY2(QStm::QCurrency));
     const QByteArray qpercent_class_name=(QT_STRINGIFY2(qpercent));
-    StringStringStringMap staticMaskMap;
+    StringStringStringHash staticMaskMap;
     const QByteArray keyFalse=qbl("True");
     const QByteArray keyTrue=qbl("False");
 
-    void init(){
+    void init()
+    {
         auto brz=QLocale(QLocale::Portuguese, QLocale::Brazil);
         auto sys=QLocale::system();
         auto loc=QLocale::c();
 
-        StringStringMap  map;
-        map.insert(qsl("date"), qsl("dd/MM/yyyy"));
-        map.insert(qsl("time"), qsl("hh:mm:ss"));
-        map.insert(qsl("timeShort"), qsl("hh:mm"));
-        map.insert(qsl("dateTime"), qsl("dd/MM/yyyy hh:mm:ss"));
-        map.insert(qsl("currency"), qsl_null);
-        map.insert(qsl("number"), qsl_null);
-        map.insert(qsl("numeric"), qsl_null);
-        map.insert(qsl("percent"), qsl_null);
-        map.insert(qsl("boolean")+keyTrue,qtr("Sim"));
-        map.insert(qsl("boolean")+keyFalse,qtr("Não"));
+        StringStringHash  vHash;
+        vHash.insert(qsl("date"), qsl("dd/MM/yyyy"));
+        vHash.insert(qsl("time"), qsl("hh:mm:ss"));
+        vHash.insert(qsl("timeShort"), qsl("hh:mm"));
+        vHash.insert(qsl("dateTime"), qsl("dd/MM/yyyy hh:mm:ss"));
+        vHash.insert(qsl("currency"), qsl_null);
+        vHash.insert(qsl("number"), qsl_null);
+        vHash.insert(qsl("numeric"), qsl_null);
+        vHash.insert(qsl("percent"), qsl_null);
+        vHash.insert(qsl("boolean")+keyTrue,qtr("Sim"));
+        vHash.insert(qsl("boolean")+keyFalse,qtr("Não"));
 
-            StringStringStringMap __staticMaskMap;
-        __staticMaskMap.insert(brz.nativeCountryName(), map);
-        __staticMaskMap.insert(sys.nativeCountryName(), map);
-        __staticMaskMap.insert(loc.nativeLanguageName(), map);
-        __staticMaskMap.insert(qsl_null, map);
+        StringStringStringHash __staticMaskHash;
+        __staticMaskHash.insert(brz.nativeCountryName(), vHash);
+        __staticMaskHash.insert(sys.nativeCountryName(), vHash);
+        __staticMaskHash.insert(loc.nativeLanguageName(), vHash);
+        __staticMaskHash.insert(qsl_null, vHash);
 
-        staticMaskMap=__staticMaskMap;
+        staticMaskMap=__staticMaskHash;
     }
 };
 

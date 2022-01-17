@@ -42,6 +42,15 @@ public:
 
     //!
     //! \brief checkBetween
+    //! \param val
+    //! \param vMin
+    //! \param vMax
+    //! \return
+    //!
+    static bool checkBetween(const double &value, double &vMin, double &vMax);
+
+    //!
+    //! \brief checkBetween
     //! \param vMin
     //! \param vMax
     //! \return
@@ -50,11 +59,29 @@ public:
 
     //!
     //! \brief checkBetween
+    //! \param value
+    //! \param vMin
+    //! \param vMax
+    //! \return
+    //!
+    static bool checkBetween(const qlonglong &value, qlonglong &vMin, qlonglong &vMax);
+
+    //!
+    //! \brief checkBetween
     //! \param vMin
     //! \param vMax
     //! \return
     //!
     static bool checkBetween(int &vMin, int &vMax);
+
+    //!
+    //! \brief checkBetween
+    //! \param value
+    //! \param vMin
+    //! \param vMax
+    //! \return
+    //!
+    static bool checkBetween(const int &value, int &vMin, int &vMax);
 
 private:
     void*p=nullptr;

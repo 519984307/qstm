@@ -1,22 +1,6 @@
 #include <QCoreApplication>
-
-class SimpleObject : public QStm::Object {
-    Q_OBJECT
-public:
-    ResultValue&hashMd5(const QVariant&bytes)
-    {
-        if(bytes.isNull())
-            return this->lr()=false;//return false and without error
-
-        if(bytes.toString().trimmed().isEmpty())
-            return this->lr().setBadRequest("Invalid data");//return false and with error
-
-        QStm::VariantUtil vu;
-        QVariant md5=vu.toByteArray(bytes);
-        return this->lr(md5);//return success and return value
-    }
-};
-
+#include <QStm>
+#include "./simpleobject.h"
 
 void check()
 {
@@ -29,6 +13,11 @@ void check()
         qWarning()<<simpleObject.lr().returnText();//error text
         return;
     }
+}
+
+void othersConversions()
+{
+    SimpleObject simpleObject;
 
     //to bytes
     qWarning()<<simpleObject.lr().resultByteArray();
@@ -75,8 +64,6 @@ void check()
     //to QObject
     qWarning()<<simpleObject.lr().resultObject<QObject*>();
 }
-
-
 
 
 int main(int argc, char *argv[])

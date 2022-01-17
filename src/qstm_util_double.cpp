@@ -48,6 +48,13 @@ bool DoubleUtil::checkBetween(double &vMin, double &vMax)
     return vMin>0 || vMax>0;
 }
 
+bool DoubleUtil::checkBetween(const double &value, double &vMin, double &vMax)
+{
+    if(!checkBetween(vMin, vMax))
+        return false;
+    return (value>=vMin) && (value<=vMax);
+}
+
 bool DoubleUtil::checkBetween(qlonglong &vMin, qlonglong &vMax)
 {
     if(vMin>vMax){
@@ -58,6 +65,13 @@ bool DoubleUtil::checkBetween(qlonglong &vMin, qlonglong &vMax)
     return vMin>0 || vMax>0;
 }
 
+bool DoubleUtil::checkBetween(const qlonglong &value, qlonglong &vMin, qlonglong &vMax)
+{
+    if(!checkBetween(vMin, vMax))
+        return false;
+    return (value>=vMin) && (value<=vMax);
+}
+
 bool DoubleUtil::checkBetween(int &vMin, int &vMax)
 {
     if(vMin>vMax){
@@ -66,6 +80,13 @@ bool DoubleUtil::checkBetween(int &vMin, int &vMax)
         vMax=aux;
     }
     return vMin>0 || vMax>0;
+}
+
+bool DoubleUtil::checkBetween(const int &value, int &vMin, int &vMax)
+{
+    if(!checkBetween(vMin, vMax))
+        return false;
+    return (value>=vMin) && (value<=vMax);
 }
 
 }
