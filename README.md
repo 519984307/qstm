@@ -161,16 +161,40 @@
 >qWarning()<<simpleObject.lr().resultObject();
 >
 >//to QObject
->qWarning()<<simpleObject.lr().resultObject<QObject*>()>
+>qWarning()<<simpleObject.lr().resultObject<QObject*>();>
 >```
 >## QStm::Object
 >Based on ***QObject*** contains functions to convert to type ***QVariant*** and assigned values ​​of ***QVariantHash***
 >```c++
 >#include <QStm>
 >
+>class MyFirstObject : public QStm::Object {
+>    Q_OBJECT
+>
+>    Q_PROPERTY(QUuid uuid MEMBER _uuid NOTIFY uuidChanged)
+>    Q_PROPERTY(QString name MEMBER _name NOTIFY nameChanged)
+>    
+>public:
+>    Q_INVOKABLE explicit MyFirstObject(QObject*parent=nullptr):QStm::Object(parent)
+>    {
+>    }
+>
+>signals:
+>    void uuidChanged();
+>    void nameChanged();
+>
+>private:
+>    QUuid _uuid;
+>    QString _name;
+>};
+>
 >void run()
 >{
->     ...more
+>    MyFirstObject myFirstObject;
+>
+>    QVariantHash vHash=myFirstObject.toHash();//include QMetaProperty in QVariantHash
+>    qWarning()<<vHash;
+>    //ouput is QVariantHash{ {"uuid", QUuid(...)}, {"name", QString(...)} }
 >}
 >```
 >## QStm::QCurrency

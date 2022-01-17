@@ -19,7 +19,11 @@ static const int percentagePrecision=2;
 static const int currencyPrecision=2;
 static const int doublePrecision=6;
 static const char fChar='f';
-//static const auto nativeCountryName = [](){return QLocale::c().nativeCountryName();};
+
+static auto nativeCountryName()
+{
+    return QLocale::c().nativeCountryName();
+};
 
 
 struct FormattingUtilStruct{
