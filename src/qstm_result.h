@@ -37,7 +37,7 @@ public:
     //!
     //! \brief ~ResultValue
     //!
-    Q_INVOKABLE virtual ~ResultValue();
+    ~ResultValue();
 
 
     //!

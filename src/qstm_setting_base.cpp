@@ -38,10 +38,12 @@ public:
     bool cacheCleanup=false;
     int cacheCleanupInterval=0;
 
-    explicit SettingBasePrv(QObject*parent){
+    explicit SettingBasePrv(QObject*parent)
+    {
         this->parent=parent;
     }
-    virtual ~SettingBasePrv(){
+    virtual ~SettingBasePrv()
+    {
     }
 };
 

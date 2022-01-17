@@ -147,7 +147,7 @@ public:
     const QString toString()
     {
         if (this->isOk())
-            return qsl_null;
+            return {};
 
         if (this->returnCode.isValid()) {
             if (this->returnCode.toString() == this->returnText)
@@ -489,7 +489,7 @@ QVariantList ResultValue::resultList() const
     switch (qTypeId(v)) {
     case QMetaType_QVariantHash:
     case QMetaType_QVariantMap:
-        return qvl_null<<v;
+        return qvl{v};
     default:
         return p.resultVariant.toList();
     }
@@ -541,8 +541,8 @@ QVariantList ResultValue::resultToList() const
         return v.toList();
     default:
         if (v.isValid())
-            return qvl_null << v;
-        return qvl_null;
+            return qvl{v};
+        return {};
     }
 }
 
