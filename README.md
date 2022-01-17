@@ -161,7 +161,7 @@
 >qWarning()<<simpleObject.lr().resultObject();
 >
 >//to QObject
->qWarning()<<simpleObject.lr().resultObject<QObject*>();>
+>qWarning()<<simpleObject.lr().resultObject<QObject*>()>
 >```
 >## QStm::Object
 >Based on ***QObject*** contains functions to convert to type ***QVariant*** and assigned values ​​of ***QVariantHash***
