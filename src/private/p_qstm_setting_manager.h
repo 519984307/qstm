@@ -187,14 +187,14 @@ public:
                 continue;
 
             if(!file.exists()){
-#if Q_RPC_LOG
+#if Q_STM_LOG
                 sWarning()<<qsl("file not exists %1").arg(file.fileName());
 #endif
                 continue;
             }
 
             if(!file.open(QFile::ReadOnly)){
-#if Q_RPC_LOG
+#if Q_STM_LOG
                 sWarning()<<qsl("%1, %2").arg(file.fileName(), file.errorString());
 #endif
                 continue;
@@ -205,14 +205,14 @@ public:
             QJsonParseError*error=nullptr;
             auto doc=QJsonDocument::fromJson(bytes, error);
             if(error!=nullptr){
-#if Q_RPC_LOG
+#if Q_STM_LOG
                 sWarning()<<qsl("%1, %2").arg(file.fileName(), error->errorString());
 #endif
                 continue;
             }
 
             if(doc.object().isEmpty()){
-#if Q_RPC_LOG
+#if Q_STM_LOG
                 sWarning()<<qsl("object is empty, %1").arg(file.fileName());
 #endif
                 continue;
@@ -236,20 +236,20 @@ public:
         auto&p=*this;
         QFile file(fileName);
         if(fileName.trimmed().isEmpty()){
-#if Q_RPC_LOG
+#if Q_STM_LOG
             sWarning()<<qsl("not file settings");
 #endif
             return false;
         }
         if(!file.exists()){
-#if Q_RPC_LOG
+#if Q_STM_LOG
             sWarning()<<qsl("file not exists %1").arg(file.fileName());
 #endif
             return false;
         }
 
         if(!file.open(QFile::ReadOnly)){
-#if Q_RPC_LOG
+#if Q_STM_LOG
             sWarning()<<qsl("%1, %2").arg(file.fileName(), fileName);
 #endif
             return false;
@@ -260,14 +260,14 @@ public:
         QJsonParseError*error=nullptr;
         auto doc=QJsonDocument::fromJson(bytes, error);
         if(error!=nullptr){
-#if Q_RPC_LOG
+#if Q_STM_LOG
             sWarning()<<qsl("%1, %2").arg(file.fileName(), error->errorString());
 #endif
             return false;
         }
 
         if(doc.object().isEmpty()){
-#if Q_RPC_LOG
+#if Q_STM_LOG
             sWarning()<<qsl("object is empty, %1").arg(file.fileName());
 #endif
             return false;
@@ -275,7 +275,7 @@ public:
 
         auto map=doc.object().toVariantHash();
         if(!map.contains(qsl("services"))){
-#if Q_RPC_LOG
+#if Q_STM_LOG
             sWarning()<<qsl("tag services not exists, %1").arg(file.fileName());
 #endif
             return false;
