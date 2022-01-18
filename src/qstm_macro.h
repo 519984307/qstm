@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+#include <QThread>
 #include <QDebug>
 
 #define Q_CONST_V\
