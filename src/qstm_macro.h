@@ -1,8 +1,7 @@
 #pragma once
 
-#include <QThread>
+#include <QObject>
 #include <QDebug>
-#include <QByteArray>
 
 #define Q_CONST_V\
     const QVariant&v=QVariant()
@@ -201,12 +200,3 @@ while (i.hasNext())
 
 #define Q_DECLARE_PVT \
     void*p=nullptr;
-
-#define vpsFiltrableStrategyLikeLR \
-QVariantHash{qsl("operator"),QOrm::koLike}, {qsl("format"),qsl("%%1cS%")}}
-
-#define vpsFiltrableStrategyLikeL \
-QVariantHash{{qsl("operator"),QOrm::koLike}, {qsl("format"),qsl("%%1")}}
-
-#define vpsFiltrableStrategyLikeR \
-QVariantHash{{qsl("operator"),QOrm::koLike}, {qsl("format"),qsl("%1%")}}

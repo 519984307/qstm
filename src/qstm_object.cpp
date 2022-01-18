@@ -9,19 +9,10 @@
 #include <QDateTime>
 #include <QUrl>
 
-
-namespace PrivateOrm {
-Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,__static_uuid_base_data,(QUuid::createUuid().toString().toUtf8()))
-Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,__static_uuid_delimer,("|"))
-Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,__static_md5_delimer,("."))
-}
-
 namespace QStm {
 
-static const auto&__static_uuid_base_data =*PrivateOrm::__static_uuid_base_data;
-static const auto&__static_uuid_delimer=*PrivateOrm::__static_uuid_delimer;
-static const auto&__static_md5_delimer=*PrivateOrm::__static_md5_delimer;
-
+Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,__static_uuid_base_data,(QUuid::createUuid().toString().toUtf8()))
+Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,__static_uuid_delimer,("|"))
 
 #define dPvt()\
     auto&p = *reinterpret_cast<ObjectPrv*>(this->p)
@@ -37,7 +28,9 @@ public:
         this->parent=parent;
         _result.setParent(parent);
     }
-    virtual ~ObjectPrv(){
+
+    virtual ~ObjectPrv()
+    {
     }
 
     CachePool&cachePool()
@@ -198,13 +191,13 @@ const QByteArray Object::toMd5(const QVariant&value)
 
 const QUuid Object::uuidGenerator()
 {
-    auto __uuid_base_bytes=__static_uuid_base_data+__static_uuid_delimer+randomGenerator()+__static_uuid_delimer+QString::number(QDateTime::currentDateTimeUtc().toMSecsSinceEpoch()).toUtf8()+__static_uuid_delimer;
+    auto __uuid_base_bytes=*__static_uuid_base_data+*__static_uuid_delimer+randomGenerator()+*__static_uuid_delimer+QString::number(QDateTime::currentDateTimeUtc().toMSecsSinceEpoch()).toUtf8()+*__static_uuid_delimer;
     return QUuid::createUuidV5(QUuid::createUuid(), __uuid_base_bytes);
 }
 
 const QUuid Object::uuidGenerator(const QString &uuidBase)
 {
-    auto __uuid_base_bytes=__static_uuid_base_data+__static_uuid_delimer+randomGenerator()+__static_uuid_delimer+QString::number(QDateTime::currentDateTimeUtc().toMSecsSinceEpoch()).toUtf8()+__static_uuid_delimer+uuidBase;
+    auto __uuid_base_bytes=*__static_uuid_base_data+*__static_uuid_delimer+randomGenerator()+*__static_uuid_delimer+QString::number(QDateTime::currentDateTimeUtc().toMSecsSinceEpoch()).toUtf8()+*__static_uuid_delimer+uuidBase;
     return QUuid::createUuidV5(QUuid::createUuid(), __uuid_base_bytes);
 }
 
