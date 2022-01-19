@@ -147,12 +147,16 @@ public:
 
     bool v_load(const QVariant &v)
     {
-        auto typeId=qTypeId(v);
-        if(QStmTypesVariantList.contains(typeId))
-            return this->load(v.toStringList());
-        if(QStmTypesVariantDictionary.contains(typeId))
+        switch (qTypeId(v)) {
+        case QMetaType_QVariantHash:
+        case QMetaType_QVariantMap:
             return this->load(v.toHash());
-        return this->load(v.toString());
+        case QMetaType_QVariantList:
+        case QMetaType_QStringList:
+            return this->load(v.toStringList());
+        default:
+            return this->load(v.toString());
+        }
     }
 
     bool load(QObject *settingsObject)
