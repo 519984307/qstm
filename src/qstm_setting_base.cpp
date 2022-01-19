@@ -58,29 +58,41 @@ SettingBase::~SettingBase(){
 
 QVariant SettingBase::url()const
 {
-    dPvt();
     QVariantList vList;
-    for(auto&v:this->routeList()){
+    auto vRouteList=this->routeList();
+    if(vRouteList.isEmpty() && !this->route().toString().isEmpty())
+        vRouteList<<this->route();
+    for(auto&v:vRouteList){
         auto route=v.toString().trimmed();
-        auto url=qsl("%1:%2/%3").arg(p.hostName).arg(p.port).arg(route);
+        auto url=qsl("%1:%2/%3").arg(this->hostName()).arg(this->port()).arg(route);
         while(url.contains(qsl("//")))
             url=url.replace(qsl("//"), qsl("/"));
-        if(qTypeId(p.protocol)==QMetaType_QVariantMap || qTypeId(p.protocol)==QMetaType_QVariantList){
-            auto record=p.protocol.toList();
+
+
+        switch (qTypeId(protocol())) {
+        case QMetaType_QVariantList:
+        case QMetaType_QStringList:
+        {
+            auto record=this->protocol().toList();
             for(const auto&v:record){
                 QString protocol;
-                if(qTypeId(v)==QMetaType_Int || qTypeId(v)==QMetaType_LongLong || qTypeId(v)==QMetaType_ULongLong || qTypeId(v)==QMetaType_UInt)
-                    protocol=QStmProtocolName.value(QStmProtocol(v.toInt()));
-                else if(qTypeId(v)==QMetaType_QString)
+                switch (qTypeId(v)) {
+                case QMetaType_Int:
+                    protocol=QStmProtocolName.value(v.toInt());
+                    break;
+                case QMetaType_QString:
+                case QMetaType_QByteArray:
                     protocol=v.toString().toLower();
-                else
+                    break;
+                default:
                     continue;
-
+                }
                 vList<<qsl("%1://%2").arg(protocol,url);
             }
+            break;
         }
-        else{
-            const auto protocol=p.protocol.toString();
+        default:
+            const auto protocol=this->protocol().toString();
             vList<<qsl("%1://%2").arg(protocol,url);;
         }
     }
