@@ -31,6 +31,7 @@ public:
     {
         this->parent=parent;
     }
+
     virtual ~SettingManagerPrv()
     {
         this->clear();
@@ -43,11 +44,12 @@ public:
             i.next();
             if(i.key().trimmed().isEmpty())
                 continue;
-            else{
-                auto&v=i.value();
-                if(v->isValid())
-                    return true;
-            }
+
+            auto&v=i.value();
+            if(!v->isValid())
+                continue;
+
+            return true;
         }
         return false;
     }
@@ -58,8 +60,9 @@ public:
         while (i.hasNext()) {
             i.next();
             auto&v=i.value();
-            if(v->isValid())
-                return false;
+            if(!v->isValid())
+                continue;
+            return false;
         }
         return true;
     }
@@ -73,14 +76,14 @@ public:
 
     QVariantHash toHash()
     {
-        QVariantHash map, vServices;
+        QVariantHash vHash, vServices;
         auto vList=QList<SettingBase*>()<<&this->settingsDefault;
         vList=vList+this->settings.values();
         for(auto&v:vList)
             vServices.insert(v->name(), v->toHash());
-        map.insert(qsl("variables"), this->variables);
-        map.insert(qsl("services"), vServices);
-        return map;
+        vHash.insert(qsl("variables"), this->variables);
+        vHash.insert(qsl("services"), vServices);
+        return vHash;
     }
 
     QByteArray settingNameAdjust(const QString&settingName)
@@ -142,7 +145,8 @@ public:
         return*this->parent;
     }
 
-    bool v_load(const QVariant &v){
+    bool v_load(const QVariant &v)
+    {
         auto typeId=qTypeId(v);
         if(QStmTypesVariantList.contains(typeId))
             return this->load(v.toStringList());
@@ -164,7 +168,7 @@ public:
                 continue;
 
             auto methodName=QString(metaMethod.name()).toLower().trimmed();
-            static auto staticNames=QStringList{qsl("settingsfilename"),qsl("settings_server"),qsl("settingsserver")};
+            static auto staticNames=QStringList{qsl("settings_filename"), qsl("settingsfilename"), qsl("settings_server"), qsl("settingsserver")};
             if(!staticNames.contains(methodName))
                 continue;
 
@@ -306,14 +310,20 @@ public:
                 this->variables[qsl("arguments")]=varguments;
 
             auto typeId=qTypeId(varguments);
-            if(typeId==QMetaType_QVariantHash || typeId==QMetaType_QVariantMap){
+            switch (typeId) {
+            case QMetaType_QVariantHash:
+            case QMetaType_QVariantMap:
+            {
                 QHashIterator<QString, QVariant> i(varguments.toHash());
                 while (i.hasNext()) {
                     i.next();
                     arguments.insert(i.key().toLower(), i.value());
                 }
+                break;
             }
-            else if(typeId==QMetaType_QVariantList || typeId==QMetaType_QStringList){
+            case QMetaType_QVariantList:
+            case QMetaType_QStringList:
+            {
                 for(auto&v:varguments.toList()){
                     auto l=v.toString().split(qsl("="));
                     if(l.isEmpty())
@@ -330,6 +340,10 @@ public:
                     auto value=l.last();
                     arguments.insert(key,value);
                 }
+                break;
+            }
+            default:
+                break;
             }
             this->parent->setArguments(arguments);
         }
