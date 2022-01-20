@@ -1019,12 +1019,14 @@ const QUuid VariantUtil::toUuidCompuser(const QVariant &value)
     QVariantList compuserValues;
     Q_DECLARE_VU;
 
-    auto typeId=qTypeId(value);
-
-    if(QStmTypesVariantList.contains(typeId))
+    switch (qTypeId(value)) {
+    case QMetaType_QVariantList:
+    case QMetaType_QStringList:
         compuserValues=value.toList();
-    else
+        break;
+    default:
         compuserValues<<value;
+    }
 
     if(compuserValues.isEmpty())
         return {};
