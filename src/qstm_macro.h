@@ -201,3 +201,12 @@ while (i.hasNext())
 
 #define Q_DECLARE_PVT \
     void*p=nullptr;
+
+#define vpsFiltrableStrategyLikeLR \
+QVariantHash{qsl("operator"),QOrm::koLike}, {qsl("format"),qsl("%%1cS%")}}
+
+#define vpsFiltrableStrategyLikeL \
+QVariantHash{{qsl("operator"),QOrm::koLike}, {qsl("format"),qsl("%%1")}}
+
+#define vpsFiltrableStrategyLikeR \
+QVariantHash{{qsl("operator"),QOrm::koLike}, {qsl("format"),qsl("%1%")}}
