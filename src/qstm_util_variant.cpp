@@ -1042,7 +1042,7 @@ const QUuid VariantUtil::toUuidCompuser(const QVariant &value)
         case QMetaType_UInt:
         case QMetaType_LongLong:
         case QMetaType_ULongLong:
-            text=QString::number(v.toLongLong(),0).toUtf8();
+            text=QString::number(v.toLongLong(),'f',0).toUtf8();
             break;
         case QMetaType_Double:
             text=QString::number(v.toDouble(),'f').toUtf8();
