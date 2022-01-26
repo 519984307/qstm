@@ -24,7 +24,8 @@ public:
         Notfound = 64,
         BadRequest = 128,
         UnsupportedMediaType = 256,
-        NotImplemented = 512
+        NoContent = 512,
+        NotImplemented = 1024,
     };
 
     //!
@@ -460,6 +461,19 @@ public:
     ResultValue &setBadRequest(const ResultValue &lr);
 
     //!
+    //! \brief setNoContent
+    //! \return
+    //!
+    ResultValue &setNoContent();
+
+    //!
+    //! \brief setNoContent
+    //! \param value
+    //! \return
+    //!
+    ResultValue &setNoContent(const QVariant &value);
+
+    //!
     //! \brief setNotFound
     //! \return
     //!
@@ -575,6 +589,12 @@ public:
     //! \return
     //!
     virtual bool isCritical() const;
+
+    //!
+    //! \brief isNoContent
+    //! \return
+    //!
+    virtual bool isNoContent() const;
 
     //!
     //! \brief isUnauthorized

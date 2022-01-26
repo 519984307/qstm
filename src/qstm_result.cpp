@@ -20,6 +20,7 @@ static const MakeArStats &__makeArStats()
                                             {ResultValue::UnsupportedMediaType, 415},
                                             {ResultValue::Critical, 500},
                                             {ResultValue::Unauthorized, 401},
+                                            {ResultValue::NoContent, 204},
                                             {ResultValue::BadRequest, 400}});
     return __makeArStats;
 }
@@ -903,6 +904,24 @@ ResultValue &ResultValue::setBadRequest(const ResultValue &lr)
     return this->setBadRequest();
 }
 
+ResultValue &ResultValue::setNoContent()
+{
+    return this->setNoContent(tr("Not found"));
+}
+
+ResultValue &ResultValue::setNoContent(const QVariant &value)
+{
+    dPvt();
+    p.clear();
+    if (value.isValid()) {
+        p.returnType = NoContent;
+        p.returnCode = p.variantConvertToCode(value);
+        p.returnText = p.variantConvertToText(value);
+        p.makeResult();
+    }
+    return *this;
+}
+
 ResultValue &ResultValue::setNotFound()
 {
     return this->setNotFound(tr("Not found"));
@@ -1065,6 +1084,12 @@ bool ResultValue::isCritical() const
 {
     dPvt();
     return p.returnType == Critical;
+}
+
+bool ResultValue::isNoContent() const
+{
+    dPvt();
+    return p.returnType == NoContent;
 }
 
 QVariantHash ResultValue::data() const
