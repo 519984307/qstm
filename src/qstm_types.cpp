@@ -25,9 +25,16 @@ bool qIsNumeric(const QVariant &v)
 #else
     auto __qtype=v.type();
 #endif
-    if(QStmTypesListNumeric.contains(__qtype))
+    switch (__qtype) {
+    case QMetaType_LongLong:
+    case QMetaType_Int:
+    case QMetaType_UInt:
+    case QMetaType_ULongLong:
+    case QMetaType_Double:
         return true;
-    if(v.toDouble()>0)
-        return true;
-    return false;
+    default:
+        if(v.toDouble()>0)
+            return true;
+        return false;
+    }
 }
