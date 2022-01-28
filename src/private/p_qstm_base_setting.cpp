@@ -89,7 +89,7 @@ public:
     bool enabled=false;
     QVariant activityLimit=defaultLimit;
     QVariant activityInterval=defaultInterval;
-    QVariant activityThread=0;
+    int activityThread=0;
     QVariant memoryLimit=0;
 
     static QVariant staticReplaceString(const QVariantHash&static_variables, const QVariant&v)
@@ -663,13 +663,13 @@ void BaseSetting::setActivityInterval(const QVariant &value)
 int BaseSetting::activityThread() const
 {
     dPvt();
-    return p.activityThread.toInt();
+    return p.activityThread>0?p.activityThread:QThread::idealThreadCount();
 }
 
 void BaseSetting::setActivityThread(const QVariant &value)
 {
     dPvt();
-    p.activityThread=value;
+    p.activityThread=value.toInt();
 }
 
 qlonglong BaseSetting::memoryLimit() const
