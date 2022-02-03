@@ -834,13 +834,13 @@ const QVariant VariantUtil::toType(int typeId, const QVariant &v)
     case QMetaType_QString:
         return this->toStr(v);
     case QMetaType_QByteArray:
-        return this->toStr(v);
+        return this->toByteArray(v);
     case QMetaType_QBitArray:
         return this->toStr(v);
     case QMetaType_QChar:
         return this->toStr(v);
     case QMetaType_QVariantHash:
-        return this->toMap(v);
+        return this->toHash(v);
     case QMetaType_QVariantMap:
         return this->toMap(v);
     case QMetaType_QStringList:
@@ -1235,6 +1235,14 @@ QVariant VariantUtil::convertTo(const QVariant &v, int typeId)
         return vu.toUrl();
     case QMetaType_Bool:
         return vu.toBool();
+    case QMetaType_QVariantHash:
+        return vu.toHash();
+    case QMetaType_QVariantMap:
+        return vu.toMap();
+    case QMetaType_QVariantList:
+        return vu.toList();
+    case QMetaType_QStringList:
+        return vu.toStringList();
     default:
         return v;
     }
