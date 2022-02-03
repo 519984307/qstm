@@ -28,13 +28,17 @@ public:
     VariantUtil*parent=nullptr;
     QVVM vvm;
 
-    explicit VariantUtilPvt(VariantUtil*v):QObject(nullptr){
+    explicit VariantUtilPvt(VariantUtil*v):QObject(nullptr)
+    {
         this->parent=v;
     }
-    virtual ~VariantUtilPvt(){
+
+    virtual ~VariantUtilPvt()
+    {
     }
 
-    void clear(){
+    void clear()
+    {
         vvm.clear();
         this->parent->setValue(QVariant());
     }
@@ -61,11 +65,9 @@ public:
 
         switch (qTypeId(v)) {
         case QMetaType_QVariantMap:
-            return v.toHash();
         case QMetaType_QVariantHash:
             return v.toHash();
         case QMetaType_QString:
-            return makeFromJson();
         case QMetaType_QByteArray:
             return makeFromJson();
         default:
@@ -97,11 +99,9 @@ public:
 
         switch (typeId) {
         case QMetaType_QVariantMap:
-            return v.toMap();
         case QMetaType_QVariantHash:
             return v.toMap();
         case QMetaType_QString:
-            return makeFromJson();
         case QMetaType_QByteArray:
             return makeFromJson();
         default:
@@ -147,11 +147,8 @@ public:
         case QMetaType_QUrl:
             return v.toUrl().toString().toUtf8();
         case QMetaType_Int:
-            return QString::number(v.toLongLong()).toUtf8();
         case QMetaType_UInt:
-            return QString::number(v.toLongLong()).toUtf8();
         case QMetaType_LongLong:
-            return QString::number(v.toLongLong()).toUtf8();
         case QMetaType_ULongLong:
             return QString::number(v.toLongLong()).toUtf8();
         case QMetaType_Double:
@@ -185,17 +182,16 @@ public:
         if(QStmTypesListObjectsString.contains(typeId)){
             QJsonParseError*error=nullptr;
             auto doc=QJsonDocument::fromJson(v.toByteArray(),error);
-            if(error!=nullptr){
-                if(doc.isArray() || doc.isObject()){
-                    vOut=doc.toVariant();
-                    return true;
-                }
+            if(error!=nullptr && (doc.isArray() || doc.isObject())){
+                vOut=doc.toVariant();
+                return true;
             }
         }
         return false;
     }
 
-    bool md5ParserUuid(const QString& vtext, QString&outText)const{
+    bool md5ParserUuid(const QString& vtext, QString&outText)const
+    {
         QByteArray suuid;
         auto text=vtext;
         text.replace(qsl("-"),qsl_null).replace(qsl("{"),qsl_null).replace(qsl("}"),qsl_null);
@@ -214,7 +210,8 @@ public:
         return false;
     }
 
-    QUuid md5toUuid(const QString&md5)const{
+    QUuid md5toUuid(const QString&md5)const
+    {
         auto smd5=md5;
         if(md5ParserUuid(smd5, smd5))
             return QUuid::fromString(qsl("{")+smd5+qsl("}"));
@@ -222,7 +219,8 @@ public:
         return QUuid();
     }
 
-    QVariant vUnion(const QVariant &v){
+    QVariant vUnion(const QVariant &v)
+    {
         auto t=qTypeId(v);
         if(!v.isValid())
             return {};
@@ -561,7 +559,7 @@ double VariantUtil::toDouble(const QVariant &v)
 
 bool VariantUtil::toBool(const QVariant &v)
 {
-    const static auto listBool=QVector<QByteArray>()<<qbl("1")<<qbl("true")<<qbl("yes")<<qbl("sim")<<qbl("verdadeiro")<<qbl("t")<<qbl("s")<<qbl("v")<<qbl("y");
+    const static auto listBool=QVector<QByteArray>{qbl("1"), qbl("true"), qbl("yes"), qbl("sim"), qbl("verdadeiro"), qbl("t"), qbl("s"), qbl("v"), qbl("y")};
     dPvt();
     set__value(v);
 
