@@ -836,9 +836,9 @@ const QVariant VariantUtil::toType(int typeId, const QVariant &v)
     case QMetaType_QByteArray:
         return this->toByteArray(v);
     case QMetaType_QBitArray:
-        return this->toStr(v);
+        return this->toByteArray(v);
     case QMetaType_QChar:
-        return this->toStr(v);
+        return this->toByteArray(v);
     case QMetaType_QVariantHash:
         return this->toHash(v);
     case QMetaType_QVariantMap:
@@ -872,69 +872,103 @@ const QVariant VariantUtil::toType(int typeId, const QVariant &v)
 
 const QVariant VariantUtil::toVariant(const QVariant &v)
 {
-    auto typeId=qTypeId(v);
-    if(QStmTypesListObjects.contains(typeId))
-        return v;
-
-    if(QStmTypesListObjectsString.contains(typeId)){
-        auto vv=this->toVariantJson(v);
+    dPvt();
+    set__value(v);
+    auto typeId=qTypeId(*this);
+    switch (typeId) {
+    case QMetaType_QVariantMap:
+    case QMetaType_QVariantHash:
+    case QMetaType_QVariantList:
+    case QMetaType_QStringList:
+        return *this;
+    case QMetaType_QString:
+    case QMetaType_QByteArray:
+    {
+        auto vv=this->toVariantJson(*this);
         if(vv.isNull() || !vv.isValid())
-            vv=this->toVariantCBor(v);
+            vv=this->toVariantCBor(*this);
         return vv;
     }
-
-    return v;
+    default:
+        return *this;
+    }
 }
 
 const QVariant VariantUtil::toVariantObject(const QVariant &v)
 {
-    auto typeId=qTypeId(v);
-    if(QStmTypesListObjects.contains(typeId))
-        return v;
-
-    if(QStmTypesListObjectsString.contains(typeId)){
-        auto vv=this->toVariantJson(v);
+    dPvt();
+    set__value(v);
+    auto typeId=qTypeId(*this);
+    switch (typeId) {
+    case QMetaType_QVariantMap:
+    case QMetaType_QVariantHash:
+    case QMetaType_QVariantList:
+    case QMetaType_QStringList:
+        return *this;
+    case QMetaType_QString:
+    case QMetaType_QByteArray:
+    {
+        auto vv=this->toVariantJson(*this);
         typeId=qTypeId(vv);
         if(!QStmTypesListObjects.contains(typeId)){
-            vv=this->toVariantCBor(v);
+            vv=this->toVariantCBor(*this);
             typeId=qTypeId(vv);
             if(!QStmTypesListObjects.contains(typeId))
-                vv=QVariant();
+                vv={};
         }
         return vv;
     }
-    return {};
+    default:
+        return *this;
+    }
 }
 
 const QVariant VariantUtil::toVariantJson(const QVariant &v)
 {
-    auto typeId=qTypeId(v);
-    if(QStmTypesListObjects.contains(typeId))
-        return v;
-
-    if(QStmTypesListObjectsString.contains(typeId)){
-        auto vv=QJsonDocument::fromJson(v.toByteArray()).toVariant();
+    dPvt();
+    set__value(v);
+    auto typeId=qTypeId(*this);
+    switch (typeId) {
+    case QMetaType_QVariantMap:
+    case QMetaType_QVariantHash:
+    case QMetaType_QVariantList:
+    case QMetaType_QStringList:
+        return *this;
+    case QMetaType_QString:
+    case QMetaType_QByteArray:
+    {
+        auto vv=QJsonDocument::fromJson((*this).toByteArray()).toVariant();
         if(vv.isNull() || !vv.isValid())
-            vv=this->toVariantCBor(v);
+            vv=this->toVariantCBor(*this);
         return vv.isValid()?vv:v;
     }
-    return v;
+    default:
+        return *this;
+    }
 }
 
 const QVariant VariantUtil::toVariantCBor(const QVariant &v)
 {
-    auto typeId=qTypeId(v);
-    if(QStmTypesListObjects.contains(typeId))
-        return v;
-
-    if(QStmTypesListObjectsString.contains(typeId)){
-        auto vv=QCborValue::fromVariant(v).toVariant();
+    dPvt();
+    set__value(v);
+    auto typeId=qTypeId(*this);
+    switch (typeId) {
+    case QMetaType_QVariantMap:
+    case QMetaType_QVariantHash:
+    case QMetaType_QVariantList:
+    case QMetaType_QStringList:
+        return *this;
+    case QMetaType_QString:
+    case QMetaType_QByteArray:
+    {
+        auto vv=QCborValue::fromVariant(*this).toVariant();
         if(vv.isNull() || !vv.isValid())
-            vv=this->toVariantJson(v);
+            vv=this->toVariantJson(*this);
         return vv.isValid()?vv:v;
     }
-
-    return v;
+    default:
+        return *this;
+    }
 }
 
 const QUrl VariantUtil::toUrl(const QVariant &v)
