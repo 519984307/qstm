@@ -418,24 +418,37 @@ VariantUtil&VariantUtil::operator=(const QVariant &v)
 
 bool VariantUtil::isUuid(const QVariant &v) const
 {
-    VariantUtil vu(v);
-    auto uuid=vu.toUuid();
-    return !uuid.isNull();
+    switch (qTypeId(v)) {
+    case QMetaType_QUuid:
+        return !v.toUuid().isNull();
+    default:
+        VariantUtil vu(v);
+        auto uuid=vu.toUuid();
+        return !uuid.isNull();
+    }
 }
 
 bool VariantUtil::isUuid(const QVariant &v, QUuid &uuidSet) const
 {
     dPvt();
-    QString text=v.toString();
-    QUuid uuid;
-    if(p.md5ParserUuid(text,text))
-        uuid=QUuid::fromString(text);
+    switch (qTypeId(v)) {
+    case QMetaType_QUuid:
+    {
+        uuidSet=v.toUuid();
+        return !uuidSet.isNull();
+    }
+    default:
+        QString text=v.toString();
+        QUuid uuid;
+        if(p.md5ParserUuid(text,text))
+            uuid=QUuid::fromString(text);
 
-    if(uuid.isNull())
-        return false;
+        if(uuid.isNull())
+            return false;
 
-    uuidSet=uuid;
-    return true;
+        uuidSet=uuid;
+        return true;
+    }
 }
 
 bool VariantUtil::isHex(const QVariant &v)const
