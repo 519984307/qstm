@@ -46,14 +46,14 @@ BaseClass&operator<<(const QVariant&value){\
     this->mergeVariant(value);\
     return*this;\
 }\
-Q_PROPERTY(QString      identification          READ identification       WRITE setIdentification     )\
-Q_PROPERTY(QVariantHash variables               READ variables            WRITE setVariables          )\
-Q_PROPERTY(bool         enabled                 READ enabled              WRITE setEnabled            )\
-Q_PROPERTY(QString      name                    READ name                 WRITE setName               )\
-Q_PROPERTY(QVariant     memoryLimit             READ memoryLimit          WRITE setMemoryLimit        )\
-Q_PROPERTY(QVariant     activityLimit           READ activityLimit        WRITE setActivityLimit      )\
-Q_PROPERTY(QVariant     activityInterval        READ activityInterval     WRITE setActivityInterval   )\
-Q_PROPERTY(QVariant     activityThread          READ activityThread       WRITE setActivityThread     )
+Q_PROPERTY(QString identification READ identification WRITE setIdentification )\
+Q_PROPERTY(QVariantHash variables READ variables WRITE setVariables )\
+Q_PROPERTY(bool enabled READ enabled WRITE setEnabled )\
+Q_PROPERTY(QString name READ name WRITE setName )\
+Q_PROPERTY(QVariant memoryLimit READ memoryLimit WRITE setMemoryLimit )\
+Q_PROPERTY(QVariant activityLimit READ activityLimit WRITE setActivityLimit )\
+Q_PROPERTY(QVariant activityInterval READ activityInterval WRITE setActivityInterval )\
+Q_PROPERTY(QVariant activityThread READ activityThread WRITE setActivityThread )
 
 //!
 //! \brief The BaseSetting class
