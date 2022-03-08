@@ -33,9 +33,9 @@ public:
         if(property.write(object, vValue))
             return true;
 
-        if(QStmTypesListString.contains(type)){
+        if(QMetaTypeUtilMetaString.contains(type)){
             QVariant v;
-            if(QStmTypesListObjects.contains(qTypeId(value)))
+            if(QMetaTypeUtilObjects.contains(qTypeId(value)))
                 v=QJsonDocument::fromVariant(vValue).toJson(QJsonDocument::Compact);
             else
                 v=vValue.toByteArray();
@@ -43,6 +43,10 @@ public:
             switch (type) {
             case QMetaType_QUuid:
                 if(property.write(object, vValue.toUuid()))
+                    return true;
+                break;
+            case QMetaType_QUrl:
+                if(property.write(object, vValue.toUrl()))
                     return true;
                 break;
             case QMetaType_QString:
@@ -66,7 +70,7 @@ public:
             }
         }
 
-        if(QStmTypesListIntegers.contains(type)){//ints
+        if(QMetaTypeUtilIntegers.contains(type)){//ints
 
             switch (type) {
             case QMetaType_LongLong:
@@ -94,12 +98,8 @@ public:
             }
         }
 
-        if(QStmTypesListClass.contains(type)){
+        if(QMetaTypeUtilObjects.contains(type)){
             switch (type) {
-            case QMetaType_QUrl:
-                if(property.write(object, vValue.toUrl()))
-                    return true;
-                break;
             case QMetaType_QVariantMap:
                 if(property.write(object, vValue.toHash()))
                     return true;
@@ -120,7 +120,8 @@ public:
                 return false;
             }
         }
-        else if(QStmTypesListDates.contains(type)){
+
+        if(QMetaTypeUtilDates.contains(type)){
             switch (type) {
             case QMetaType_QDate:
                 if(property.write(object, vValue.toDate()))
@@ -139,7 +140,7 @@ public:
             }
         }
 
-        if(QStmTypesListBool.contains(type) || QStmTypesListBool.contains(qTypeId(value))){
+        if(QMetaTypeUtilBool.contains(type) || QMetaTypeUtilBool.contains(qTypeId(value))){
 
             switch (type) {
             case QMetaType_Bool:

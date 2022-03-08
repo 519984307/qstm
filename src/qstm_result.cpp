@@ -463,7 +463,7 @@ QVariant ResultValue::resultVariantInfo() const
         return vHash;
     }
 
-    if (QStmTypesVariantDictionary.contains(qTypeId(p.resultVariant))){
+    if (QMetaTypeUtilVariantDictionary.contains(qTypeId(p.resultVariant))){
         auto vHash=p.resultVariant.toHash();
         vHash[qsl("resultInfo")]=p.resultInfo.toHash();
         return vHash;

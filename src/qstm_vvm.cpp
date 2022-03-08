@@ -85,14 +85,16 @@ QVVM QVVM::from(const QVariantMap &v)
     return vvm;
 }
 
-void QVVM::insert(const QVariant &key, const QVariant &value)
+QVVM &QVVM::insert(const QVariant &key, const QVariant &value)
 {
     QVariantHash::insert(toBytes(key), toBytes(value));
+    return *this;
 }
 
-void QVVM::remove(const QVariant &key)
+QVVM &QVVM::remove(const QVariant &key)
 {
     QVariantHash::remove(toBytes(key));
+    return *this;
 }
 
 QVariant QVVM::value(const QVariant &key) const

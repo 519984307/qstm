@@ -24,37 +24,37 @@ public:
     //!
     //! \brief typesListString
     //!
-    const QStmVTypesList&typesListString     = QStmTypesListMetaString   ;
+    const QMetaTypeUtil&typesListString = QMetaTypeUtilMetaString ;
 
     //!
     //! \brief typesListNumeric
     //!
-    const QStmVTypesList&typesListNumeric    = QStmTypesListNumeric  ;
+    const QMetaTypeUtil&typesListNumeric = QMetaTypeUtilNumeric ;
 
     //!
     //! \brief typesListIntergers
     //!
-    const QStmVTypesList&typesListIntergers  = QStmTypesListIntegers;
+    const QMetaTypeUtil&typesListIntergers = QMetaTypeUtilIntegers;
 
     //!
     //! \brief typesListClass
     //!
-    const QStmVTypesList&typesListClass      = QStmTypesListClass    ;
+    const QMetaTypeUtil&typesListClass = QMetaTypeUtilClass ;
 
     //!
     //! \brief typesListObjects
     //!
-    const QStmVTypesList&typesListObjects    = QStmTypesListObjects  ;
+    const QMetaTypeUtil&typesListObjects = QMetaTypeUtilObjects ;
 
     //!
     //! \brief typesListDates
     //!
-    const QStmVTypesList&typesListDates      = QStmTypesListDates    ;
+    const QMetaTypeUtil&typesListDates = QMetaTypeUtilDates ;
 
     //!
     //! \brief typesListBool
     //!
-    const QStmVTypesList&typesListBool       = QStmTypesListBool     ;
+    const QMetaTypeUtil&typesListBool = QMetaTypeUtilBool ;
 
     //!
     //! \brief operator =

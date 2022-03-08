@@ -1,36 +1,8 @@
 #pragma once
 
-#include <QObject>
-#include <QMap>
-#include <QVariant>
-#include <QString>
-#include <QMetaProperty>
-#include <QTemporaryFile>
 #include <QMutex>
 #include <QMutexLocker>
-
-//!
-//! \brief qTypeId
-//! \param v
-//! \return
-//!
-int qTypeId(const QVariant&v);
-
-//!
-//! \brief qTypeId
-//! \param p
-//! \return
-//!
-int qTypeId(const QMetaProperty&p);
-
-//!
-//! \brief qIsNumeric
-//! \param v
-//! \return
-//!
-bool qIsNumeric(const QVariant&v);
-
-typedef QVector<int> QStmVTypesList;
+#include "./qstm_meta_types.h"
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 typedef QMutexLocker<QMutex> QMutexLOCKER;
@@ -39,45 +11,6 @@ typedef QMetaType::Type QMetaTypeType;
 typedef QMutexLocker QMutexLOCKER;
 typedef QVariant::Type QMetaTypeType;
 #endif
-static const int QMetaType_UnknownType  = QMetaType::UnknownType   ;
-static const int QMetaType_Void         = QMetaType::Void          ;
-static const int QMetaType_Bool         = QMetaType::Bool          ;
-static const int QMetaType_User         = QMetaType::User          ;
-static const int QMetaType_Double       = QMetaType::Double        ;
-static const int QMetaType_Int          = QMetaType::Int           ;
-static const int QMetaType_UInt         = QMetaType::UInt          ;
-static const int QMetaType_LongLong     = QMetaType::LongLong      ;
-static const int QMetaType_ULongLong    = QMetaType::ULongLong     ;
-static const int QMetaType_QBitArray    = QMetaType::QBitArray     ;
-static const int QMetaType_QByteArray   = QMetaType::QByteArray    ;
-static const int QMetaType_QChar        = QMetaType::QChar         ;
-static const int QMetaType_QDate        = QMetaType::QDate         ;
-static const int QMetaType_QDateTime    = QMetaType::QDateTime     ;
-static const int QMetaType_QString      = QMetaType::QString       ;
-static const int QMetaType_QStringList  = QMetaType::QStringList   ;
-static const int QMetaType_QTime        = QMetaType::QTime         ;
-static const int QMetaType_QUrl         = QMetaType::QUrl          ;
-static const int QMetaType_QUuid        = QMetaType::QUuid         ;
-static const int QMetaType_QVariantHash = QMetaType::QVariantHash  ;
-static const int QMetaType_QVariantList = QMetaType::QVariantList  ;
-static const int QMetaType_QVariantMap  = QMetaType::QVariantMap   ;
-static const int QMetaType_CustomType   = 65538                    ;
-
-
-static const QStmVTypesList QStmTypesListString=QStmVTypesList{QMetaType_QString,QMetaType_QByteArray,QMetaType_QChar,QMetaType_QBitArray};
-static const QStmVTypesList QStmTypesListMetaString=QStmVTypesList{QMetaType_QUuid, QMetaType_QString, QMetaType_QByteArray, QMetaType_QChar, QMetaType_QBitArray};
-static const QStmVTypesList QStmTypesListNumeric=QStmVTypesList{QMetaType_LongLong,QMetaType_Int,QMetaType_UInt,QMetaType_ULongLong,QMetaType_Double};
-static const QStmVTypesList QStmTypesListDoubles=QStmVTypesList{QMetaType_Double};
-static const QStmVTypesList QStmTypesListIntegers=QStmVTypesList{QMetaType_LongLong,QMetaType_Int,QMetaType_UInt,QMetaType_ULongLong,QMetaType_Double};
-static const QStmVTypesList QStmTypesListClass=QStmVTypesList{QMetaType_QUrl,QMetaType_QUuid,QMetaType_QVariantMap,QMetaType_QVariantHash,QMetaType_QVariantList,QMetaType_QStringList};
-static const QStmVTypesList QStmTypesListObjects=QStmVTypesList{QMetaType_QVariantMap,QMetaType_QVariantHash,QMetaType_QVariantList,QMetaType_QStringList};
-static const QStmVTypesList QStmTypesListObjectsString=QStmVTypesList{QMetaType_QString,QMetaType_QByteArray};
-static const QStmVTypesList QStmTypesListDates=QStmVTypesList{QMetaType_QDate,QMetaType_QDateTime,QMetaType_QTime};
-static const QStmVTypesList QStmTypesListBool=QStmVTypesList{QMetaType_Bool};
-
-static const QStmVTypesList QStmTypesVariantDictionary=QStmVTypesList{QMetaType_QVariantHash, QMetaType_QVariantMap};
-static const QStmVTypesList QStmTypesVariantList=QStmVTypesList{QMetaType_QVariantList, QMetaType_QStringList};
-static const QStmVTypesList QStmTypesObjectMetaData=QStmVTypesList{QMetaType_QVariantHash, QMetaType_QVariantMap, QMetaType_QVariantList, QMetaType_QStringList};
 
 enum QStmRequestMethod {Head=1, Get=2, Post=4, Put=8, Delete=16, Options=32, MaxMethod=Options};
 

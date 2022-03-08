@@ -2,8 +2,6 @@
 
 #include <QVariant>
 #include <QVariantHash>
-#include <QVariantHash>
-
 #include "./qstm_global.h"
 
 //!
@@ -40,21 +38,21 @@ public:
     //! \param v
     //! \return
     //!
-    QVVM&operator=(const QVariant &v);
+    QVVM &operator=(const QVariant &v);
 
     //!
     //! \brief operator +=
     //! \param v
     //! \return
     //!
-    QVVM&operator+=(const QVariantHash &v);
+    QVVM &operator+=(const QVariantHash &v);
 
     //!
     //! \brief operator +=
     //! \param v
     //! \return
     //!
-    QVVM&operator+=(const QVariantMap &v);
+    QVVM &operator+=(const QVariantMap &v);
 
     //!
     //! \brief from
@@ -75,13 +73,13 @@ public:
     //! \param key
     //! \param value
     //!
-    virtual void insert(const QVariant&key, const QVariant&value);
+    virtual QVVM &insert(const QVariant&key, const QVariant&value);
 
     //!
     //! \brief remove
     //! \param key
     //!
-    virtual void remove(const QVariant&key);
+    virtual QVVM &remove(const QVariant&key);
 
     //!
     //! \brief value

@@ -130,7 +130,7 @@ public:
         if(bytes.isEmpty())
             return {};
         //se ja for md5 ou uuid manteremos o uuid como md5 logo ja e um
-        if(QStmTypesListObjectsString.contains(typeId)){
+        if(QMetaTypeUtilObjectsString.contains(typeId)){
             auto md5=bytes.replace(qbl("{"),qbl_null).replace(qbl("}"),qbl_null).replace(qbl("-"),qbl_null);
             if(md5.length()==32)
                 return md5;
@@ -160,7 +160,7 @@ public:
         case QMetaType_QDateTime:
             return v.toDateTime().toString(Qt::ISODateWithMs).toUtf8();
         default:
-            if(QStmTypesObjectMetaData.contains(typeId))
+            if(QMetaTypeUtilObjectMetaData.contains(typeId))
                 return QJsonDocument::fromVariant(v).toJson(QJsonDocument::Compact);
             return v.toByteArray();
         }
@@ -174,12 +174,12 @@ public:
 
         auto typeId=qTypeId(v);
 
-        if(QStmTypesListObjects.contains(typeId)){
+        if(QMetaTypeUtilObjects.contains(typeId)){
             vOut=v;
             return true;
         }
 
-        if(QStmTypesListObjectsString.contains(typeId)){
+        if(QMetaTypeUtilObjectsString.contains(typeId)){
             QJsonParseError*error=nullptr;
             auto doc=QJsonDocument::fromJson(v.toByteArray(),error);
             if(error!=nullptr && (doc.isArray() || doc.isObject())){
@@ -225,7 +225,7 @@ public:
         if(!v.isValid())
             return {};
 
-        if(QStmTypesVariantList.contains(t)){
+        if(QMetaTypeUtilVariantList.contains(t)){
             auto vList=v.toList();
             QVariant vA;
             while(!vList.isEmpty()){
@@ -244,10 +244,10 @@ public:
         if(t!=qTypeId(vSource))
             return {};
 
-        if(QStmTypesVariantList.contains(t))
+        if(QMetaTypeUtilVariantList.contains(t))
             return (vDestine.toList()+vSource.toList());
 
-        if(QStmTypesVariantDictionary.contains(t)){
+        if(QMetaTypeUtilVariantDictionary.contains(t)){
             auto aMap=vDestine.toHash();
             auto bMap=vSource.toHash();
             QHashIterator<QString, QVariant> i(bMap);
@@ -276,7 +276,7 @@ public:
             if(!vOut.isValid())
                 return {};
 
-            if(QStmTypesVariantList.contains(t)){
+            if(QMetaTypeUtilVariantList.contains(t)){
                 auto vList=vOut.toList();
                 if(!vList.isEmpty()){
                     auto vA=QVariant(vList.takeFirst());
@@ -306,7 +306,7 @@ public:
         if(qTypeId(vDestine)!=qTypeId(vSource))
             return {};
 
-        if(QStmTypesVariantList.contains(t)){
+        if(QMetaTypeUtilVariantList.contains(t)){
             auto dst=vDestine.toList();
             auto src=vSource.toList();
             QStringList keyList;
@@ -314,7 +314,7 @@ public:
             for(const auto&v:dst){//cache de chaves existentes
                 if(v.isValid()){
                     auto typeId=qTypeId(v);
-                    if(QStmTypesVariantDictionary.contains(typeId)){
+                    if(QMetaTypeUtilVariantDictionary.contains(typeId)){
                         keyList<<toMd5(v);
                         continue;
                     }
@@ -325,7 +325,7 @@ public:
                 if(v.isValid()){
                     QByteArray key;
                     auto typeId=qTypeId(v);
-                    if(QStmTypesVariantDictionary.contains(typeId))
+                    if(QMetaTypeUtilVariantDictionary.contains(typeId))
                         key=toMd5(v);
                     else
                         key=toByteArray(v);
@@ -337,7 +337,7 @@ public:
             return lst;
         }
 
-        if(QStmTypesVariantDictionary.contains(t)){
+        if(QMetaTypeUtilVariantDictionary.contains(t)){
             auto aMap=vDestine.toHash();
             auto bMap=vSource.toHash();
             QHashIterator<QString, QVariant> i(bMap);
@@ -368,7 +368,7 @@ public:
     QVariant vDeduplicate(const QVariant&v){
         QVariant vRet;
         auto typeId=qTypeId(v);
-        if(QStmTypesVariantDictionary.contains(typeId)){
+        if(QMetaTypeUtilVariantDictionary.contains(typeId)){
             auto vMap=v.toHash();
             auto vAdd=QVariantHash();
             QHashIterator<QString, QVariant> i(vMap);
@@ -382,7 +382,7 @@ public:
             vRet=vAdd;
         }
 
-        if(QStmTypesVariantList.contains(typeId)){
+        if(QMetaTypeUtilVariantList.contains(typeId)){
             auto vMap=v.toList();
             auto vAdd=QVariantHash();
             for(auto&v:vMap){
@@ -619,7 +619,7 @@ const QByteArray VariantUtil::toMd5(const QVariant &v)
     if(bytes.isEmpty())
         return {};
     //se ja for md5 ou uuid manteremos o uuid como md5 logo ja e um
-    if(QStmTypesListObjectsString.contains(qTypeId(*this))){
+    if(QMetaTypeUtilObjectsString.contains(qTypeId(*this))){
         auto md5=bytes.replace(qbl("{"), qbl_null).replace(qbl("}"), qbl_null).replace(qbl("-"), qbl_null);
         if(md5.length()==32)
             return md5;
@@ -692,12 +692,12 @@ const QVariantList VariantUtil::takeList(const QByteArray &keyName)
 {
     QVariantList la;
     QVariantList lb;
-    if(QStmTypesVariantList.contains(qTypeId(*this)))
+    if(QMetaTypeUtilVariantList.contains(qTypeId(*this)))
         la=this->toList();
     else
         la<<this->toHash();
     for(auto&v:la){
-        if(QStmTypesVariantDictionary.contains(qTypeId(v))){
+        if(QMetaTypeUtilVariantDictionary.contains(qTypeId(v))){
             auto vm=v.toHash();
             auto vv=vm.value(keyName);
             if(vv.isValid())
@@ -724,13 +724,13 @@ const QStringList VariantUtil::toStringList()
 const QStringList VariantUtil::toStringList(const QVariant &v)
 {
     auto typeId=qTypeId(v);
-    if(QStmTypesVariantList.contains(typeId))
+    if(QMetaTypeUtilVariantList.contains(typeId))
         return v.toStringList();
 
     if(v.isNull() || !v.isValid())
         return {};
 
-    if(QStmTypesListObjectsString.contains(typeId)){
+    if(QMetaTypeUtilObjectsString.contains(typeId)){
         if(v.toString().trimmed().isEmpty())
             return {};
         QJsonParseError*error=nullptr;
@@ -923,10 +923,10 @@ const QVariant VariantUtil::toVariantObject(const QVariant &v)
     {
         auto vv=this->toVariantJson(*this);
         typeId=qTypeId(vv);
-        if(!QStmTypesListObjects.contains(typeId)){
+        if(!QMetaTypeUtilObjects.contains(typeId)){
             vv=this->toVariantCBor(*this);
             typeId=qTypeId(vv);
-            if(!QStmTypesListObjects.contains(typeId))
+            if(!QMetaTypeUtilObjects.contains(typeId))
                 vv={};
         }
         return vv;
@@ -1223,7 +1223,7 @@ bool VariantUtil::vIsObject(const QVariant &v)
     dPvt();
     p.clear();
     this->setValue(v);
-    if(QStmTypesListObjects.contains(qTypeId(*this)))
+    if(QMetaTypeUtilObjects.contains(qTypeId(*this)))
         return true;
     return false;
 }
@@ -1233,7 +1233,7 @@ bool VariantUtil::vIsList(const QVariant &v)
     dPvt();
     p.clear();
     this->setValue(v);
-    if(QStmTypesVariantList.contains(qTypeId(*this)))
+    if(QMetaTypeUtilVariantList.contains(qTypeId(*this)))
         return true;
     return false;
 }
@@ -1243,7 +1243,7 @@ bool VariantUtil::vIsMap(const QVariant &v)
     dPvt();
     p.clear();
     this->setValue(v);
-    if(QStmTypesVariantDictionary.contains(qTypeId(*this)))
+    if(QMetaTypeUtilVariantDictionary.contains(qTypeId(*this)))
         return true;
     if(QByteArray(v.typeName())==QT_STRINGIFY2(QVVM))
         return true;
@@ -1255,7 +1255,7 @@ bool VariantUtil::vIsString(const QVariant &v)
     dPvt();
     p.clear();
     this->setValue(v);
-    if(QStmTypesListString.contains(qTypeId(v)))
+    if(QMetaTypeUtilString.contains(qTypeId(v)))
         return true;
     return false;
 }

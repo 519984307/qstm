@@ -40,7 +40,7 @@ public:
 
     static QByteArray toMd5(const QVariant&v){
         QByteArray bytes;
-        if(QStmTypesObjectMetaData.contains(qTypeId(v)))
+        if(QMetaTypeUtilObjectMetaData.contains(qTypeId(v)))
             bytes=QJsonDocument::fromVariant(v).toJson(QJsonDocument::Compact);
         else
             bytes=v.toByteArray();

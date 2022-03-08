@@ -98,7 +98,7 @@ public:
         if(v.isNull() || !v.isValid() || v.toLongLong()<0)
             return defaultV;
 
-        if(QStmTypesListNumeric.contains(qTypeId(v)))
+        if(QMetaTypeUtilNumeric.contains(qTypeId(v)))
             return v;
 
         qlonglong scale=1;
