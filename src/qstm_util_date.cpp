@@ -3,6 +3,7 @@
 #include <QCoreApplication>
 #include <QStringList>
 #include <QVariantList>
+#include "./qstm_meta_types.h"
 
 namespace QStm {
 

@@ -1,5 +1,6 @@
 #include "./qstm_vvm.h"
 #include "./qstm_util_variant.h"
+#include "./qstm_meta_types.h"
 #include <QJsonDocument>
 
 const static QString toBytes(const QVariant &v)

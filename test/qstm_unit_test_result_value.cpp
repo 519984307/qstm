@@ -12,11 +12,6 @@ class Q_STM_ResultValueTestUnit : public SDKGoogleTestUnit {
 public:
 };
 
-TEST_F(Q_STM_ResultValueTestUnit, serviceStart)
-{
-    EXPECT_TRUE(this->serviceStart())<<"fail: service start";
-}
-
 TEST_F(Q_STM_ResultValueTestUnit, operatorBool)
 {
     QStm::Object objectA;
@@ -101,11 +96,6 @@ TEST_F(Q_STM_ResultValueTestUnit, checkResult)
         objectA.lr().clear();
         EXPECT_EQ(objectA.lr().resultVariant().isValid(),false)<<"fail: error on clear ResultValue";
     }
-}
-
-TEST_F(Q_STM_ResultValueTestUnit, serviceStop)
-{
-    EXPECT_TRUE(this->serviceStop())<<"fail: service stop";
 }
 
 }

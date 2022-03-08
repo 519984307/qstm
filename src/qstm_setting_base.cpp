@@ -1,5 +1,6 @@
 #include "./qstm_setting_base.h"
 #include "./qstm_types.h"
+#include "./qstm_meta_types.h"
 #include <QStandardPaths>
 #include <QProcess>
 #include <QDateTime>

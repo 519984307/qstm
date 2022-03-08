@@ -8,8 +8,6 @@
 #include <QString>
 #include <QMetaProperty>
 
-namespace QStm{
-
 //!
 //! \brief Consts to QMetaType
 static const int QMetaType_UnknownType  = QMetaType::UnknownType   ;
@@ -35,6 +33,8 @@ static const int QMetaType_QVariantHash = QMetaType::QVariantHash  ;
 static const int QMetaType_QVariantList = QMetaType::QVariantList  ;
 static const int QMetaType_QVariantMap  = QMetaType::QVariantMap   ;
 static const int QMetaType_CustomType   = 65538                    ;
+
+namespace QStm{
 
 //!
 //! \brief The QMetaTypeUtil class
@@ -166,32 +166,32 @@ public:
 //! \param v
 //! \return
 //!
-int qTypeId(const QVariant&v){ return QStm::QMetaTypeUtil::qTypeId(v);};
+int qTypeId(const QVariant&v);
 
 //!
 //! \brief qTypeId
 //! \param p
 //! \return
 //!
-int qTypeId(const QMetaProperty&p){ return QStm::QMetaTypeUtil::qTypeId(p);};
+int qTypeId(const QMetaProperty&p);
 
 //!
 //! \brief qIsNumeric
 //! \param v
 //! \return
 //!
-bool qIsNumeric(const QVariant&v){ return QStm::QMetaTypeUtil::qIsNumeric(v);};
+bool qIsNumeric(const QVariant&v);
 
-static const QStm::QMetaTypeUtil &QMetaTypeUtilString=QStm::QMetaTypeUtil::qMetaTypeUtilObjectMetaData();
-static const QStm::QMetaTypeUtil &QMetaTypeUtilMetaString=QStm::QMetaTypeUtil::qMetaTypeUtilVariantList();
-static const QStm::QMetaTypeUtil &QMetaTypeUtilNumeric=QStm::QMetaTypeUtil::qMetaTypeUtilVariantDictionary();
-static const QStm::QMetaTypeUtil &QMetaTypeUtilDoubles=QStm::QMetaTypeUtil::qMetaTypeUtilBool();
-static const QStm::QMetaTypeUtil &QMetaTypeUtilIntegers=QStm::QMetaTypeUtil::qMetaTypeUtilDates();
-static const QStm::QMetaTypeUtil &QMetaTypeUtilClass=QStm::QMetaTypeUtil::qMetaTypeUtilObjectsString();
+static const QStm::QMetaTypeUtil &QMetaTypeUtilString=QStm::QMetaTypeUtil::qMetaTypeUtilString();
+static const QStm::QMetaTypeUtil &QMetaTypeUtilMetaString=QStm::QMetaTypeUtil::qMetaTypeUtilMetaString();
+static const QStm::QMetaTypeUtil &QMetaTypeUtilNumeric=QStm::QMetaTypeUtil::qMetaTypeUtilNumeric();
+static const QStm::QMetaTypeUtil &QMetaTypeUtilDoubles=QStm::QMetaTypeUtil::qMetaTypeUtilDoubles();
+static const QStm::QMetaTypeUtil &QMetaTypeUtilIntegers=QStm::QMetaTypeUtil::qMetaTypeUtilIntegers();
+static const QStm::QMetaTypeUtil &QMetaTypeUtilClass=QStm::QMetaTypeUtil::qMetaTypeUtilClass();
 static const QStm::QMetaTypeUtil &QMetaTypeUtilObjects=QStm::QMetaTypeUtil::qMetaTypeUtilObjects();
-static const QStm::QMetaTypeUtil &QMetaTypeUtilObjectsString=QStm::QMetaTypeUtil::qMetaTypeUtilClass();
-static const QStm::QMetaTypeUtil &QMetaTypeUtilDates=QStm::QMetaTypeUtil::qMetaTypeUtilIntegers();
-static const QStm::QMetaTypeUtil &QMetaTypeUtilBool=QStm::QMetaTypeUtil::qMetaTypeUtilDoubles();
-static const QStm::QMetaTypeUtil &QMetaTypeUtilVariantDictionary=QStm::QMetaTypeUtil::qMetaTypeUtilNumeric();
-static const QStm::QMetaTypeUtil &QMetaTypeUtilVariantList=QStm::QMetaTypeUtil::qMetaTypeUtilMetaString();
-static const QStm::QMetaTypeUtil &QMetaTypeUtilObjectMetaData=QStm::QMetaTypeUtil::qMetaTypeUtilString();
+static const QStm::QMetaTypeUtil &QMetaTypeUtilObjectsString=QStm::QMetaTypeUtil::qMetaTypeUtilObjectsString();
+static const QStm::QMetaTypeUtil &QMetaTypeUtilDates=QStm::QMetaTypeUtil::qMetaTypeUtilDates();
+static const QStm::QMetaTypeUtil &QMetaTypeUtilBool=QStm::QMetaTypeUtil::qMetaTypeUtilBool();
+static const QStm::QMetaTypeUtil &QMetaTypeUtilVariantDictionary=QStm::QMetaTypeUtil::qMetaTypeUtilVariantDictionary();
+static const QStm::QMetaTypeUtil &QMetaTypeUtilVariantList=QStm::QMetaTypeUtil::qMetaTypeUtilVariantList();
+static const QStm::QMetaTypeUtil &QMetaTypeUtilObjectMetaData=QStm::QMetaTypeUtil::qMetaTypeUtilObjectMetaData();

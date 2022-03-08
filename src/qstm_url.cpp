@@ -1,5 +1,6 @@
 #include "./qstm_url.h"
 #include "./qstm_util_variant.h"
+#include <QFile>
 
 namespace QStm {
 

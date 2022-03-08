@@ -10,65 +10,70 @@
 #include <QLocale>
 #include <QJsonDocument>
 #include <gtest/gtest.h>
-#include "../src/qstm_types.h"
 
 namespace QStm {
 
 class SDKGoogleTest : public testing::Test{
 public:
 
-    explicit SDKGoogleTest(){
-        this->clear();
-        QLocale::setDefault(QLocale(QLocale::Portuguese, QLocale::Brazil));
-    }
+    //!
+    //! \brief SDKGoogleTest
+    //!
+    explicit SDKGoogleTest();
 
-    virtual bool clear(){
-        return true;
-    }
-
-    virtual bool serviceStart(){
-        return this->clear();
-    }
-
-    virtual bool serviceStop(){
-        return this->clear();
-    }
-
-    virtual QStringList arguments(){
-        return qApp->arguments();
-    }
-
-    static QByteArray toMd5(const QVariant&v){
-        QByteArray bytes;
-        if(QMetaTypeUtilObjectMetaData.contains(qTypeId(v)))
-            bytes=QJsonDocument::fromVariant(v).toJson(QJsonDocument::Compact);
-        else
-            bytes=v.toByteArray();
-        return QCryptographicHash::hash(bytes, QCryptographicHash::Md5).toHex();
-    }
-
-    static QVariant toVar(const QVariant&v){
-        if(qTypeId(v)==QMetaType_QString || qTypeId(v)==QMetaType_QByteArray)
-            return QJsonDocument::fromJson(v.toByteArray()).toVariant();
-        else
-            return v;
-    }
-
+    //!
+    //! \brief SetUpTestCase
+    //!
     static void SetUpTestCase()
     {
     }
 
+    //!
+    //! \brief SetUp
+    //!
     virtual void SetUp()
     {
     }
 
+    //!
+    //! \brief TearDown
+    //!
     virtual void TearDown()
     {
     }
 
+    //!
+    //! \brief TearDownTestCase
+    //!
     static void TearDownTestCase()
     {
     }
+
+    //!
+    //! \brief clear
+    //! \return
+    //!
+    virtual bool clear();
+
+    //!
+    //! \brief arguments
+    //! \return
+    //!
+    virtual QStringList arguments()const;
+
+    //!
+    //! \brief toMd5
+    //! \param v
+    //! \return
+    //!
+    static const QByteArray toMd5(const QVariant&v);
+
+    //!
+    //! \brief toVar
+    //! \param v
+    //! \return
+    //!
+    static const QVariant toVar(const QVariant&v);
 
 public:
 

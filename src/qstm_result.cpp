@@ -2,13 +2,15 @@
 #include "./qstm_macro.h"
 #include "./qstm_object.h"
 #include "./qstm_util_variant.h"
+#include "./qstm_meta_types.h"
 #include <QCoreApplication>
 #include <QCryptographicHash>
 #include <QMutex>
 #include <QThread>
 
-typedef QHash<ResultValue::MessageType, int> MakeArStats;
+using namespace QStm;
 
+typedef QHash<ResultValue::MessageType, int> MakeArStats;
 
 static const MakeArStats &__makeArStats()
 {

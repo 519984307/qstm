@@ -1,5 +1,6 @@
 #include "./qstm_util_meta_object.h"
 #include "./qstm_vvm.h"
+#include "./qstm_meta_types.h"
 #include <QCoreApplication>
 #include <QUuid>
 #include <QUrl>

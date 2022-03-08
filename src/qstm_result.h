@@ -12,7 +12,7 @@
 class Q_STM_EXPORT ResultValue : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QVariantHash data READ data WRITE setData)
+    Q_PROPERTY(QVariantHash data READ data WRITE setData NOTIFY dataChanged)
 public:
     enum MessageType {
         None = 1,
@@ -653,4 +653,6 @@ public:
     Q_INVOKABLE virtual QString toString() const;
 public:
     void *p = nullptr;
+signals:
+    void dataChanged();
 };

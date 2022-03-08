@@ -5,6 +5,7 @@
 #include <QUuid>
 #include <QUrl>
 #include <QCoreApplication>
+#include "./qstm_meta_types.h"
 
 #define set_v \
 this->setValue((v.isValid())?v:(*this))

@@ -1,4 +1,5 @@
 #include "./qstm_result_info.h"
+#include "./qstm_meta_types.h"
 #include <QMetaProperty>
 #include <QJsonDocument>
 

@@ -9,6 +9,7 @@
 #include <QVariantHash>
 #include "./qstm_global.h"
 #include "./qstm_types.h"
+#include "./qstm_meta_types.h"
 #include "./qstm_vvm.h"
 
 namespace QStm {

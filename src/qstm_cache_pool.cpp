@@ -6,6 +6,7 @@
 #include <QVariant>
 #include <QCryptographicHash>
 #include <QJsonDocument>
+#include "../../qstm/src/qstm_meta_types.h"
 
 
 namespace PrivateQStm {
