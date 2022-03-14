@@ -216,7 +216,7 @@ public:
         if(md5ParserUuid(smd5, smd5))
             return QUuid::fromString(qsl("{")+smd5+qsl("}"));
 
-        return QUuid();
+        return {};
     }
 
     QVariant vUnion(const QVariant &v)

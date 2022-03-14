@@ -83,7 +83,7 @@ QVariant SettingBase::url()const
                 QString protocol;
                 switch (qTypeId(v)) {
                 case QMetaType_Int:
-                    protocol=QStmProtocolName.value(v.toInt());
+                    protocol=QStm::ProtocolName.value(v.toInt());
                     break;
                 case QMetaType_QString:
                 case QMetaType_QByteArray:
@@ -144,7 +144,7 @@ SettingBase &SettingBase::setProtocol(const QVariant &value)
     case QMetaType_Double:
     case QMetaType_LongLong:
     case QMetaType_ULongLong:
-        p.protocol=QStmProtocolName.value(value.toInt());
+        p.protocol=QStm::ProtocolName.value(value.toInt());
         break;
     default:
         p.protocol=value;

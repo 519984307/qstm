@@ -165,7 +165,7 @@ public:
                 continue;
             return s;
         }
-        return QString();
+        return {};
     }
 
 

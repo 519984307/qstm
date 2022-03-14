@@ -12,17 +12,21 @@ class PathUtilPvt:public QObject{
 public:
     QString v;
     PathUtil*parent=nullptr;
-    explicit PathUtilPvt(PathUtil*v):QObject(nullptr){
+    explicit PathUtilPvt(PathUtil*v):QObject(nullptr)
+    {
         this->parent=v;
     }
-    virtual ~PathUtilPvt(){
+    virtual ~PathUtilPvt()
+    {
     }
 
-    void clear(){
+    void clear()
+    {
         this->v.clear();
     }
 
-    QString format(const QString&v)const{
+    QString format(const QString&v)const
+    {
         auto s=v;
         s=q_dir_separator+s.replace(qsl("\\"),q_dir_separator);
         s=s.replace(s,qsl_null);

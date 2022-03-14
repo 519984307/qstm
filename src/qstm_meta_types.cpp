@@ -83,9 +83,17 @@ const QMetaTypeUtil &QMetaTypeUtil::qMetaTypeUtilObjectMetaData(){ return *stati
 }
 
 
+int qTypeId(const QVariant &v)
+{
+    return QStm::QMetaTypeUtil::qTypeId(v);
+}
 
-int qTypeId(const QVariant &v){ return QStm::QMetaTypeUtil::qTypeId(v);}
+int qTypeId(const QMetaProperty &p)
+{
+    return QStm::QMetaTypeUtil::qTypeId(p);
+}
 
-int qTypeId(const QMetaProperty &p){ return QStm::QMetaTypeUtil::qTypeId(p);}
-
-bool qIsNumeric(const QVariant &v){ return QStm::QMetaTypeUtil::qIsNumeric(v);}
+bool qIsNumeric(const QVariant &v)
+{
+    return QStm::QMetaTypeUtil::qIsNumeric(v);
+}

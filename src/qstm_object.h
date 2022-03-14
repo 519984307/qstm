@@ -1,8 +1,9 @@
 #pragma once
 
+#include "./qstm_global.h"
 #include "./qstm_result.h"
 #include "./qstm_cache_pool.h"
-#include "./qstm_global.h"
+#include "./qstm_util_notation.h"
 
 namespace QStm {
 

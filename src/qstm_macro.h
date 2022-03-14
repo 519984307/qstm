@@ -210,3 +210,20 @@ QVariantHash{{qsl("operator"),QOrm::koLike}, {qsl("format"),qsl("%%1")}}
 
 #define vpsFiltrableStrategyLikeR \
 QVariantHash{{qsl("operator"),QOrm::koLike}, {qsl("format"),qsl("%1%")}}
+
+#define Q_NOTATION_CLASS(notations)\
+public:\
+Q_INVOKABLE QVariantList _notation_object_class()\
+{\
+    static auto __return=QVariantList(notations);\
+    return __return;\
+}
+
+#define Q_NOTATION_METHOD(methodName, notations)\
+public:\
+Q_INVOKABLE QVariantList _notation_object_method_##methodName()\
+{\
+    static auto __return=QVariantList(notations);\
+    return __return;\
+}
+
