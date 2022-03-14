@@ -43,17 +43,20 @@ public:
     {
         this->parent=parent;
     }
+
     virtual ~SettingBasePrv()
     {
     }
 };
 
 
-SettingBase::SettingBase(QObject *parent):BaseSetting(parent){
+SettingBase::SettingBase(QObject *parent):SettingBaseTemplate<SettingBase>(parent)
+{
     this->p = new SettingBasePrv(this);
 }
 
-SettingBase::~SettingBase(){
+SettingBase::~SettingBase()
+{
     dPvt();delete&p;
 }
 
@@ -63,6 +66,7 @@ QVariant SettingBase::url()const
     auto vRouteList=this->routeList();
     if(vRouteList.isEmpty() && !this->route().toString().isEmpty())
         vRouteList<<this->route();
+
     for(auto&v:vRouteList){
         auto route=v.toString().trimmed();
         auto url=qsl("%1:%2/%3").arg(this->hostName()).arg(this->port()).arg(route);
@@ -106,9 +110,10 @@ QString SettingBase::service() const
     return this->identification();
 }
 
-void SettingBase::setService(const QString &value)
+SettingBase &SettingBase::setService(const QString &value)
 {
     this->setIdentification(value);
+    return*this;
 }
 
 QVariantHash SettingBase::headers() const
@@ -117,10 +122,11 @@ QVariantHash SettingBase::headers() const
     return p.headers;
 }
 
-void SettingBase::setHeaders(const QVariantHash &value)
+SettingBase &SettingBase::setHeaders(const QVariantHash &value)
 {
     dPvt();
     p.headers = value;
+    return*this;
 }
 
 QVariant SettingBase::protocol() const
@@ -129,13 +135,21 @@ QVariant SettingBase::protocol() const
     return p.protocol;
 }
 
-void SettingBase::setProtocol(const QVariant &value)
+SettingBase &SettingBase::setProtocol(const QVariant &value)
 {
     dPvt();
-    if(qTypeId(value)==QMetaType_Int || qTypeId(value)==QMetaType_Int || qTypeId(value)==QMetaType_Double || qTypeId(value)==QMetaType_LongLong || qTypeId(value)==QMetaType_ULongLong)
+    switch (qTypeId(value)) {
+    case QMetaType_Int:
+    case QMetaType_UInt:
+    case QMetaType_Double:
+    case QMetaType_LongLong:
+    case QMetaType_ULongLong:
         p.protocol=QStmProtocolName.value(value.toInt());
-    else
+        break;
+    default:
         p.protocol=value;
+    }
+    return*this;
 }
 
 QString SettingBase::method() const
@@ -144,10 +158,11 @@ QString SettingBase::method() const
     return p.method;
 }
 
-void SettingBase::setMethod(const QString &value)
+SettingBase &SettingBase::setMethod(const QString &value)
 {
     dPvt();
     p.method=value;
+    return*this;
 }
 
 QString SettingBase::driverName() const
@@ -156,10 +171,11 @@ QString SettingBase::driverName() const
     return p.driverName;
 }
 
-void SettingBase::setDriverName(const QString &value)
+SettingBase &SettingBase::setDriverName(const QString &value)
 {
     dPvt();
     p.driverName=value;
+    return*this;
 }
 
 QString SettingBase::hostName() const
@@ -168,10 +184,11 @@ QString SettingBase::hostName() const
     return this->parseVariables(p.hostName).toString();
 }
 
-void SettingBase::setHostName(const QString &value)
+SettingBase &SettingBase::setHostName(const QString &value)
 {
     dPvt();
     p.hostName = value.trimmed();
+    return*this;
 }
 
 QString SettingBase::userName() const
@@ -180,10 +197,11 @@ QString SettingBase::userName() const
     return this->parseVariables(p.userName).toString();
 }
 
-void SettingBase::setUserName(const QString &value)
+SettingBase &SettingBase::setUserName(const QString &value)
 {
     dPvt();
     p.userName = value.trimmed();
+    return*this;
 }
 
 QString SettingBase::password() const
@@ -192,10 +210,11 @@ QString SettingBase::password() const
     return p.password;
 }
 
-void SettingBase::setPassword(const QString &value)
+SettingBase &SettingBase::setPassword(const QString &value)
 {
     dPvt();
     p.password = value.trimmed();
+    return*this;
 }
 
 int SettingBase::port() const
@@ -204,10 +223,11 @@ int SettingBase::port() const
     return p.port;
 }
 
-void SettingBase::setPort(int value)
+SettingBase &SettingBase::setPort(int value)
 {
     dPvt();
     p.port = value;
+    return*this;
 }
 
 QVariant SettingBase::route() const
@@ -231,10 +251,11 @@ QVariantList SettingBase::routeList() const
     return vRouteList;
 }
 
-void SettingBase::setRoute(const QVariant &value)
+SettingBase &SettingBase::setRoute(const QVariant &value)
 {
     dPvt();
     p.route = value;
+    return*this;
 }
 
 QString SettingBase::path() const
@@ -243,10 +264,11 @@ QString SettingBase::path() const
     return this->parseVariables(p.path).toString();
 }
 
-void SettingBase::setPath(const QString &value)
+SettingBase &SettingBase::setPath(const QString &value)
 {
     dPvt();
     p.path = value.trimmed();
+    return*this;
 }
 
 QVariantHash SettingBase::parameters() const
@@ -255,10 +277,11 @@ QVariantHash SettingBase::parameters() const
     return p.parameters;
 }
 
-void SettingBase::setParameters(const QVariantHash &value)
+SettingBase &SettingBase::setParameters(const QVariantHash &value)
 {
     dPvt();
     p.parameters=value;
+    return*this;
 }
 
 QVariant SettingBase::body() const
@@ -267,10 +290,11 @@ QVariant SettingBase::body() const
     return p.body;
 }
 
-void SettingBase::setBody(const QVariant &value)
+SettingBase &SettingBase::setBody(const QVariant &value)
 {
     dPvt();
     p.body=value;
+    return*this;
 }
 
 int SettingBase::cacheInterval() const
@@ -279,10 +303,11 @@ int SettingBase::cacheInterval() const
     return this->parseInterval(p.cacheInterval, defaultInterval).toInt();
 }
 
-void SettingBase::setCacheInterval(const QVariant &value)
+SettingBase &SettingBase::setCacheInterval(const QVariant &value)
 {
     dPvt();
     p.cacheInterval=value.toInt();
+    return*this;
 }
 
 bool SettingBase::cacheCleanup() const
@@ -291,10 +316,11 @@ bool SettingBase::cacheCleanup() const
     return p.cacheCleanup;
 }
 
-void SettingBase::setCacheCleanup(const QVariant &value)
+SettingBase &SettingBase::setCacheCleanup(const QVariant &value)
 {
     dPvt();
     p.cacheCleanup=value.toBool();
+    return*this;
 }
 
 int SettingBase::cacheCleanupInterval() const
@@ -303,10 +329,11 @@ int SettingBase::cacheCleanupInterval() const
     return this->parseInterval(p.cacheCleanupInterval).toInt();
 }
 
-void SettingBase::setCacheCleanupInterval(const QVariant &value)
+SettingBase &SettingBase::setCacheCleanupInterval(const QVariant &value)
 {
     dPvt();
     p.cacheCleanupInterval=value.toInt();
+    return*this;
 }
 
 }
