@@ -47,6 +47,8 @@ const QHash<QString, QStmRequestMethod> ___QStmRequestMethodType(){
     r.insert(QT_STRINGIFY2(put),Put);
     r.insert(QT_STRINGIFY2(delete),Delete);
     r.insert(QT_STRINGIFY2(options),Options);
+    r.insert(QT_STRINGIFY2(patch),Patch);
+    r.insert(QT_STRINGIFY2(trace),Trace);
 
     r.insert(QT_STRINGIFY2(Head),Head);
     r.insert(QT_STRINGIFY2(Get),Get);
@@ -54,6 +56,8 @@ const QHash<QString, QStmRequestMethod> ___QStmRequestMethodType(){
     r.insert(QT_STRINGIFY2(Put),Put);
     r.insert(QT_STRINGIFY2(Delete),Delete);
     r.insert(QT_STRINGIFY2(Options),Options);
+    r.insert(QT_STRINGIFY2(Patch),Patch);
+    r.insert(QT_STRINGIFY2(Trace),Trace);
     return r;
 }
 

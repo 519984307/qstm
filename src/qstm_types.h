@@ -19,7 +19,7 @@ typedef QMutexLocker QMutexLOCKER;
 typedef QVariant::Type QMetaTypeType;
 #endif
 
-enum QStmRequestMethod {Head=1, Get=2, Post=4, Put=8, Delete=16, Options=32, MaxMethod=Options};
+enum QStmRequestMethod {Head=1, Get=2, Post=4, Put=8, Delete=16, Options=32, Patch=64, Trace=128, MaxMethod=Trace};
 
 const QHash<int,QString> ___QStmRequestMethodName();
 static const auto QStmRequestMethodName = ___QStmRequestMethodName();
@@ -48,6 +48,8 @@ static const auto vGET="get";
 static const auto vPOST="post";
 static const auto vPUT="put";
 static const auto vDELETE="delete";
+static const auto vPatch="patch";
+static const auto vTrace="trace";
 
 static const auto vObject="object";
 static const auto vList="list";
