@@ -182,16 +182,67 @@ int qTypeId(const QMetaProperty&p);
 //!
 bool qIsNumeric(const QVariant&v);
 
+//!
+//! \brief QMetaTypeUtilString
+//!
 static const QStm::QMetaTypeUtil &QMetaTypeUtilString=QStm::QMetaTypeUtil::qMetaTypeUtilString();
+
+//!
+//! \brief QMetaTypeUtilMetaString
+//!
 static const QStm::QMetaTypeUtil &QMetaTypeUtilMetaString=QStm::QMetaTypeUtil::qMetaTypeUtilMetaString();
+
+//!
+//! \brief QMetaTypeUtilNumeric
+//!
 static const QStm::QMetaTypeUtil &QMetaTypeUtilNumeric=QStm::QMetaTypeUtil::qMetaTypeUtilNumeric();
+
+//!
+//! \brief QMetaTypeUtilDoubles
+//!
 static const QStm::QMetaTypeUtil &QMetaTypeUtilDoubles=QStm::QMetaTypeUtil::qMetaTypeUtilDoubles();
+
+//!
+//! \brief QMetaTypeUtilIntegers
+//!
 static const QStm::QMetaTypeUtil &QMetaTypeUtilIntegers=QStm::QMetaTypeUtil::qMetaTypeUtilIntegers();
+
+//!
+//! \brief QMetaTypeUtilClass
+//!
 static const QStm::QMetaTypeUtil &QMetaTypeUtilClass=QStm::QMetaTypeUtil::qMetaTypeUtilClass();
+
+//!
+//! \brief QMetaTypeUtilObjects
+//!
 static const QStm::QMetaTypeUtil &QMetaTypeUtilObjects=QStm::QMetaTypeUtil::qMetaTypeUtilObjects();
+
+//!
+//! \brief QMetaTypeUtilObjectsString
+//!
 static const QStm::QMetaTypeUtil &QMetaTypeUtilObjectsString=QStm::QMetaTypeUtil::qMetaTypeUtilObjectsString();
+
+//!
+//! \brief QMetaTypeUtilDates
+//!
 static const QStm::QMetaTypeUtil &QMetaTypeUtilDates=QStm::QMetaTypeUtil::qMetaTypeUtilDates();
+
+//!
+//! \brief QMetaTypeUtilBool
+//!
 static const QStm::QMetaTypeUtil &QMetaTypeUtilBool=QStm::QMetaTypeUtil::qMetaTypeUtilBool();
+
+//!
+//! \brief QMetaTypeUtilVariantDictionary
+//!
 static const QStm::QMetaTypeUtil &QMetaTypeUtilVariantDictionary=QStm::QMetaTypeUtil::qMetaTypeUtilVariantDictionary();
+
+//!
+//! \brief QMetaTypeUtilVariantList
+//!
 static const QStm::QMetaTypeUtil &QMetaTypeUtilVariantList=QStm::QMetaTypeUtil::qMetaTypeUtilVariantList();
+
+//!
+//! \brief QMetaTypeUtilObjectMetaData
+//!
 static const QStm::QMetaTypeUtil &QMetaTypeUtilObjectMetaData=QStm::QMetaTypeUtil::qMetaTypeUtilObjectMetaData();

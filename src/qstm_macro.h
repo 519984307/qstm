@@ -30,18 +30,6 @@
 #define Q_DECLARE_DBU \
     QStm::DateUtil dbu
 
-#define Q_DECLARE_INSTANCE(Controller)\
-public:\
-static Controller&instance(){\
-    static Controller*static_##Controller=nullptr;\
-    if(static_##Controller==nullptr)\
-        static_##Controller=new Controller(nullptr);\
-    return*static_##Controller;\
-}\
-static Controller&i(){\
-    return instance();\
-}
-
 #define Q_LOOP_TIMEOUT(mSecs)\
 auto&___##mSecs=mSecs;\
 auto ___m_msecs_max_time##mSecs = QDateTime::currentDateTime().addMSecs(___##mSecs);\
@@ -210,20 +198,3 @@ QVariantHash{{qsl("operator"),QOrm::koLike}, {qsl("format"),qsl("%%1")}}
 
 #define vpsFiltrableStrategyLikeR \
 QVariantHash{{qsl("operator"),QOrm::koLike}, {qsl("format"),qsl("%1%")}}
-
-#define Q_NOTATION_CLASS(notations)\
-public:\
-Q_INVOKABLE QVariantList _notation_object_class()\
-{\
-    static auto __return=QVariantList(notations);\
-    return __return;\
-}
-
-#define Q_NOTATION_METHOD(methodName, notations)\
-public:\
-Q_INVOKABLE QVariantList _notation_object_method_##methodName()\
-{\
-    static auto __return=QVariantList(notations);\
-    return __return;\
-}
-

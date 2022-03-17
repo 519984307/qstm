@@ -3,7 +3,7 @@
 #include "./qstm_global.h"
 #include "./qstm_result.h"
 #include "./qstm_cache_pool.h"
-#include "./qstm_util_notation.h"
+#include "./qstm_object_macro.h"
 
 namespace QStm {
 
@@ -23,19 +23,19 @@ public:
     //! \brief operator =
     //! \param value
     //!
-    void operator=( ResultValue&value);
+    void operator=(ResultValue &value);
 
     //!
     //! \brief operator =
     //! \param value
     //!
-    void operator=( QSqlError&value);
+    void operator=(QSqlError &value);
 
     //!
     //! \brief operator =
     //! \param value
     //!
-    void operator=( QVariant&value);
+    void operator=(QVariant &value);
 
     //!
     //! \brief cachePool

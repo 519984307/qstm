@@ -21,12 +21,12 @@ class ObjectPrv{
 public:
     CachePool*_cachePool=nullptr;
     QByteArray storedMd5;
-    ResultValue _result;
+    ResultValue result;
     QObject*parent=nullptr;
     explicit ObjectPrv(QObject*parent)
     {
         this->parent=parent;
-        _result.setParent(parent);
+        result.setParent(parent);
     }
 
     virtual ~ObjectPrv()
@@ -68,15 +68,9 @@ Object::~Object()
     dPvt();delete&p;
 }
 
-void Object::operator=(ResultValue&value)
+void Object::operator=(ResultValue &value)
 {
     this->lastResult().setResult(value);
-}
-
-CachePool &Object::cachePool()
-{
-    dPvt();
-    return p.cachePool();
 }
 
 void Object::operator =(QSqlError &value)
@@ -89,33 +83,39 @@ void Object::operator=(QVariant &value)
     this->lastResult().setResult(value);
 }
 
+CachePool &Object::cachePool()
+{
+    dPvt();
+    return p.cachePool();
+}
+
 ResultValue &Object::lr()
 {
     dPvt();
-    return p._result;
+    return p.result;
 }
 
 ResultValue &Object::lr(const ResultValue&value)
 {
     dPvt();
-    p._result.setResult(value);
-    return p._result;
+    p.result.setResult(value);
+    return p.result;
 }
 
 ResultValue &Object::lr(const QSqlError&value)
 {
     dPvt();
-    if(p._result.returnType() == ResultValue::None)
-        p._result.setResult(value);
-    return p._result;
+    if(p.result.returnType() == ResultValue::None)
+        p.result.setResult(value);
+    return p.result;
 }
 
 ResultValue &Object::lr(const QVariant&value)
 {
     dPvt();
-    if(p._result.returnType() == ResultValue::None)
-        p._result.setResult(value);
-    return p._result;
+    if(p.result.returnType() == ResultValue::None)
+        p.result.setResult(value);
+    return p.result;
 }
 
 ResultValue &Object::lr(const QString &value)
@@ -126,7 +126,7 @@ ResultValue &Object::lr(const QString &value)
 ResultValue &Object::lastResult()
 {
     dPvt();
-    return p._result;
+    return p.result;
 }
 
 ResultValue &Object::lastResult(const ResultValue&value)

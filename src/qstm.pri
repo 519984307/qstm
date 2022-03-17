@@ -12,9 +12,9 @@ HEADERS += \
     $$PWD/qstm_global.h \
     $$PWD/qstm_macro.h \
     $$PWD/qstm_meta_types.h \
+    $$PWD/qstm_object_macro.h \
     $$PWD/qstm_result_info.h \
     $$PWD/qstm_types_const.h \
-    $$PWD/qstm_util_notation.h \
     $$PWD/qstm_util_path.h \
     $$PWD/qstm_result.h \
     $$PWD/qstm_cache_pool.h \
@@ -38,7 +38,6 @@ SOURCES += \
     $$PWD/private/p_qstm_setting_manager.cpp \
     $$PWD/qstm_meta_types.cpp \
     $$PWD/qstm_result_info.cpp \
-    $$PWD/qstm_util_notation.cpp \
     $$PWD/qstm_util_path.cpp \
     $$PWD/qstm_result.cpp \
     $$PWD/qstm_cache_pool.cpp \
