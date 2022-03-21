@@ -72,16 +72,16 @@ public:
 
 };
 
-Url::Url(const QVariant &v):QVariant()
+Url::Url(const QVariant &v):QVariant{}
 {
-    this->p = new UrlPvt(this);
+    this->p = new UrlPvt{this};
     dPvt();
     p.setVar(v);
 }
 
-Url::Url(const ResultValue &v):QVariant()
+Url::Url(const ResultValue &v):QVariant{}
 {
-    this->p = new UrlPvt(this);
+    this->p = new UrlPvt{this};
     dPvt();
     p.setVar(v.resultHash());
 }

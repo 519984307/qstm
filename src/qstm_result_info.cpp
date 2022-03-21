@@ -48,9 +48,9 @@ public :
     }
 };
 
-ResultInfo::ResultInfo(QObject *parent):QObject(parent)
+ResultInfo::ResultInfo(QObject *parent):QObject{parent}
 {
-    this->p=new ResultInfoPvt(this);
+    this->p=new ResultInfoPvt{this};
 }
 
 ResultInfo::~ResultInfo()

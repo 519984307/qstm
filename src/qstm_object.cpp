@@ -58,7 +58,7 @@ public:
     }
 };
 
-Object::Object(QObject *parent):QObject(parent)
+Object::Object(QObject *parent):QObject{parent}
 {
     this->p = new ObjectPrv(this);
 }

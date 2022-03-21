@@ -337,9 +337,9 @@ public:
     }
 };
 
-ResultValue::ResultValue(QObject *parent) : QObject(parent)
+ResultValue::ResultValue(QObject *parent) : QObject{parent}
 {
-    this->p = new ResultValuePvt(this);
+    this->p = new ResultValuePvt{this};
 }
 
 ResultValue::~ResultValue()

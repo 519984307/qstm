@@ -283,7 +283,7 @@ public:
     //! \brief SettingBaseTemplate
     //! \param parent
     //!
-    explicit SettingBaseTemplate(QObject*parent=nullptr):QStm::Object(parent)
+    explicit SettingBaseTemplate(QObject*parent=nullptr):QStm::Object{parent}
     {
         this->p = new SettingBaseTemplatePrv(this);
     }

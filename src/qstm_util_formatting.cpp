@@ -169,9 +169,9 @@ FormattingUtil::Masks &FormattingUtil::masks()const
     return p.masks;
 }
 
-FormattingUtil::FormattingUtil(const QVariant &v):QVariant(v)
+FormattingUtil::FormattingUtil(const QVariant &v):QVariant{v}
 {
-    this->p = new FormattingUtilPvt(this);
+    this->p = new FormattingUtilPvt{this};
     dPvt();
     p.masks.p=this->p;
 }

@@ -36,7 +36,7 @@ public:
 
 PathUtil::PathUtil(const QVariant &v)
 {
-    this->p = new PathUtilPvt(this);
+    this->p = new PathUtilPvt{this};
     dPvt();
     p.v=v.toString();
 }

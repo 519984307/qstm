@@ -185,12 +185,12 @@ public:
 
 MetaObjectUtil::MetaObjectUtil()
 {
-    this->p = new MetaObjectUtilPvt(this);
+    this->p = new MetaObjectUtilPvt{this};
 }
 
 MetaObjectUtil::MetaObjectUtil(const QMetaObject &metaObject)
 {
-    this->p = new MetaObjectUtilPvt(this);
+    this->p = new MetaObjectUtilPvt{this};
     dPvt();
     p.metaObjectList.clear();
     p.metaObjectList.append(&metaObject);

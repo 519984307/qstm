@@ -50,7 +50,7 @@ public:
 };
 
 
-SettingBase::SettingBase(QObject *parent):SettingBaseTemplate<SettingBase>(parent)
+SettingBase::SettingBase(QObject *parent):SettingBaseTemplate<SettingBase>{parent}
 {
     this->p = new SettingBasePrv(this);
 }

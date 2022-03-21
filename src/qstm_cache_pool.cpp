@@ -27,7 +27,7 @@ class CachePoolPrv:public QObject{
 public:
     QMutex cacheMutex;
     QHash<QByteArray, CacheItem> cache;
-    explicit CachePoolPrv(QObject*parent):QObject(parent)
+    explicit CachePoolPrv(QObject*parent):QObject{parent}
     {
     }
     virtual ~CachePoolPrv()
@@ -58,7 +58,7 @@ public:
 };
 
 
-CachePool::CachePool(QObject *parent) : QObject(parent)
+CachePool::CachePool(QObject *parent) : QObject{parent}
 {
 
 }

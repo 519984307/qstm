@@ -46,9 +46,9 @@ public:
     }
 };
 
-QCurrency::QCurrency(const QVariant &v, const QVariant &precision):QVariant(v)
+QCurrency::QCurrency(const QVariant &v, const QVariant &precision):QVariant{v}
 {
-    this->p = new QCurrencyPvt(this);
+    this->p = new QCurrencyPvt{this};
     dPvt();
     if(precision.isValid())
         p.precision=precision.toInt();

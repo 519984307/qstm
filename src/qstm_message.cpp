@@ -204,9 +204,9 @@ public:
 
 };
 
-Message::Message(const QVariant&v, const QString&settingName):QVariant()
+Message::Message(const QVariant&v, const QString&settingName):QVariant{}
 {
-    this->p = new MessagePvt(this);
+    this->p = new MessagePvt{this};
     dPvt();
 
     QVariant vv;
@@ -221,9 +221,9 @@ Message::Message(const QVariant&v, const QString&settingName):QVariant()
     p.setVar(vv);
 }
 
-Message::Message(const ResultValue &v):QVariant()
+Message::Message(const ResultValue &v):QVariant{}
 {
-    this->p = new MessagePvt(this);
+    this->p = new MessagePvt{this};
     dPvt();
     p.setVar(v.resultHash());
 }

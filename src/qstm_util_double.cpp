@@ -21,9 +21,9 @@ public:
     }
 };
 
-DoubleUtil::DoubleUtil(const QVariant &v):QVariant(v)
+DoubleUtil::DoubleUtil(const QVariant &v):QVariant{v}
 {
-    this->p = new DoubleUtilPvt(this);
+    this->p = new DoubleUtilPvt{this};
 }
 
 DoubleUtil::~DoubleUtil()

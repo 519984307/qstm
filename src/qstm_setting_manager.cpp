@@ -5,11 +5,10 @@
 
 namespace QStm {
 
-
-SettingManager::SettingManager(QObject *parent) : QObject(nullptr)
+SettingManager::SettingManager(QObject *parent) : QObject{nullptr}
 {
     this->p = new SettingManagerPrv(this);
-    if(parent && parent->thread()==this->thread())
+    if (parent && parent->thread() == this->thread())
         this->setParent(parent);
     dPvt();
     p.parentParent = parent;
@@ -19,19 +18,19 @@ SettingManager::SettingManager(QObject *parent) : QObject(nullptr)
 SettingManager::SettingManager(const QStringList &settingFileName, QObject *parent)
 {
     this->p = new SettingManagerPrv(this);
-    if(parent!=nullptr){
-        if(parent->thread()==this->thread())
+    if (parent != nullptr) {
+        if (parent->thread() == this->thread())
             this->setParent(parent);
     }
     dPvt();
     p.load(settingFileName);
 }
 
-SettingManager::SettingManager(const QString &settingFileName, QObject *parent):QObject(parent)
+SettingManager::SettingManager(const QString &settingFileName, QObject *parent) : QObject{parent}
 {
     this->p = new SettingManagerPrv(this);
-    if(parent!=nullptr){
-        if(parent->thread()==this->thread())
+    if (parent != nullptr) {
+        if (parent->thread() == this->thread())
             this->setParent(parent);
     }
     dPvt();
@@ -40,14 +39,15 @@ SettingManager::SettingManager(const QString &settingFileName, QObject *parent):
 
 SettingManager::~SettingManager()
 {
-    dPvt();delete&p;
+    dPvt();
+    delete &p;
 }
 
 SettingManager &SettingManager::clear()
 {
     dPvt();
     p.clear();
-    return*this;
+    return *this;
 }
 
 SettingManager &SettingManager::insert(SettingBase &value)
@@ -62,27 +62,27 @@ SettingManager &SettingManager::insert(const QVariantHash &value)
     return p.insert(value);
 }
 
-SettingBase&SettingManager::setting()
+SettingBase &SettingManager::setting()
 {
     return this->setting(qsl_null);
 }
 
-SettingBase&SettingManager::setting(const QString&value)
+SettingBase &SettingManager::setting(const QString &value)
 {
     dPvt();
-    const auto name=value.toUtf8();
+    const auto name = value.toUtf8();
     return p.settingGetCheck(name);
 }
 
 SettingBase *SettingManager::settingClone(const QString &value)
 {
     dPvt();
-    const auto name=value.toUtf8();
-    auto&setting=p.settingGetCheck(name);
-    if(!setting.isValid())
+    const auto name = value.toUtf8();
+    auto &setting = p.settingGetCheck(name);
+    if (!setting.isValid())
         return nullptr;
-    auto _parent=(QThread::currentThread()==this->thread())?this:nullptr;
-    auto newSetting=p.settingCreate(_parent);
+    auto _parent = (QThread::currentThread() == this->thread()) ? this : nullptr;
+    auto newSetting = p.settingCreate(_parent);
     newSetting->fromHash(setting.toHash());
     return newSetting;
 }
@@ -94,14 +94,13 @@ QObject *SettingManager::settingCreate(QObject *parent)
     return nullptr;
 }
 
-
 bool SettingManager::load(const QVariant &settings)
 {
     dPvt();
     return p.v_load(settings);
 }
 
-bool SettingManager::load(const SettingManager&manager)
+bool SettingManager::load(const SettingManager &manager)
 {
     dPvt();
     return p.load(manager.toHash());
@@ -113,7 +112,7 @@ bool SettingManager::load(QObject *settingsObject)
     return p.load(settingsObject);
 }
 
-QVariant SettingManager::settingsFileName()const
+QVariant SettingManager::settingsFileName() const
 {
     dPvt();
     return p.settingsFileName;
@@ -132,8 +131,8 @@ QVariantHash SettingManager::settingBody() const
 
 const QVariantHash SettingManager::settingBody(const QString &value)
 {
-    auto&setting=this->setting(value);
-    auto vHash=setting.toHash();
+    auto &setting = this->setting(value);
+    auto vHash = setting.toHash();
     return vHash;
 }
 
@@ -146,14 +145,14 @@ QVariantHash SettingManager::arguments() const
 void SettingManager::setArguments(const QVariantHash &value)
 {
     dPvt();
-    auto arguments=p.variables.value(qsl("arguments")).toHash();
+    auto arguments = p.variables.value(qsl("arguments")).toHash();
     QHashIterator<QString, QVariant> i(value);
     while (i.hasNext()) {
         i.next();
-        auto v=SettingBase::staticParseVariables(i.value());
+        auto v = SettingBase::staticParseVariables(i.value());
         arguments.insert(i.key(), v);
     }
-    p.variables.insert(qsl("arguments"),arguments);
+    p.variables.insert(qsl("arguments"), arguments);
 }
 
 QVariantHash SettingManager::variables() const
@@ -177,15 +176,15 @@ QVariantHash SettingManager::toHash() const
 QString SettingManager::rootDir() const
 {
     dPvt();
-    auto v=p.variables.value(qsl("rootdir")).toString();
+    auto v = p.variables.value(qsl("rootdir")).toString();
     return v;
 }
 
 SettingManager &SettingManager::setRootDir(const QString &value)
 {
     dPvt();
-    p.variables.insert(qsl("rootdir"),value);
-    return*this;
+    p.variables.insert(qsl("rootdir"), value);
+    return *this;
 }
 
 QVariantHash SettingManager::toMap() const
@@ -193,4 +192,4 @@ QVariantHash SettingManager::toMap() const
     return this->toHash();
 }
 
-}
+} // namespace QStm

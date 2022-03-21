@@ -130,9 +130,9 @@ public:
 
 };
 
-DateUtil::DateUtil(const QVariant &v):QVariant(v)
+DateUtil::DateUtil(const QVariant &v):QVariant{v}
 {
-    this->p = new DateUtilPvt(this);
+    this->p = new DateUtilPvt{this};
 }
 
 DateUtil::~DateUtil()
