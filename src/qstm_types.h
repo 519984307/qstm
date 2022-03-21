@@ -14,6 +14,9 @@
 //class QStmListen;
 //class QStmListenProtocol;
 
+
+typedef QVector<QString> QStringVector;
+
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 typedef QMutexLocker<QMutex> QMutexLOCKER;
 typedef QMetaType::Type QMetaTypeType;
