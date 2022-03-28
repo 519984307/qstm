@@ -32,6 +32,11 @@ static const int QMetaType_QUuid        = QMetaType::QUuid         ;
 static const int QMetaType_QVariantHash = QMetaType::QVariantHash  ;
 static const int QMetaType_QVariantList = QMetaType::QVariantList  ;
 static const int QMetaType_QVariantMap  = QMetaType::QVariantMap   ;
+static const int QMetaType_QObjectStar  = QMetaType::QObjectStar   ;
+static const int QMetaType_QColor       = QMetaType::QColor        ;
+static const int QMetaType_QJsonObject  = QMetaType::QJsonValue    ;
+static const int QMetaType_QJsonArray   = QMetaType::QJsonArray    ;
+static const int QMetaType_QJsonValue   = QMetaType::QJsonObject   ;
 static const int QMetaType_CustomType   = 65538                    ;
 
 namespace QStm{
