@@ -8,6 +8,7 @@ QT += sql
 HEADERS += \
     $$PWD/private/p_qstm_base_setting.h \
     $$PWD/private/p_qstm_setting_manager.h \
+    $$PWD/qstm.h \
     $$PWD/qstm_const.h \
     $$PWD/qstm_global.h \
     $$PWD/qstm_macro.h \
