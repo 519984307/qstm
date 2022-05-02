@@ -98,7 +98,7 @@ QVariant SettingBase::url()const
         }
         default:
             const auto protocol=this->protocol().toString();
-            vList<<qsl("%1://%2").arg(protocol,url);;
+            vList<<qsl("%1://%2").arg(protocol,url);
         }
     }
     QVariant __return=(vList.size()==1)?vList.first():vList;
