@@ -16,14 +16,14 @@ class Q_STM_EXPORT ResultInfo:public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QVariantList errors READ errors WRITE setErrors)
-    Q_PROPERTY(QVariantList messages READ messages WRITE setMessages)
-    Q_PROPERTY(bool success READ success WRITE setSuccess)
-    Q_PROPERTY(int page READ page WRITE setPage)
-    Q_PROPERTY(int per_page READ per_page WRITE setPer_page)
-    Q_PROPERTY(int count READ count WRITE setCount)
-    Q_PROPERTY(int total_count READ total_count WRITE setTotal_count)
-    Q_PROPERTY(int total_pages READ total_pages WRITE setTotal_pages)
+    Q_PROPERTY(QVariantList errors READ errors WRITE setErrors NOTIFY errorsChanged)
+    Q_PROPERTY(QVariantList messages READ messages WRITE setMessages NOTIFY messagesChanged)
+    Q_PROPERTY(bool success READ success WRITE setSuccess NOTIFY successChanged)
+    Q_PROPERTY(int page READ page WRITE setPage NOTIFY pageChanged)
+    Q_PROPERTY(int per_page READ per_page WRITE setPer_page NOTIFY per_pageChanged)
+    Q_PROPERTY(int count READ count WRITE setCount NOTIFY countChanged)
+    Q_PROPERTY(int total_count READ total_count WRITE setTotal_count NOTIFY total_countChanged)
+    Q_PROPERTY(int total_pages READ total_pages WRITE setTotal_pages NOTIFY total_pagesChanged)
 
 public:
     //!
@@ -216,6 +216,15 @@ public:
 
 private:
     void*p=nullptr;
+signals:
+    void errorsChanged();
+    void messagesChanged();
+    void successChanged();
+    void pageChanged();
+    void per_pageChanged();
+    void countChanged();
+    void total_countChanged();
+    void total_pagesChanged();
 };
 
 }
