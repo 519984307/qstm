@@ -67,6 +67,7 @@ static const auto vpInputType="inputType";
 static const auto vpInputMask="inputMask";
 static const auto vtInputLinks="inputlinks";
 static const auto vpFiltrableStrategy="searchStrategy";
+
 static const auto vtInputCurrency="inputcurrency";
 static const auto vtInputNumber="inputnumber";
 static const auto vtInputDouble="inputdouble";
@@ -81,10 +82,10 @@ static const auto vtInputUuid="inputuiid";
 static const auto vtInputMd5="inputmd5";
 static const auto vtInputDateTime="inputdatetime";
 static const auto vtInputCalendar="inputcalendar";
-static const auto vtSearchBox="searchbox";
-static const auto vtComboBox="comboBox";
-static const auto vtRadioBox="radiobox";
-static const auto vtCheckBox="checkbox";
+static const auto vtInputTextSearch="inputtextsearch";
+static const auto vtInputComboBox="inputcombobox";
+static const auto vtInputRadioBox="inputradiobox";
+static const auto vtInputCheckBox="inputcheckbox";
 static const auto vtInputAddress="inputaddress";
 
 static const auto vpOutput="output";
