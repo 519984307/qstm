@@ -55,7 +55,7 @@ public:
     //Q_PROPERTY(bool caching READ caching CONSTANT )
 public:
     explicit FileInfo();
-    explicit FileInfo(const QString&fileName);
+    explicit FileInfo(const QString &fileName);
     virtual ~FileInfo();
 
     //!

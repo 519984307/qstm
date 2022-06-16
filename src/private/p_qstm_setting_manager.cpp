@@ -18,7 +18,7 @@ bool QStm::SettingManagerPrv::isLoaded()
         if(i.key().trimmed().isEmpty())
             continue;
 
-        auto&v=i.value();
+        auto &v=i.value();
         if(!v->isValid())
             continue;
 
@@ -32,7 +32,7 @@ bool QStm::SettingManagerPrv::isEmpty()
     QHashIterator<QString, SettingBase*> i(this->settings);
     while (i.hasNext()) {
         i.next();
-        auto&v=i.value();
+        auto &v=i.value();
         if(!v->isValid())
             continue;
         return false;
@@ -52,7 +52,7 @@ QVariantHash QStm::SettingManagerPrv::toHash()
     QVariantHash vHash, vServices;
     auto vList=QList<SettingBase*>()<<&this->settingsDefault;
     vList=vList+this->settings.values();
-    for(auto&v:vList)
+    for(auto &v:vList)
         vServices.insert(v->name(), v->toHash());
     vHash.insert(qsl("variables"), this->variables);
     vHash.insert(qsl("services"), vServices);
@@ -90,7 +90,7 @@ QStm::SettingBase *QStm::SettingManagerPrv::settingCreate(QObject *parent)
 
 QStm::SettingManager &QStm::SettingManagerPrv::insert(const QVariantHash &value)
 {
-    auto&p=*this;
+    auto &p=*this;
     QVariantHash vValue=value;
     if(vValue.isEmpty())
         return*this->parent;
@@ -103,7 +103,7 @@ QStm::SettingManager &QStm::SettingManagerPrv::insert(const QVariantHash &value)
         setting->deleteLater();
 
     static auto l=QStringList{QT_STRINGIFY2(activityLimit),QT_STRINGIFY2(activityInterval)};
-    for(auto&property:l){
+    for(auto &property:l){
         auto v=vValue.value(property);
         if(v.isValid() && v.toLongLong()<=0){
             v=SettingBase::parseInterval(v);
@@ -133,7 +133,7 @@ bool QStm::SettingManagerPrv::v_load(const QVariant &v)
 
 bool QStm::SettingManagerPrv::load(QObject *settingsObject)
 {
-    auto&p=*this;
+    auto &p=*this;
     if(settingsObject==nullptr)
         return false;
 
@@ -160,8 +160,8 @@ bool QStm::SettingManagerPrv::load(QObject *settingsObject)
 bool QStm::SettingManagerPrv::load(const QStringList &settingsFileName)
 {
     QVariantList vList;
-    auto&p=*this;
-    for(auto&fileName:settingsFileName){
+    auto &p=*this;
+    for(auto &fileName:settingsFileName){
         QFile file(fileName);
         if(fileName.isEmpty())
             continue;
@@ -213,7 +213,7 @@ bool QStm::SettingManagerPrv::load(const QStringList &settingsFileName)
 
 bool QStm::SettingManagerPrv::load(const QString &fileName)
 {
-    auto&p=*this;
+    auto &p=*this;
     QFile file(fileName);
     if(fileName.trimmed().isEmpty()){
 #if Q_STM_LOG
@@ -266,7 +266,7 @@ bool QStm::SettingManagerPrv::load(const QString &fileName)
 
 bool QStm::SettingManagerPrv::load(const QVariantHash &settingsBody)
 {
-    auto&p=*this;
+    auto &p=*this;
     p.settingBody=settingsBody;
 
     const auto settings=settingsBody.contains(qsl("services"))?settingsBody.value(qsl("services")).toHash():p.settingBody;
@@ -298,7 +298,7 @@ bool QStm::SettingManagerPrv::load(const QVariantHash &settingsBody)
         case QMetaType_QVariantList:
         case QMetaType_QStringList:
         {
-            for(auto&v:varguments.toList()){
+            for(auto &v:varguments.toList()){
                 auto l=v.toString().split(qsl("="));
                 if(l.isEmpty())
                     continue;

@@ -21,7 +21,7 @@ static const auto &qpercent_class_name=*PrivateQStm::qpercent_class_name;
 static auto &staticMaskMap=*PrivateQStm::staticMaskMap;
 
 #define dPvt()\
-    auto&p = *reinterpret_cast<QCurrencyPvt*>(this->p)
+    auto &p = *reinterpret_cast<QCurrencyPvt*>(this->p)
 
 class QCurrencyPvt{
 public:
@@ -36,9 +36,9 @@ public:
     {
 
     }
-    auto&setValue(const QVariant &value)
+    auto &setValue(const QVariant &value)
     {
-        auto&v=*dynamic_cast<QVariant*>(this->parent);
+        auto &v=*dynamic_cast<QVariant*>(this->parent);
         this->qbcmath.setValue(value.toString());
         this->qbcmath.round(this->precision);
         v.setValue(qbcmath.toString());

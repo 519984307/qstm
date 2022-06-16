@@ -62,7 +62,7 @@ public:
     //! \param v
     //! \return
     //!
-    VariantUtil&operator=(const QVariant&v);
+    VariantUtil&operator=(const QVariant &v);
 
     //!
     //! \brief isUuid
@@ -77,7 +77,7 @@ public:
     //! \param uuidSet
     //! \return
     //!
-    virtual bool isUuid(const QVariant&v, QUuid&uuidSet) const;
+    virtual bool isUuid(const QVariant &v, QUuid&uuidSet) const;
 
     //!
     //! \brief isHex
@@ -250,7 +250,7 @@ public:
     //! \param v
     //! \return
     //!
-    virtual const QVVM toVVM(const QVariant&v);
+    virtual const QVVM toVVM(const QVariant &v);
 
     //!
     //! \brief toVVM
@@ -284,14 +284,14 @@ public:
     //! \param v
     //! \return
     //!
-    virtual const QStringList toStringList(const QVariant&v);
+    virtual const QStringList toStringList(const QVariant &v);
 
     //!
     //! \brief toList
     //! \param v
     //! \return
     //!
-    virtual const QVariantList toList(const QVariant&v=QVariant());
+    virtual const QVariantList toList(const QVariant &v=QVariant());
 
     //!
     //! \brief toMap
@@ -304,7 +304,7 @@ public:
     //! \param v
     //! \return
     //!
-    virtual const QVariantMap toMap(const QVariant&v);
+    virtual const QVariantMap toMap(const QVariant &v);
 
     //!
     //! \brief toMap
@@ -312,7 +312,7 @@ public:
     //! \param value
     //! \return
     //!
-    virtual const QVariantMap toMap(const QVariant&key, const QVariant&value);
+    virtual const QVariantMap toMap(const QVariant&key, const QVariant &value);
 
     //!
     //! \brief toHash
@@ -325,7 +325,7 @@ public:
     //! \param v
     //! \return
     //!
-    virtual const QVariantHash toHash(const QVariant&v);
+    virtual const QVariantHash toHash(const QVariant &v);
 
     //!
     //! \brief toHash
@@ -333,7 +333,7 @@ public:
     //! \param value
     //! \return
     //!
-    virtual const QVariantHash toHash(const QVariant&key, const QVariant&value);
+    virtual const QVariantHash toHash(const QVariant&key, const QVariant &value);
 
     //!
     //! \brief toMultiHash
@@ -369,28 +369,28 @@ public:
     //! \param v
     //! \return
     //!
-    virtual const QVariant toVariant(const QVariant&v);
+    virtual const QVariant toVariant(const QVariant &v);
 
     //!
     //! \brief toVariantObject
     //! \param v
     //! \return
     //!
-    virtual const QVariant toVariantObject(const QVariant&v);
+    virtual const QVariant toVariantObject(const QVariant &v);
 
     //!
     //! \brief toVariantJson
     //! \param v
     //! \return
     //!
-    virtual const QVariant toVariantJson(const QVariant&v);
+    virtual const QVariant toVariantJson(const QVariant &v);
 
     //!
     //! \brief toVariantCBor
     //! \param v
     //! \return
     //!
-    virtual const QVariant toVariantCBor(const QVariant&v);
+    virtual const QVariant toVariantCBor(const QVariant &v);
 
     //!
     //! \brief toUrl
@@ -413,7 +413,7 @@ public:
     //! \param value
     //! \return
     //!
-    virtual VariantUtil &mVVM(const QVariant&key, const QVariant&value);
+    virtual VariantUtil &mVVM(const QVariant&key, const QVariant &value);
 
     //!
     //! \brief makeMap
@@ -421,7 +421,7 @@ public:
     //! \param value
     //! \return
     //!
-    virtual VariantUtil &makeMap(const QVariant&key, const QVariant&value);
+    virtual VariantUtil &makeMap(const QVariant&key, const QVariant &value);
 
     //!
     //! \brief mMap
@@ -429,7 +429,7 @@ public:
     //! \param value
     //! \return
     //!
-    virtual VariantUtil &mMap(const QVariant&key, const QVariant&value);
+    virtual VariantUtil &mMap(const QVariant&key, const QVariant &value);
 
     //!
     //! \brief makeHash
@@ -437,7 +437,7 @@ public:
     //! \param value
     //! \return
     //!
-    virtual VariantUtil &makeHash(const QVariant&key, const QVariant&value);
+    virtual VariantUtil &makeHash(const QVariant&key, const QVariant &value);
 
     //!
     //! \brief mHash
@@ -445,28 +445,28 @@ public:
     //! \param value
     //! \return
     //!
-    virtual VariantUtil &mHash(const QVariant&key, const QVariant&value);
+    virtual VariantUtil &mHash(const QVariant&key, const QVariant &value);
 
     //!
     //! \brief makeList
     //! \param value
     //! \return
     //!
-    virtual VariantUtil &makeList(const QVariant&value);
+    virtual VariantUtil &makeList(const QVariant &value);
 
     //!
     //! \brief mList
     //! \param value
     //! \return
     //!
-    virtual VariantUtil &mList(const QVariant&value);
+    virtual VariantUtil &mList(const QVariant &value);
 
     //!
     //! \brief toUuidCompuser
     //! \param value
     //! \return
     //!
-    virtual const QUuid toUuidCompuser(const QVariant&value);
+    virtual const QUuid toUuidCompuser(const QVariant &value);
 
     //!
     //! \brief clear
@@ -479,7 +479,7 @@ public:
     //! \param v
     //! \return
     //!
-    virtual VariantUtil &vUnion(const QVariant&v);
+    virtual VariantUtil &vUnion(const QVariant &v);
 
     //!
     //! \brief vUnion
@@ -487,14 +487,14 @@ public:
     //! \param vSource
     //! \return
     //!
-    virtual VariantUtil &vUnion(const QVariant&vDestine, const QVariant&vSource);
+    virtual VariantUtil &vUnion(const QVariant &vDestine, const QVariant &vSource);
 
     //!
     //! \brief vMerge
     //! \param v
     //! \return
     //!
-    virtual VariantUtil &vMerge(const QVariant&v);
+    virtual VariantUtil &vMerge(const QVariant &v);
 
     //!
     //! \brief vMerge
@@ -502,14 +502,14 @@ public:
     //! \param vSource
     //! \return
     //!
-    virtual VariantUtil &vMerge(const QVariant &vDestine, const QVariant&vSource);
+    virtual VariantUtil &vMerge(const QVariant &vDestine, const QVariant &vSource);
 
     //!
     //! \brief vDeduplicate
     //! \param v
     //! \return
     //!
-    virtual VariantUtil &vDeduplicate(const QVariant&v);
+    virtual VariantUtil &vDeduplicate(const QVariant &v);
 
     //!
     //! \brief vIsEmpty
@@ -552,7 +552,7 @@ public:
     //! \param typeId
     //! \return
     //!
-    virtual QVariant convertTo(const QVariant&v, int typeId);
+    virtual QVariant convertTo(const QVariant &v, int typeId);
 
 private:
     void*p=nullptr;

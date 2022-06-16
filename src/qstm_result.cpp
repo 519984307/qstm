@@ -27,14 +27,14 @@ static const MakeArStats &__makeArStats()
     return __makeArStats;
 }
 
-static const auto&__makeStatusCodeSuccessList()
+static const auto &__makeStatusCodeSuccessList()
 {
     static auto vList=QVector<int>{0, 200, 201, 202};
     return vList;
 }
 
-static const auto&makeArStats = __makeArStats();
-static const auto&statusCodeSuccessList = __makeStatusCodeSuccessList();
+static const auto &makeArStats = __makeArStats();
+static const auto &statusCodeSuccessList = __makeStatusCodeSuccessList();
 
 struct QStmConstsResult
 {
@@ -94,7 +94,7 @@ public:
         if (this->isOk()) {
             this->resultInfo.clearErrors();
             resultInfo.setSuccess(true);
-            auto&msgs=resultInfo.messages();
+            auto &msgs=resultInfo.messages();
             msgs.clear();
             msgs.append(this->parent->returnText());
             return;
@@ -112,7 +112,7 @@ public:
         }
         if(!this->parent->returnText().isEmpty()){
             resultInfo.setSuccess(false);
-            auto&msgs=resultInfo.errors();
+            auto &msgs=resultInfo.errors();
             msgs.clear();
             msgs.append(this->parent->returnText());
         }
@@ -488,7 +488,7 @@ QVariantHash ResultValue::resultHash() const
 QVariantList ResultValue::resultList() const
 {
     dPvt();
-    auto&v=p.resultVariant;
+    auto &v=p.resultVariant;
     switch (qTypeId(v)) {
     case QMetaType_QVariantHash:
     case QMetaType_QVariantMap:
@@ -501,7 +501,7 @@ QVariantList ResultValue::resultList() const
 QStringList ResultValue::resultStringList() const
 {
     dPvt();
-    auto&v=p.resultVariant;
+    auto &v=p.resultVariant;
     switch (qTypeId(v)) {
     case QMetaType_QStringList:
         return v.toStringList();
@@ -509,7 +509,7 @@ QStringList ResultValue::resultStringList() const
     {
         Q_DECLARE_VU;
         QStringList __return;
-        for(auto&row:v.toList()){
+        for(auto &row:v.toList()){
             switch (qTypeId(row)) {
             case QMetaType_QVariantHash:
             case QMetaType_QVariantMap:
@@ -537,7 +537,7 @@ QStringList ResultValue::resultStringList() const
 QVariantList ResultValue::resultToList() const
 {
     dPvt();
-    auto&v=p.resultVariant;
+    auto &v=p.resultVariant;
     switch (qTypeId(v)) {
     case QMetaType_QVariantList:
     case QMetaType_QStringList:

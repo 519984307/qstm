@@ -69,10 +69,10 @@ Q_GLOBAL_STATIC(FormattingUtilStruct,___formattingUtilStruct)
 
 
 #define dPvt()\
-auto&p = *reinterpret_cast<FormattingUtilPvt*>(this->p)
+auto &p = *reinterpret_cast<FormattingUtilPvt*>(this->p)
 
 
-          auto&consts=*___formattingUtilStruct;
+          auto &consts=*___formattingUtilStruct;
 
 void init(){
     consts.init();
@@ -292,7 +292,7 @@ const QString FormattingUtil::v(const QVariant &v, int prec)
     return QVariant::toString();
 }
 
-const QString FormattingUtil::currencySymbol(const QVariant&v)
+const QString FormattingUtil::currencySymbol(const QVariant &v)
 {
     static const QLocale brz(QLocale::Portuguese, QLocale::Brazil);
     auto __v=brz.currencySymbol();

@@ -30,7 +30,7 @@ public:
     //! \param v
     //! \return
     //!
-    DoubleUtil&operator=(const QVariant&v);
+    DoubleUtil&operator=(const QVariant &v);
 
     //!
     //! \brief checkBetween

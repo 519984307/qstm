@@ -112,7 +112,7 @@ private:
         int activityThread=0;
         QVariant memoryLimit=0;
 
-        static QVariant staticReplaceString(const QVariantHash&static_variables, const QVariant&v)
+        static QVariant staticReplaceString(const QVariantHash&static_variables, const QVariant &v)
         {
             QString value;
             auto typeId=qTypeId(v);
@@ -153,14 +153,14 @@ private:
 
         }
 
-        static const QVariant replaceEnvStatic(const QVariant&v)
+        static const QVariant replaceEnvStatic(const QVariant &v)
         {
             auto value=v;
             value=staticReplaceString(QStm::Private::static_variables(), value);
             return value;
         }
 
-        QVariant replaceEnv(const QVariant&v)const
+        QVariant replaceEnv(const QVariant &v)const
         {
             auto value=v;
             value=staticReplaceString(QStm::Private::static_variables(), value);
@@ -168,19 +168,19 @@ private:
             return value;
         }
 
-        static const QVariant getAlpha(const QVariant&v)
+        static const QVariant getAlpha(const QVariant &v)
         {
             auto num=qsl("0123456789,.");
             QString r;
             auto ss=v.toString();
-            for(auto&v:ss){
+            for(auto &v:ss){
                 if(!num.contains(v))
                     r+=v;
             }
             return r;
         }
 
-        static const QVariant getNumber(const QVariant&v)
+        static const QVariant getNumber(const QVariant &v)
         {
             auto num=qsl("0123456789,.");
             QString r,ss;
@@ -203,20 +203,20 @@ private:
                 ss=v.toString();
             }
 
-            for(auto&c:ss){
+            for(auto &c:ss){
                 if(num.contains(c))
                     r+=c;
             }
             return r;
         }
 
-        static QVariant getInterval(const QVariant&v, const QVariant&defaultV=QVariant())
+        static QVariant getInterval(const QVariant &v, const QVariant&defaultV=QVariant())
         {
             Q_DECLARE_DU;
             return du.parseInterval(v,defaultV);
         }
 
-        QVariant getMemoryBytes(const QVariant&v, const QVariant&defaultV=QVariant())
+        QVariant getMemoryBytes(const QVariant &v, const QVariant&defaultV=QVariant())
         {
             if(v.isNull() || !v.isValid() || v.toLongLong()<0)
                 return defaultV;
@@ -290,7 +290,7 @@ public:
 
     ~SettingBaseTemplate()
     {
-        auto&p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);delete&p;
+        auto &p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);delete&p;
     }
 
     //!
@@ -319,7 +319,7 @@ public:
     //!
     QVariant parseVariables(const QVariant &v) const
     {
-        auto&p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
+        auto &p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
         return p.replaceEnv(v);
     }
 
@@ -339,9 +339,9 @@ public:
     //! \param v
     //! \return
     //!
-    QVariant variable(const QString&v) const
+    QVariant variable(const QString &v) const
     {
-        auto&p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
+        auto &p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
         auto var=p.variables.value(v);
         return var.isValid()?var:p.replaceEnv(var);
     }
@@ -351,7 +351,7 @@ public:
     //! \param v
     //! \return
     //!
-    static const QVariant parseAlpha(const QVariant&v)
+    static const QVariant parseAlpha(const QVariant &v)
     {
         return SettingBaseTemplatePrv::getAlpha(v);
     }
@@ -361,7 +361,7 @@ public:
     //! \param v
     //! \return
     //!
-    static const QVariant parseNumber(const QVariant&v)
+    static const QVariant parseNumber(const QVariant &v)
     {
         return SettingBaseTemplatePrv::getNumber(v);
     }
@@ -371,7 +371,7 @@ public:
     //! \param v
     //! \return
     //!
-    static const QVariant parseInterval(const QVariant&v)
+    static const QVariant parseInterval(const QVariant &v)
     {
         return SettingBaseTemplatePrv::getInterval(v, QVariant());
     }
@@ -382,7 +382,7 @@ public:
     //! \param interval
     //! \return
     //!
-    static const QVariant parseInterval(const QVariant&v, const QVariant &interval)
+    static const QVariant parseInterval(const QVariant &v, const QVariant &interval)
     {
         return SettingBaseTemplatePrv::getInterval(v, interval);
     }
@@ -411,7 +411,7 @@ public:
     //! \param name
     //! \return
     //!
-    virtual bool macth(const QString&name)
+    virtual bool macth(const QString &name)
     {
         auto i_name=this->name();
         auto startWith=i_name.contains(qbl("*"));
@@ -620,7 +620,7 @@ public:
         QStm::MetaObjectUtil metaObjectUtil(*metaObject);
         auto propertyList=metaObjectUtil.toPropertyList();
         bool __return=!v.isEmpty();
-        for(auto&property:propertyList){
+        for(auto &property:propertyList){
             if(QByteArray(property.name())==QT_STRINGIFY2(objectName))
                 continue;
 
@@ -688,7 +688,7 @@ public:
         case QMetaType_QVariantMap:
             return this->fromHash(vv.toHash());
         case QMetaType_QVariantList:{
-            for(auto&h:vv.toList())
+            for(auto &h:vv.toList())
                 if(!this->fromHash(h.toHash()))
                     return false;
             return true;
@@ -717,7 +717,7 @@ public:
         auto metaObject = this->metaObject();
         QStm::MetaObjectUtil metaObjectUtil(*metaObject);
         auto propertyList=metaObjectUtil.toPropertyList();
-        for(auto&property:propertyList){
+        for(auto &property:propertyList){
             auto key = QString::fromUtf8(property.name()).toLower();
 
             if(key==QT_STRINGIFY2(objectName))
@@ -807,7 +807,7 @@ public:
             return this->mergeHash(vv.toHash());
         case QMetaType_QVariantList:
         {
-            for(auto&h:vv.toList())
+            for(auto &h:vv.toList())
                 if(!this->mergeHash(h.toHash()))
                     return false;
             break;
@@ -826,12 +826,12 @@ public:
     //!
     virtual QString identification() const
     {
-        auto&p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
+        auto &p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
         return p.identification;
     }
     virtual T &setIdentification(const QString &value)
     {
-        auto&p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
+        auto &p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
         p.identification=value;
         return *dynamic_cast<T*>(this);
     }
@@ -842,12 +842,12 @@ public:
     //!
     virtual QString name() const
     {
-        auto&p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
+        auto &p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
         return p.name;
     }
     virtual T &setName(const QString &value)
     {
-        auto&p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
+        auto &p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
         p.name = value.trimmed();
         return *dynamic_cast<T*>(this);
     }
@@ -858,13 +858,13 @@ public:
     //!
     virtual QVariantHash &variables() const
     {
-        auto&p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
+        auto &p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
         return p.variables;
     }
 
     virtual T &setVariables(const QVariantHash &value)
     {
-        auto&p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
+        auto &p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
         p.variables=value;
         return *dynamic_cast<T*>(this);
     }
@@ -875,12 +875,12 @@ public:
     //!
     virtual bool enabled() const
     {
-        auto&p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
+        auto &p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
         return p.enabled;
     }
     virtual T &setEnabled(const bool &value)
     {
-        auto&p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
+        auto &p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
         p.enabled=value;
         return *dynamic_cast<T*>(this);
     }
@@ -891,12 +891,12 @@ public:
     //!
     virtual qlonglong activityLimit() const
     {
-        auto&p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
+        auto &p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
         return p.getInterval(p.activityLimit, defaultLimit).toLongLong();
     }
     virtual T &setActivityLimit(const QVariant &value)
     {
-        auto&p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
+        auto &p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
         p.activityLimit=value;
         return *dynamic_cast<T*>(this);
     }
@@ -907,12 +907,12 @@ public:
     //!
     virtual qlonglong activityInterval() const
     {
-        auto&p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
+        auto &p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
         return p.getInterval(p.activityInterval, defaultInterval).toLongLong();
     }
     virtual T &setActivityInterval(const QVariant &value)
     {
-        auto&p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
+        auto &p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
         p.activityInterval=value;
         return *dynamic_cast<T*>(this);
     }
@@ -923,12 +923,12 @@ public:
     //!
     virtual int activityThread() const
     {
-        auto&p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
+        auto &p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
         return p.activityThread>0?p.activityThread:QThread::idealThreadCount();
     }
     virtual T &setActivityThread(const QVariant &value)
     {
-        auto&p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
+        auto &p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
         p.activityThread=value.toInt();
         return *dynamic_cast<T*>(this);
     }
@@ -939,12 +939,12 @@ public:
     //!
     virtual qlonglong memoryLimit() const
     {
-        auto&p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
+        auto &p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
         return p.getMemoryBytes(p.memoryLimit, 0).toLongLong();
     }
     virtual T &setMemoryLimit(const QVariant &value)
     {
-        auto&p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
+        auto &p = *reinterpret_cast<SettingBaseTemplatePrv*>(this->p);
         p.memoryLimit=value;
         return *dynamic_cast<T*>(this);
     }

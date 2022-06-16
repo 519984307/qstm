@@ -19,7 +19,7 @@ public:
     //! \param v
     //! \param precision
     //!
-    explicit QCurrency(const QVariant&v=QVariant(), const QVariant&precision=QVariant());
+    explicit QCurrency(const QVariant &v=QVariant(), const QVariant&precision=QVariant());
 
     //!
     //! \brief ~QCurrency
@@ -31,7 +31,7 @@ public:
     //! \param v
     //! \return
     //! operator to calc
-    QCurrency&operator = (const QVariant&v);
+    QCurrency&operator = (const QVariant &v);
 
     //!
     //! \brief operator =
@@ -166,7 +166,7 @@ public:
     //! \param value
     //! \return
     //!operator to calc
-    virtual QCurrency &setValue(const QVariant&value);
+    virtual QCurrency &setValue(const QVariant &value);
 
     //!
     //! \brief toDouble

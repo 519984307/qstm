@@ -8,7 +8,7 @@
 namespace QStm {
 
 #define dPvt()\
-auto&p = *reinterpret_cast<DateUtilPvt*>(this->p)
+auto &p = *reinterpret_cast<DateUtilPvt*>(this->p)
 
 namespace QStmPvt
 {
@@ -17,9 +17,9 @@ namespace QStmPvt
     Q_GLOBAL_STATIC_WITH_ARGS(QStringList   , static_paramDelimiter , (qvsl_null<<","<<"|")                 )//
 }
 
-static const auto&static_minTime=*QStmPvt::static_minTime;
-static const auto&static_maxTime=*QStmPvt::static_maxTime;
-static const auto&static_paramDelimiter=*QStmPvt::static_paramDelimiter;
+static const auto &static_minTime=*QStmPvt::static_minTime;
+static const auto &static_maxTime=*QStmPvt::static_maxTime;
+static const auto &static_paramDelimiter=*QStmPvt::static_paramDelimiter;
 
 //static void initConsts(){
 //}
@@ -42,7 +42,7 @@ public:
         this->parent->setValue(QVariant());
     }
 
-    static const QVariant getAlpha(const QVariant&v)
+    static const QVariant getAlpha(const QVariant &v)
     {
         auto num=qsl("0123456789,.");
         QString r,ss;
@@ -60,14 +60,14 @@ public:
             ss=v.toString();
             break;
         }
-        for(auto&c:ss){
+        for(auto &c:ss){
             if(!num.contains(c))
                 r+=c;
         }
         return r;
     }
 
-    static const QVariant getNumber(const QVariant&v)
+    static const QVariant getNumber(const QVariant &v)
     {
         auto num=qsl("0123456789,.");
         QString r,ss;
@@ -87,14 +87,14 @@ public:
             break;
         }
 
-        for(auto&c:ss){
+        for(auto &c:ss){
             if(num.contains(c))
                 r+=c;
         }
         return r;
     }
 
-    QVariant parseInterval(const QVariant&v, const QVariant&defaultV=QVariant())
+    QVariant parseInterval(const QVariant &v, const QVariant&defaultV=QVariant())
     {
         if(v.isNull() || !v.isValid() || v.toLongLong()<0)
             return defaultV;
@@ -148,7 +148,7 @@ DateUtil&DateUtil::operator=(const QVariant &v)
     return*this;
 }
 
-QDateTime DateUtil::firstMonthDate(const QVariant&v) const
+QDateTime DateUtil::firstMonthDate(const QVariant &v) const
 {
     auto vv=v.isValid()?v:*this;
     QDate d;
@@ -177,7 +177,7 @@ QDateTime DateUtil::firstMonthDate(const QVariant&v) const
     return QDateTime(QDate(d.year(), d.month(), 1), static_minTime);
 }
 
-QDateTime DateUtil::lastMonthDate(const QVariant&v) const
+QDateTime DateUtil::lastMonthDate(const QVariant &v) const
 {
     auto vv=v.isValid()?v:*this;
     QDate d;
@@ -733,7 +733,7 @@ bool DateUtil::checkBetween(const QVariant &v, QDateTime &vMin, QDateTime &vMax)
     case QMetaType_QByteArray:
     {
         auto s=v.toString().trimmed();
-        for(auto&c:static_paramDelimiter){
+        for(auto &c:static_paramDelimiter){
             if(s.contains(c)){
                 vv=s.split(c);
                 break;
@@ -750,7 +750,7 @@ bool DateUtil::checkBetween(const QVariant &v, QDateTime &vMin, QDateTime &vMax)
     case QMetaType_QStringList:
     {
         auto l=vv.toList();
-        for(auto&v:l){
+        for(auto &v:l){
             v=v.toString().replace(qsl("\""),qsl_null).replace(qsl("'"),qsl_null).replace(qsl(";"),qsl_null);
         }
         vMin=l.size()<=0?QDateTime():l[0].toDateTime();

@@ -15,7 +15,7 @@
 namespace QStm {
 
 #define dPvt()\
-    auto&p = *reinterpret_cast<SettingManagerPrv*>(this->p)
+    auto &p = *reinterpret_cast<SettingManagerPrv*>(this->p)
 
 class SettingManagerPrv{
 public:
@@ -39,7 +39,7 @@ public:
 
     QVariantHash toHash();
 
-    QByteArray settingNameAdjust(const QString&settingName);
+    QByteArray settingNameAdjust(const QString &settingName);
 
     SettingBase&settingGetCheck(const QByteArray&settingName);
 

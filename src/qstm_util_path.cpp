@@ -6,7 +6,7 @@
 namespace QStm {
 
 #define dPvt()\
-    auto&p = *reinterpret_cast<PathUtilPvt*>(this->p)
+    auto &p = *reinterpret_cast<PathUtilPvt*>(this->p)
 
 class PathUtilPvt:public QObject{
 public:
@@ -25,7 +25,7 @@ public:
         this->v.clear();
     }
 
-    QString format(const QString&v)const
+    QString format(const QString &v)const
     {
         auto s=v;
         s=q_dir_separator+s.replace(qsl("\\"),q_dir_separator);
@@ -72,7 +72,7 @@ PathUtil &PathUtil::operator<<(const QVariant &v)
     return*this;
 }
 
-bool PathUtil::exists(const QVariant&v) const
+bool PathUtil::exists(const QVariant &v) const
 {
     dPvt();
     if(v.isValid())

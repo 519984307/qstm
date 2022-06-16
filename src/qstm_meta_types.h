@@ -68,7 +68,7 @@ public:
     //! \param v
     //! \return
     //!
-    static int qTypeId(const QVariant&v);
+    static int qTypeId(const QVariant &v);
 
     //!
     //! \brief qTypeId
@@ -82,7 +82,7 @@ public:
     //! \param v
     //! \return
     //!
-    static bool qIsNumeric(const QVariant&v);
+    static bool qIsNumeric(const QVariant &v);
 
     //!
     //! \brief QMetaTypeUtilString
@@ -171,7 +171,7 @@ public:
 //! \param v
 //! \return
 //!
-int qTypeId(const QVariant&v);
+int qTypeId(const QVariant &v);
 
 //!
 //! \brief qTypeId
@@ -185,7 +185,7 @@ int qTypeId(const QMetaProperty&p);
 //! \param v
 //! \return
 //!
-bool qIsNumeric(const QVariant&v);
+bool qIsNumeric(const QVariant &v);
 
 //!
 //! \brief QMetaTypeUtilString
