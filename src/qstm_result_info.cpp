@@ -6,7 +6,7 @@
 namespace QStm {
 
 #define dPvt()\
-    auto&p = *reinterpret_cast<ResultInfoPvt*>(this->p)\
+    auto &p = *reinterpret_cast<ResultInfoPvt*>(this->p)\
 
 class ResultInfoPvt{
 public :
@@ -190,7 +190,7 @@ const QVariantHash ResultInfo::toRequestHash() const
 QVariantMap ResultInfo::toMap()const
 {
     QVariantMap __return;
-    auto&metaObject = *this->metaObject();
+    auto &metaObject = *this->metaObject();
     for(int col = 0; col < metaObject.propertyCount(); ++col) {
         auto property = metaObject.property(col);
         __return.insert(property.name(), property.read(this));
@@ -201,7 +201,7 @@ QVariantMap ResultInfo::toMap()const
 QVariantHash ResultInfo::toHash() const
 {
     QVariantHash __return;
-    auto&metaObject = *this->metaObject();
+    auto &metaObject = *this->metaObject();
     for(int col = 0; col < metaObject.propertyCount(); ++col) {
         auto property = metaObject.property(col);
         __return.insert(property.name(), property.read(this));
@@ -233,7 +233,7 @@ bool ResultInfo::fromVar(const QVariant &v)
 bool ResultInfo::fromMap(const QVariantMap&map)
 {
     bool __return=false;
-    auto&metaObject = *this->metaObject();
+    auto &metaObject = *this->metaObject();
     for(int col = 0; col < metaObject.propertyCount(); ++col) {
         auto property = metaObject.property(col);
         if(property.write(this, map.value(property.name()))){
@@ -246,7 +246,7 @@ bool ResultInfo::fromMap(const QVariantMap&map)
 bool ResultInfo::fromHash(const QVariantHash &map)
 {
     bool __return=false;
-    auto&metaObject = *this->metaObject();
+    auto &metaObject = *this->metaObject();
     for(int col = 0; col < metaObject.propertyCount(); ++col) {
         auto property = metaObject.property(col);
         if(property.write(this, map.value(property.name()))){
@@ -259,7 +259,7 @@ bool ResultInfo::fromHash(const QVariantHash &map)
 bool ResultInfo::fromResultInfo(const ResultInfo &resultInfo)
 {
     bool __return=false;
-    auto&metaObject = *this->metaObject();
+    auto &metaObject = *this->metaObject();
     for(int col = 0; col < metaObject.propertyCount(); ++col) {
         auto property = metaObject.property(col);
         if(property.write(this, property.read(&resultInfo)))

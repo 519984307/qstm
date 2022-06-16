@@ -29,7 +29,7 @@ public:
     //! \param v
     //! \return
     //! set values
-    DateUtil&operator=(const QVariant&v);
+    DateUtil&operator=(const QVariant &v);
 
     //!
     //! \brief firstMonthDate
@@ -286,7 +286,7 @@ public:
     //! \return
     //!
     //! check and arrange bettween dates
-    bool checkBetween(const QVariant&v, QDateTime &vMin, QDateTime &vMax);
+    bool checkBetween(const QVariant &v, QDateTime &vMin, QDateTime &vMax);
 
     //!
     //! \brief checkBetween
@@ -324,7 +324,7 @@ public:
     //! \param defaultV
     //! \return
     //!parse text to interval ms
-    QVariant parseInterval(const QVariant&v, const QVariant&defaultV=QVariant());
+    QVariant parseInterval(const QVariant &v, const QVariant&defaultV=QVariant());
 
 private:
     void*p=nullptr;

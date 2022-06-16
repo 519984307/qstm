@@ -19,7 +19,7 @@ public:
     //! \param v
     //! \param settingName
     //!
-    explicit Message(const QVariant&v=QVariantHash(), const QString&settingName=QString());
+    explicit Message(const QVariant &v=QVariantHash(), const QString &settingName=QString());
     explicit Message(const ResultValue &v);
     virtual ~Message();
 
@@ -28,7 +28,7 @@ public:
     //! \param v
     //! \return
     //! operator to assigned values
-    Message&operator=(const QVariant&v);
+    Message&operator=(const QVariant &v);
 
     //!
     //! \brief operator <<
@@ -42,7 +42,7 @@ public:
     //! \param v
     //! \return
     //! make message with value
-    static Message make(const QVariant&v);
+    static Message make(const QVariant &v);
 
     //!
     //! \brief variables
@@ -55,21 +55,21 @@ public:
     //! \param v
     //! \return
     //! write variabled
-    Message &variables(const QVariant&v);
+    Message &variables(const QVariant &v);
 
     //!
     //! \brief setVariables
     //! \param v
     //! \return
     //!
-    Message &setVariables(const QVariant&v);
+    Message &setVariables(const QVariant &v);
 
     //!
     //! \brief read
     //! \param v
     //! \return
     //! assign values
-    Message&read(const QVariant&v);
+    Message&read(const QVariant &v);
 
     //!
     //! \brief isValid

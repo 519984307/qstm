@@ -6,7 +6,7 @@
 namespace QStm {
 
 #define dPvt()\
-auto&p =*reinterpret_cast<MessagePvt*>(this->p)
+auto &p =*reinterpret_cast<MessagePvt*>(this->p)
 
 class MessagePvt{
 public:
@@ -38,7 +38,7 @@ public:
     {
     }
 
-    static QVariant staticReplaceVar(const QVariantHash&static_variables, const QVariant&v)
+    static QVariant staticReplaceVar(const QVariantHash&static_variables, const QVariant &v)
     {
         Q_DECLARE_VU;
         QString value;
@@ -100,25 +100,25 @@ public:
     }
 
 
-    QVariant parserVariable(const QVariant&v)
+    QVariant parserVariable(const QVariant &v)
     {
         auto __return=staticReplaceVar(this->variables, v).toString();
         return __return;
     }
 
-    QString parserText(const QVariant&v)
+    QString parserText(const QVariant &v)
     {
         Q_DECLARE_VU;
         return vu.toStr(v);
     }
 
-    QString parserTextHtml(const QVariant&v)
+    QString parserTextHtml(const QVariant &v)
     {
         Q_DECLARE_VU;
         return vu.toStr(v);
     }
 
-    QString parserTextLine(const QVariant&v)
+    QString parserTextLine(const QVariant &v)
     {
         Q_DECLARE_VU;
         QVariantList vl;
@@ -130,7 +130,7 @@ public:
             vl<<v.toString();
 
         QStringList vsl;
-        for(auto&v:vl)
+        for(auto &v:vl)
             vsl<<vu.toStr(v);
         auto s=vsl.join(qsl_key_return);
         return s;
@@ -159,7 +159,7 @@ public:
 
     QString getStr(const QStringList &keys, const QVariantHash&vBody)
     {
-        for(auto&v:keys){
+        for(auto &v:keys){
             auto s=vBody.value(v).toString().trimmed();
             if(s.isEmpty())
                 continue;
@@ -204,7 +204,7 @@ public:
 
 };
 
-Message::Message(const QVariant&v, const QString&settingName):QVariant{}
+Message::Message(const QVariant &v, const QString &settingName):QVariant{}
 {
     this->p = new MessagePvt{this};
     dPvt();

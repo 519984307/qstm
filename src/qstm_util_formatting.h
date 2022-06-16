@@ -105,7 +105,7 @@ public:
     //! \param v
     //! \return
     //!
-    FormattingUtil&operator=(const QVariant&v);
+    FormattingUtil&operator=(const QVariant &v);
 
     //!
     //! \brief toDate

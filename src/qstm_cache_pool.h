@@ -79,7 +79,7 @@ public:
     //! \param value
     //! \return
     //!
-    virtual bool set(const QVariant &key, const QVariant&value)const;
+    virtual bool set(const QVariant &key, const QVariant &value)const;
 
     //!
     //! \brief take

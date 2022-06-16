@@ -5,7 +5,7 @@
 namespace QStm {
 
 #define dPvt()\
-    auto&p =*reinterpret_cast<UrlPvt*>(this->p)
+    auto &p =*reinterpret_cast<UrlPvt*>(this->p)
 
 class UrlPvt{
 public:

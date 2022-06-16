@@ -5,7 +5,7 @@
 #include <QDebug>
 
 #define Q_CONST_V\
-    const QVariant&v=QVariant()
+    const QVariant &v=QVariant()
 
 #define Q_CONST_D\
     const QDate&v=QDate()
@@ -31,7 +31,7 @@
     QStm::DateUtil dbu
 
 #define Q_LOOP_TIMEOUT(mSecs)\
-auto&___##mSecs=mSecs;\
+auto &___##mSecs=mSecs;\
 auto ___m_msecs_max_time##mSecs = QDateTime::currentDateTime().addMSecs(___##mSecs);\
 while(QDateTime::currentDateTime()<___m_msecs_max_time##mSecs)
 

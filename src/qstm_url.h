@@ -18,7 +18,7 @@ public:
     //! \brief Url
     //! \param v
     //!
-    Q_INVOKABLE explicit Url(const QVariant&v=QVariantHash());
+    Q_INVOKABLE explicit Url(const QVariant &v=QVariantHash());
 
     //!
     //! \brief Url
@@ -36,7 +36,7 @@ public:
     //! \param v
     //! \return
     //!
-    Url&operator=(const QVariant&v);
+    Url&operator=(const QVariant &v);
 
 
     //!
@@ -44,14 +44,14 @@ public:
     //! \param v
     //! \return
     //!
-    static Url from(const QVariant&v);
+    static Url from(const QVariant &v);
 
     //!
     //! \brief read
     //! \param v
     //! \return
     //!
-    Url&read(const QVariant&v);
+    Url&read(const QVariant &v);
 
     //!
     //! \brief headers

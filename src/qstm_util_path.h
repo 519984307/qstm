@@ -13,10 +13,10 @@ public:
     explicit PathUtil(Q_CONST_V);
     virtual ~PathUtil();
 
-    PathUtil&operator=(const QVariant&v);
-    PathUtil&operator+=(const QVariant&v);
-    PathUtil&operator-=(const QVariant&v);
-    PathUtil&operator<<(const QVariant&v);
+    PathUtil&operator=(const QVariant &v);
+    PathUtil&operator+=(const QVariant &v);
+    PathUtil&operator-=(const QVariant &v);
+    PathUtil&operator<<(const QVariant &v);
 
     //!
     //! \brief exists
@@ -125,7 +125,7 @@ public:
     //! \param v
     //! \return
     //!
-    QString arg(const QVariant&v);
+    QString arg(const QVariant &v);
 
 private:
     void*p=nullptr;

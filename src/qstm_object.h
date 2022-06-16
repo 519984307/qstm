@@ -68,14 +68,14 @@ public:
     //! \param value
     //! \return
     //!result value class
-    virtual ResultValue &lr(const QVariant&value);
+    virtual ResultValue &lr(const QVariant &value);
 
     //!
     //! \brief lr
     //! \param value
     //! \return
     //!result value class
-    virtual ResultValue &lr(const QString&value);
+    virtual ResultValue &lr(const QString &value);
 
     //!
     //! \brief lastResult
@@ -102,14 +102,14 @@ public:
     //! \param value
     //! \return
     //!result value class
-    virtual ResultValue &lastResult(const QVariant&value);
+    virtual ResultValue &lastResult(const QVariant &value);
 
     //!
     //! \brief lastResult
     //! \param value
     //! \return
     //!result value class
-    virtual ResultValue &lastResult(const QString&value);
+    virtual ResultValue &lastResult(const QString &value);
 
     //!
     //! \brief setResult
@@ -130,14 +130,14 @@ public:
     //! \param value
     //! \return
     //!result value class
-    virtual ResultValue &setResult(const QVariant&value);
+    virtual ResultValue &setResult(const QVariant &value);
 
     //!
     //! \brief setResult
     //! \param value
     //! \return
     //!result value class
-    virtual ResultValue &setResult(const QString&value);
+    virtual ResultValue &setResult(const QString &value);
 
     //!
     //! \brief now
@@ -157,14 +157,14 @@ public:
     //! \param value
     //! \return
     //!
-    static const QByteArray toMd5(const QString&value);
+    static const QByteArray toMd5(const QString &value);
 
     //!
     //! \brief toMd5
     //! \param value
     //! \return
     //!
-    static const QByteArray toMd5(const QVariant&value);
+    static const QByteArray toMd5(const QVariant &value);
 
     //!
     //! \brief uuidGenerator
@@ -177,7 +177,7 @@ public:
     //! \param uuidBase
     //! \return
     //!
-    static const QUuid uuidGenerator(const QString&uuidBase);
+    static const QUuid uuidGenerator(const QString &uuidBase);
 
     //!
     //! \brief uuidGenCheck

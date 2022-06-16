@@ -17,7 +17,7 @@
 namespace QStm {
 
 #define dPvt()\
-    auto&p = *reinterpret_cast<VariantUtilPvt*>(this->p)
+    auto &p = *reinterpret_cast<VariantUtilPvt*>(this->p)
 
 
 #define set__value(v)\
@@ -190,14 +190,14 @@ public:
         return false;
     }
 
-    bool md5ParserUuid(const QString& vtext, QString&outText)const
+    bool md5ParserUuid(const QString & vtext, QString&outText)const
     {
         QByteArray suuid;
         auto text=vtext;
         text.replace(qsl("-"),qsl_null).replace(qsl("{"),qsl_null).replace(qsl("}"),qsl_null);
         if(text.length()==32){
             int i=0;
-            for(auto&c:text){
+            for(auto &c:text){
                 ++i;
                 suuid.append(c.toLatin1());
                 if(i==8 || i==12 || i==16 || i==20)
@@ -210,7 +210,7 @@ public:
         return false;
     }
 
-    QUuid md5toUuid(const QString&md5)const
+    QUuid md5toUuid(const QString &md5)const
     {
         auto smd5=md5;
         if(md5ParserUuid(smd5, smd5))
@@ -253,7 +253,7 @@ public:
             QHashIterator<QString, QVariant> i(bMap);
             while (i.hasNext()) {
                 i.next();
-                const auto&k=i.key();
+                const auto &k=i.key();
                 if(!aMap.contains(k))
                     aMap[k]=i.value();
             }
@@ -262,7 +262,7 @@ public:
 
         QByteArray rByte;
         auto ls=QVariantList{vDestine, vSource};
-        for(auto&v:ls){
+        for(auto &v:ls){
             rByte.append(v.toByteArray());
         }
         return rByte;
@@ -280,7 +280,7 @@ public:
                 auto vList=vOut.toList();
                 if(!vList.isEmpty()){
                     auto vA=QVariant(vList.takeFirst());
-                    for(const auto&vB:vList){
+                    for(const auto &vB:vList){
                         if(qTypeId(vB)==qTypeId(vA)){
                             vA=vMerge(vA,vB);
                         }
@@ -292,7 +292,7 @@ public:
         return {};
     }
 
-    static QVariant vMerge(const QVariant&vDestineIn, const QVariant&vSourceIn)
+    static QVariant vMerge(const QVariant &vDestineIn, const QVariant &vSourceIn)
     {
         QVariant vDestine;
         QVariant vSource;
@@ -311,7 +311,7 @@ public:
             auto src=vSource.toList();
             QStringList keyList;
             QVariantList lst;
-            for(const auto&v:dst){//cache de chaves existentes
+            for(const auto &v:dst){//cache de chaves existentes
                 if(v.isValid()){
                     auto typeId=qTypeId(v);
                     if(QMetaTypeUtilVariantDictionary.contains(typeId)){
@@ -321,7 +321,7 @@ public:
                     keyList<<toByteArray(v);
                 }
             }
-            for(auto&v:src){
+            for(auto &v:src){
                 if(v.isValid()){
                     QByteArray key;
                     auto typeId=qTypeId(v);
@@ -343,9 +343,9 @@ public:
             QHashIterator<QString, QVariant> i(bMap);
             while (i.hasNext()) {
                 i.next();
-                const auto&k=i.key();
-                const auto&vb=i.value();
-                auto&va=aMap[k];
+                const auto &k=i.key();
+                const auto &vb=i.value();
+                auto &va=aMap[k];
                 if(!va.isValid() || va.isNull()){
                     va=vb;
                 }
@@ -359,13 +359,13 @@ public:
 
         QByteArray rByte;
         auto ls=QVariantList{vDestine, vSource};
-        for(auto&v:ls){
+        for(auto &v:ls){
             rByte.append(v.toByteArray());
         }
         return rByte;
     }
 
-    QVariant vDeduplicate(const QVariant&v){
+    QVariant vDeduplicate(const QVariant &v){
         QVariant vRet;
         auto typeId=qTypeId(v);
         if(QMetaTypeUtilVariantDictionary.contains(typeId)){
@@ -374,7 +374,7 @@ public:
             QHashIterator<QString, QVariant> i(vMap);
             while (i.hasNext()) {
                 i.next();
-                const auto&key=i.key();//no modifique a chave
+                const auto &key=i.key();//no modifique a chave
                 auto value=vDeduplicate(i.value());
                 if(vAdd.contains(key))
                     vAdd.insert(key, value);
@@ -385,7 +385,7 @@ public:
         if(QMetaTypeUtilVariantList.contains(typeId)){
             auto vMap=v.toList();
             auto vAdd=QVariantHash();
-            for(auto&v:vMap){
+            for(auto &v:vMap){
                 const auto value=vDeduplicate(v);
                 const auto key=toMd5(value);
                 if(!vAdd.contains(key))
@@ -454,7 +454,7 @@ bool VariantUtil::isUuid(const QVariant &v, QUuid &uuidSet) const
 bool VariantUtil::isHex(const QVariant &v)const
 {
     bool __isHex=false;
-    for(auto&c:v.toString()){
+    for(auto &c:v.toString()){
         if (!isxdigit(c.toLatin1()))
             return false;
         else
@@ -481,7 +481,7 @@ const QByteArray VariantUtil::toAlphaNumber(const QVariant &v)
     QString __return;
     static auto num=qsl("0123456789");
     auto text=v.toString();
-    for(auto&c:text){
+    for(auto &c:text){
         if(num.contains(c))
             __return+=c;
     }
@@ -493,7 +493,7 @@ const QByteArray VariantUtil::toAlphaNumeric(const QVariant &v)
     QString __return;
     static auto num=qsl("0123456789.,-");
     auto text=v.toString();
-    for(auto&c:text){
+    for(auto &c:text){
         if(num.contains(c))
             __return+=c;
     }
@@ -505,7 +505,7 @@ const QString VariantUtil::toAlphaText(const QVariant &v)
     QString __return;
     static auto num=qsl("0123456789");
     auto text=v.toString();
-    for(auto&c:text){
+    for(auto &c:text){
         if(!num.contains(c))
             __return+=c;
     }
@@ -696,7 +696,7 @@ const QVariantList VariantUtil::takeList(const QByteArray &keyName)
         la=this->toList();
     else
         la<<this->toHash();
-    for(auto&v:la){
+    for(auto &v:la){
         if(QMetaTypeUtilVariantDictionary.contains(qTypeId(v))){
             auto vm=v.toHash();
             auto vv=vm.value(keyName);
@@ -1053,7 +1053,7 @@ VariantUtil &VariantUtil::makeList(const QVariant &value)
     return*this;
 }
 
-VariantUtil &VariantUtil::mList(const QVariant&value)
+VariantUtil &VariantUtil::mList(const QVariant &value)
 {
     return this->makeList(value);
 }
@@ -1076,7 +1076,7 @@ const QUuid VariantUtil::toUuidCompuser(const QVariant &value)
     if(compuserValues.isEmpty())
         return {};
 
-    for(auto&v:compuserValues){
+    for(auto &v:compuserValues){
         QString text;
         switch (qTypeId(v)) {
         case QMetaType_QUuid:

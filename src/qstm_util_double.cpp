@@ -3,7 +3,7 @@
 namespace QStm {
 
 #define dPvt()\
-    auto&p = *reinterpret_cast<DoubleUtilPvt*>(this->p)
+    auto &p = *reinterpret_cast<DoubleUtilPvt*>(this->p)
 
 class DoubleUtilPvt{
 public:

@@ -18,7 +18,7 @@
 namespace QStm {
 
 #define dPvt()\
-    auto&p = *reinterpret_cast<SettingBasePrv*>(this->p)
+    auto &p = *reinterpret_cast<SettingBasePrv*>(this->p)
 
 class SettingBasePrv{
 public:
@@ -67,7 +67,7 @@ QVariant SettingBase::url()const
     if(vRouteList.isEmpty() && !this->route().toString().isEmpty())
         vRouteList<<this->route();
 
-    for(auto&v:vRouteList){
+    for(auto &v:vRouteList){
         auto route=v.toString().trimmed();
         auto url=qsl("%1:%2/%3").arg(this->hostName()).arg(this->port()).arg(route);
         while(url.contains(qsl("//")))
@@ -79,7 +79,7 @@ QVariant SettingBase::url()const
         case QMetaType_QStringList:
         {
             auto record=this->protocol().toList();
-            for(const auto&v:record){
+            for(const auto &v:record){
                 QString protocol;
                 switch (qTypeId(v)) {
                 case QMetaType_Int:
@@ -239,14 +239,14 @@ QVariant SettingBase::route() const
 QVariantList SettingBase::routeList() const
 {
     dPvt();
-    const auto&vRoute=p.route;
+    const auto &vRoute=p.route;
     QVariantList vRouteList=vRoute.toList();
     if(vRouteList.isEmpty()){
         auto route=vRoute.toString().trimmed();
         if(!route.isEmpty())
             vRouteList<<route;
     }
-    for(auto&v:vRouteList)
+    for(auto &v:vRouteList)
         v=this->parseVariables(v.toString().trimmed());
     return vRouteList;
 }

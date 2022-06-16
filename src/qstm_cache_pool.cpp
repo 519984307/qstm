@@ -19,9 +19,9 @@ namespace QStm {
 typedef QPair<QDateTime,QVariant> CacheItem;
 
 #define dPvt()\
-    auto&p = *reinterpret_cast<CachePoolPrv*>(this->p)
+    auto &p = *reinterpret_cast<CachePoolPrv*>(this->p)
 
-static auto&instancesMap=*PrivateQStm::instancesMap;
+static auto &instancesMap=*PrivateQStm::instancesMap;
 
 class CachePoolPrv:public QObject{
 public:
@@ -34,7 +34,7 @@ public:
     {
     }
 
-    QByteArray toMd5(const QVariant&value)const
+    QByteArray toMd5(const QVariant &value)const
     {
         QByteArray bytes;
         switch (qTypeId(value)) {
@@ -83,7 +83,7 @@ CachePool &CachePool::instance(QThread*currentThread)
 {
     static QMutex instanceMutex;
     QMutexLOCKER locker(&instanceMutex);//enfileira e apenas 1 vai entrar
-    auto&i=instancesMap[currentThread];
+    auto &i=instancesMap[currentThread];
     if(i==nullptr){
         i=new CachePool();
     }

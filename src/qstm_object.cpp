@@ -15,7 +15,7 @@ Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,__static_uuid_base_data,(QUuid::createUuid(
 Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,__static_uuid_delimer,("|"))
 
 #define dPvt()\
-    auto&p = *reinterpret_cast<ObjectPrv*>(this->p)
+    auto &p = *reinterpret_cast<ObjectPrv*>(this->p)
 
 class ObjectPrv{
 public:
@@ -40,7 +40,7 @@ public:
         return*this->_cachePool;
     }
 
-    static const QByteArray toMd5(const QVariant&value)
+    static const QByteArray toMd5(const QVariant &value)
     {
         Q_DECLARE_VU;
         return vu.toMd5(value);
@@ -48,7 +48,7 @@ public:
 
     QByteArray storedMd5Make() const
     {
-        auto&metaObject = *this->parent->metaObject();
+        auto &metaObject = *this->parent->metaObject();
         QVariantHash vBody;
         for(int col = 0; col < metaObject.propertyCount(); ++col) {
             auto property = metaObject.property(col);
@@ -110,7 +110,7 @@ ResultValue &Object::lr(const QSqlError&value)
     return p.result;
 }
 
-ResultValue &Object::lr(const QVariant&value)
+ResultValue &Object::lr(const QVariant &value)
 {
     dPvt();
     if(p.result.returnType() == ResultValue::None)
@@ -139,7 +139,7 @@ ResultValue &Object::lastResult(const QSqlError&value)
     return this->lr(value);
 }
 
-ResultValue &Object::lastResult(const QVariant&value)
+ResultValue &Object::lastResult(const QVariant &value)
 {
     return this->lr(value);
 }
@@ -159,7 +159,7 @@ ResultValue &Object::setResult(const QSqlError&value)
     return this->lastResult().setResult(value);
 }
 
-ResultValue &Object::setResult(const QVariant&value)
+ResultValue &Object::setResult(const QVariant &value)
 {
     return this->lastResult().setResult(value);
 }
@@ -179,12 +179,12 @@ const QByteArray Object::toMd5(const QByteArray&value)
     return ObjectPrv::toMd5(value);
 }
 
-const QByteArray Object::toMd5(const QString&value)
+const QByteArray Object::toMd5(const QString &value)
 {
     return ObjectPrv::toMd5(value);
 }
 
-const QByteArray Object::toMd5(const QVariant&value)
+const QByteArray Object::toMd5(const QVariant &value)
 {
     return ObjectPrv::toMd5(value);
 }
@@ -234,7 +234,7 @@ const QString Object::makeObjectName(const QVariant &v)
         auto v=r.generate();
         name+=QString::number(v);
     }
-    for(auto&v:listChar){
+    for(auto &v:listChar){
         name=name.replace(v,qsl("_"));
     }
     while(name.contains(qsl("__")))
@@ -254,7 +254,7 @@ const QByteArray Object::randomGenerator()
 QVariantMap Object::toMap()const
 {
     QVariantMap __return;
-    auto&metaObject = *this->metaObject();
+    auto &metaObject = *this->metaObject();
     for(int col = 0; col < metaObject.propertyCount(); ++col) {
         auto property = metaObject.property(col);
         QVariant value;
@@ -273,7 +273,7 @@ QVariantMap Object::toMap()const
 QVariantHash Object::toHash() const
 {
     QVariantHash __return;
-    auto&metaObject = *this->metaObject();
+    auto &metaObject = *this->metaObject();
     for(int col = 0; col < metaObject.propertyCount(); ++col) {
         auto property = metaObject.property(col);
         QVariant value;
@@ -315,7 +315,7 @@ bool Object::fromVar(const QVariant &v)
 bool Object::fromMap(const QVariantMap&map)
 {
     bool __return=false;
-    auto&metaObject = *this->metaObject();
+    auto &metaObject = *this->metaObject();
     for(int col = 0; col < metaObject.propertyCount(); ++col) {
         auto property = metaObject.property(col);
         if(!property.write(this, map.value(property.name())))
@@ -328,7 +328,7 @@ bool Object::fromMap(const QVariantMap&map)
 bool Object::fromHash(const QVariantHash &map)
 {
     bool __return=false;
-    auto&metaObject = *this->metaObject();
+    auto &metaObject = *this->metaObject();
     for(int col = 0; col < metaObject.propertyCount(); ++col) {
         auto property = metaObject.property(col);
         if(!property.write(this, map.value(property.name())))
