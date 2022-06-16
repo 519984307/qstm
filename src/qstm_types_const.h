@@ -71,9 +71,10 @@ static const auto vpDefaultValue="defaultValue";
 static const auto vpDefaultSelect="defaultSelect";
 static const auto vpInputType="inputType";
 static const auto vpInputMask="inputMask";
-static const auto vtInputLinks="inputlinks";
+static const auto vpInputLinks="inputlinks";
 static const auto vpFiltrableStrategy="searchStrategy";
 static const auto vpObrigatory="obrigatory";
+static const auto vpDisplayer="displayer";
 
 static const auto vtInputCurrency="inputcurrency";
 static const auto vtInputNumber="inputnumber";
