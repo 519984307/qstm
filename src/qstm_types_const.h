@@ -33,6 +33,7 @@ static const auto vaCenter="center";
 static const auto vaEnd="end";
 
 static const auto vpId="id";
+static const auto vpUuid="uuid";
 static const auto vpName="name";
 static const auto vpTitle="title";
 static const auto vpHeaders="headers";
