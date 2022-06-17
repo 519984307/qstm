@@ -479,7 +479,7 @@ public:
     //! \param v
     //! \return
     //!
-    virtual VariantUtil &vUnion(const QVariant &v);
+    virtual QVariant vUnion(const QVariant &v);
 
     //!
     //! \brief vUnion
@@ -487,14 +487,14 @@ public:
     //! \param vSource
     //! \return
     //!
-    virtual VariantUtil &vUnion(const QVariant &vDestine, const QVariant &vSource);
+    virtual QVariant vUnion(const QVariant &vDestine, const QVariant &vSource);
 
     //!
     //! \brief vMerge
     //! \param v
     //! \return
     //!
-    virtual VariantUtil &vMerge(const QVariant &v);
+    virtual QVariant vMerge(const QVariant &v);
 
     //!
     //! \brief vMerge
@@ -502,14 +502,14 @@ public:
     //! \param vSource
     //! \return
     //!
-    virtual VariantUtil &vMerge(const QVariant &vDestine, const QVariant &vSource);
+    virtual QVariant vMerge(const QVariant &vDestine, const QVariant &vSource);
 
     //!
     //! \brief vDeduplicate
     //! \param v
     //! \return
     //!
-    virtual VariantUtil &vDeduplicate(const QVariant &v);
+    virtual QVariant vDeduplicate(const QVariant &v);
 
     //!
     //! \brief vIsEmpty

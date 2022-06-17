@@ -232,7 +232,7 @@ bool ResultInfo::fromMap(const QVariantMap&map)
     auto &metaObject = *this->metaObject();
     for(int col = 0; col < metaObject.propertyCount(); ++col) {
         auto property = metaObject.property(col);
-        if(property.write(this, map->value(property.name()))){
+        if(property.write(this, map.value(property.name()))){
             __return=true;
         }
     }
@@ -245,7 +245,7 @@ bool ResultInfo::fromHash(const QVariantHash &map)
     auto &metaObject = *this->metaObject();
     for(int col = 0; col < metaObject.propertyCount(); ++col) {
         auto property = metaObject.property(col);
-        if(property.write(this, map->value(property.name()))){
+        if(property.write(this, map.value(property.name()))){
             __return=true;
         }
     }

@@ -401,7 +401,10 @@ VariantUtil::VariantUtil(const QVariant &v):QVariant{v}
 
 VariantUtil::~VariantUtil()
 {
-    delete p;
+    if(p) {
+        delete p;
+        this->p=nullptr;
+    }
 }
 
 VariantUtil&VariantUtil::operator=(const QVariant &v)
@@ -1122,49 +1125,48 @@ const QUuid VariantUtil::toUuidCompuser(const QVariant &value)
 
 VariantUtil &VariantUtil::clear()
 {
-
     p->clear();
     return*this;
 }
 
-VariantUtil &VariantUtil::vUnion(const QVariant &v)
+QVariant VariantUtil::vUnion(const QVariant &v)
 {
-
     p->clear();
-    this->setValue(p->vUnion(v));
-    return*this;
+    auto newV=p->vUnion(v);
+    this->setValue(newV);
+    return newV;
 }
 
-VariantUtil &VariantUtil::vUnion(const QVariant &vDestine, const QVariant &vSource)
+QVariant VariantUtil::vUnion(const QVariant &vDestine, const QVariant &vSource)
 {
-
     p->clear();
-    this->setValue(p->vUnion(vDestine,vSource));
-    return*this;
+    auto newV=p->vUnion(vDestine,vSource);
+    this->setValue(newV);
+    return newV;
 }
 
-VariantUtil &VariantUtil::vMerge(const QVariant &v)
+QVariant VariantUtil::vMerge(const QVariant &v)
 {
-
     p->clear();
-    this->setValue(p->vMerge(v));
-    return*this;
+    auto newV=p->vMerge(v);
+    this->setValue(newV);
+    return newV;
 }
 
-VariantUtil &VariantUtil::vMerge(const QVariant &vDestine, const QVariant &vSource)
+QVariant VariantUtil::vMerge(const QVariant &vDestine, const QVariant &vSource)
 {
-
     p->clear();
-    this->setValue(p->vMerge(vDestine,vSource));
-    return*this;
+    auto newV=p->vMerge(vDestine,vSource);
+    this->setValue(newV);
+    return newV;
 }
 
-VariantUtil &VariantUtil::vDeduplicate(const QVariant &v)
+QVariant VariantUtil::vDeduplicate(const QVariant &v)
 {
-
     p->clear();
-    this->setValue(p->vDeduplicate(v));
-    return*this;
+    auto newV=p->vDeduplicate(v);
+    this->setValue(newV);
+    return newV;
 }
 
 bool VariantUtil::vIsEmpty(const QVariant &v)

@@ -308,7 +308,7 @@ public:
         case QMetaType_UInt:
         case QMetaType_LongLong:
         case QMetaType_ULongLong:
-            return qsl("%1: %2").arg(qapp->tr("Error value"), value.toString());
+            return qsl("%1: %2").arg(QObject::tr("Error value"), value.toString());
         case QMetaType_QStringList:
             list = value.toStringList();
             break;
