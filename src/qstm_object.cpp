@@ -14,26 +14,23 @@ namespace QStm {
 Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,__static_uuid_base_data,(QUuid::createUuid().toString().toUtf8()))
 Q_GLOBAL_STATIC_WITH_ARGS(QByteArray,__static_uuid_delimer,("|"))
 
-#define dPvt()\
-    auto &p = *reinterpret_cast<ObjectPrv*>(this->p)
-
-class ObjectPrv{
+class ObjectPvt{
 public:
     CachePool*_cachePool=nullptr;
     QByteArray storedMd5;
     ResultValue result;
     QObject*parent=nullptr;
-    explicit ObjectPrv(QObject*parent)
+    explicit ObjectPvt(QObject*parent)
     {
         this->parent=parent;
         result.setParent(parent);
     }
 
-    virtual ~ObjectPrv()
+    virtual ~ObjectPvt()
     {
     }
 
-    CachePool&cachePool()
+    CachePool &cachePool()
     {
         if(this->_cachePool==nullptr)
             this->_cachePool=&CachePool::instance();
@@ -60,12 +57,12 @@ public:
 
 Object::Object(QObject *parent):QObject{parent}
 {
-    this->p = new ObjectPrv(this);
+    this->p = new ObjectPvt(this);
 }
 
 Object::~Object()
 {
-    dPvt();delete&p;
+    delete p;
 }
 
 void Object::operator=(ResultValue &value)
@@ -85,37 +82,37 @@ void Object::operator=(QVariant &value)
 
 CachePool &Object::cachePool()
 {
-    dPvt();
-    return p.cachePool();
+
+    return p->cachePool();
 }
 
 ResultValue &Object::lr()
 {
-    dPvt();
-    return p.result;
+
+    return p->result;
 }
 
 ResultValue &Object::lr(const ResultValue&value)
 {
-    dPvt();
-    p.result.setResult(value);
-    return p.result;
+
+    p->result.setResult(value);
+    return p->result;
 }
 
 ResultValue &Object::lr(const QSqlError&value)
 {
-    dPvt();
-    if(p.result.returnType() == ResultValue::None)
-        p.result.setResult(value);
-    return p.result;
+
+    if(p->result.returnType() == ResultValue::None)
+        p->result.setResult(value);
+    return p->result;
 }
 
 ResultValue &Object::lr(const QVariant &value)
 {
-    dPvt();
-    if(p.result.returnType() == ResultValue::None)
-        p.result.setResult(value);
-    return p.result;
+
+    if(p->result.returnType() == ResultValue::None)
+        p->result.setResult(value);
+    return p->result;
 }
 
 ResultValue &Object::lr(const QString &value)
@@ -125,8 +122,8 @@ ResultValue &Object::lr(const QString &value)
 
 ResultValue &Object::lastResult()
 {
-    dPvt();
-    return p.result;
+
+    return p->result;
 }
 
 ResultValue &Object::lastResult(const ResultValue&value)
@@ -176,17 +173,17 @@ const QDateTime Object::now()
 
 const QByteArray Object::toMd5(const QByteArray&value)
 {
-    return ObjectPrv::toMd5(value);
+    return ObjectPvt::toMd5(value);
 }
 
 const QByteArray Object::toMd5(const QString &value)
 {
-    return ObjectPrv::toMd5(value);
+    return ObjectPvt::toMd5(value);
 }
 
 const QByteArray Object::toMd5(const QVariant &value)
 {
-    return ObjectPrv::toMd5(value);
+    return ObjectPvt::toMd5(value);
 }
 
 const QUuid Object::uuidGenerator()
@@ -340,9 +337,9 @@ bool Object::fromHash(const QVariantHash &map)
 
 ResultValue &Object::storedProperty()
 {
-    dPvt();
-    p.storedMd5=this->storedMd5Make();
-    return this->lr(QVariant(p.storedMd5));
+
+    p->storedMd5=this->storedMd5Make();
+    return this->lr(QVariant(p->storedMd5));
 }
 
 bool Object::storedIsChanged()const
@@ -356,13 +353,13 @@ bool Object::storedIsChanged()const
 
 QByteArray&Object::storedMd5()const
 {
-    dPvt();
-    return p.storedMd5;
+
+    return p->storedMd5;
 }
 
 QByteArray Object::storedMd5Make() const{
-    dPvt();
-    return p.storedMd5Make();
+
+    return p->storedMd5Make();
 }
 
 }

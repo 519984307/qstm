@@ -9,7 +9,7 @@
 #include "./qstm_global.h"
 
 namespace QStm {
-
+class MetaObjectUtilPvt;
 //!
 //! \brief The MetaObjectUtil class
 //!util class to operation objects
@@ -129,7 +129,7 @@ public:
     }
 
 private:
-    void*p=nullptr;
+    MetaObjectUtilPvt *p=nullptr;
 };
 
 }

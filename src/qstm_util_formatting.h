@@ -9,6 +9,7 @@
 #include "./qstm_global.h"
 
 namespace QStm {
+class FormattingUtilPvt;
 //!
 //! \brief The FormattingUtil class
 //!util class to format string values
@@ -86,7 +87,7 @@ public:
         //!
         virtual QString&boolean(const bool&v)const;
     private:
-        void*p=nullptr;
+        FormattingUtilPvt *p=nullptr;
     };
 
     //!
@@ -201,7 +202,7 @@ public:
     virtual Masks&masks() const;
 
 private:
-    void*p=nullptr;
+    FormattingUtilPvt *p=nullptr;
 };
 
 }

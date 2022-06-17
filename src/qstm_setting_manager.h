@@ -5,7 +5,7 @@
 #include <QSettings>
 
 namespace QStm {
-
+class SettingManagerPvt;
 #define Q_SETTING_MANAGER_REPLACE_METHODS(Manager,Setting)                                                                                          \
 public:                                                                                                                                             \
     Q_INVOKABLE explicit Manager(QObject *parent = nullptr) : QStm::SettingManager(parent)                                                          \
@@ -210,7 +210,7 @@ public:
 
 
 private:
-    void*p=nullptr;
+    SettingManagerPvt *p=nullptr;
 };
 
 }

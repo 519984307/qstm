@@ -5,9 +5,6 @@
 
 namespace QStm {
 
-#define dPvt()\
-    auto &p = *reinterpret_cast<ResultInfoPvt*>(this->p)\
-
 class ResultInfoPvt{
 public :
     ResultInfo *parent=nullptr;
@@ -55,128 +52,127 @@ ResultInfo::ResultInfo(QObject *parent):QObject{parent}
 
 ResultInfo::~ResultInfo()
 {
-    dPvt();
-    delete&p;
+    delete p;
 }
 
 void ResultInfo::clear()
 {
-    dPvt();
-    p.clear();
+
+    p->clear();
 }
 
 void ResultInfo::clearErrors()
 {
-    dPvt();
-    p.clearErrors();
+
+    p->clearErrors();
 }
 
 bool ResultInfo::enabled()
 {
-    dPvt();
-    return p.enabled;
+
+    return p->enabled;
 }
 
 void ResultInfo::setEnabled(bool value)
 {
-    dPvt();
-    p.enabled=value;
+
+    p->enabled=value;
 }
 
 QVariantList &ResultInfo::errors()
 {
-    dPvt();
-    return p.errors;
+
+    return p->errors;
 }
 
 void ResultInfo::setErrors(const QVariantList &value)
 {
-    dPvt();
-    p.errors=value;
+
+    p->errors=value;
 }
 
 QVariantList &ResultInfo::messages()
 {
-    dPvt();
-    return p.messages;
+
+    return p->messages;
 }
 
 void ResultInfo::setMessages(const QVariantList &value)
 {
-    dPvt();
-    p.messages=value;
+
+    p->messages=value;
 }
 
 int ResultInfo::success() const
 {
-    dPvt();
-    return p.success;
+
+    return p->success;
 }
 
 void ResultInfo::setSuccess(bool value)
 {
-    dPvt();
-    p.success=value;
+
+    p->success=value;
 }
 
 int ResultInfo::page() const
 {
-    dPvt();
-    return p.page;
+
+    return p->page;
 }
 
 void ResultInfo::setPage(int value)
 {
-    dPvt();
-    p.page = value;
+
+    p->page = value;
 }
 
 int ResultInfo::per_page() const
 {
-    dPvt();
-    return p.per_page;
+
+    return p->per_page;
 }
 
 void ResultInfo::setPer_page(int value)
 {
-    dPvt();
-    p.per_page = value;
+
+    p->per_page = value;
 }
 
 int ResultInfo::count() const
 {
-    dPvt();
-    return p.count;
+
+    return p->count;
 }
 
 void ResultInfo::setCount(int value)
 {
-    dPvt();
-    p.count = value;
+
+    p->count = value;
 }
 
 int ResultInfo::total_count() const
 {
-    dPvt();
-    return p.total_count;
+
+    return p->total_count;
 }
 
 void ResultInfo::setTotal_count(int value)
 {
-    dPvt();
-    p.total_count = value;
+
+    p->total_count = value;
 }
 
 int ResultInfo::total_pages() const
 {
-    dPvt();
-    return p.total_pages;
+
+    return p->total_pages;
 }
 
 void ResultInfo::setTotal_pages(int value)
 {
-    dPvt();
-    p.total_pages = value;
+
+    p->total_pages = value;
 }
 
 const QVariantHash ResultInfo::toRequestHash() const
@@ -236,7 +232,7 @@ bool ResultInfo::fromMap(const QVariantMap&map)
     auto &metaObject = *this->metaObject();
     for(int col = 0; col < metaObject.propertyCount(); ++col) {
         auto property = metaObject.property(col);
-        if(property.write(this, map.value(property.name()))){
+        if(property.write(this, map->value(property.name()))){
             __return=true;
         }
     }
@@ -249,7 +245,7 @@ bool ResultInfo::fromHash(const QVariantHash &map)
     auto &metaObject = *this->metaObject();
     for(int col = 0; col < metaObject.propertyCount(); ++col) {
         auto property = metaObject.property(col);
-        if(property.write(this, map.value(property.name()))){
+        if(property.write(this, map->value(property.name()))){
             __return=true;
         }
     }

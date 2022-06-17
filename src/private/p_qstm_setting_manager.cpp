@@ -1,16 +1,16 @@
 #include "./p_qstm_setting_manager.h"
 
-QStm::SettingManagerPrv::SettingManagerPrv(SettingManager *parent):settingsDefault(parent)
+QStm::SettingManagerPvt::SettingManagerPvt(SettingManager *parent):settingsDefault(parent)
 {
     this->parent=parent;
 }
 
-QStm::SettingManagerPrv::~SettingManagerPrv()
+QStm::SettingManagerPvt::~SettingManagerPvt()
 {
     this->clear();
 }
 
-bool QStm::SettingManagerPrv::isLoaded()
+bool QStm::SettingManagerPvt::isLoaded()
 {
     QHashIterator<QString, SettingBase*> i(this->settings);
     while (i.hasNext()) {
@@ -27,7 +27,7 @@ bool QStm::SettingManagerPrv::isLoaded()
     return false;
 }
 
-bool QStm::SettingManagerPrv::isEmpty()
+bool QStm::SettingManagerPvt::isEmpty()
 {
     QHashIterator<QString, SettingBase*> i(this->settings);
     while (i.hasNext()) {
@@ -40,14 +40,14 @@ bool QStm::SettingManagerPrv::isEmpty()
     return true;
 }
 
-void QStm::SettingManagerPrv::clear()
+void QStm::SettingManagerPvt::clear()
 {
     auto _detail=this->settings.values();
     this->settings.clear();
     qDeleteAll(_detail);
 }
 
-QVariantHash QStm::SettingManagerPrv::toHash()
+QVariantHash QStm::SettingManagerPvt::toHash()
 {
     QVariantHash vHash, vServices;
     auto vList=QList<SettingBase*>()<<&this->settingsDefault;
@@ -59,13 +59,13 @@ QVariantHash QStm::SettingManagerPrv::toHash()
     return vHash;
 }
 
-QByteArray QStm::SettingManagerPrv::settingNameAdjust(const QString &settingName)
+QByteArray QStm::SettingManagerPvt::settingNameAdjust(const QString &settingName)
 {
     auto setting=settingName.trimmed();
     return setting.toUtf8();
 }
 
-QStm::SettingBase &QStm::SettingManagerPrv::settingGetCheck(const QByteArray &settingName)
+QStm::SettingBase &QStm::SettingManagerPvt::settingGetCheck(const QByteArray &settingName)
 {
     auto name=this->settingNameAdjust(settingName);
     auto ___return=settings.value(name);
@@ -76,7 +76,7 @@ QStm::SettingBase &QStm::SettingManagerPrv::settingGetCheck(const QByteArray &se
     return*___return;
 }
 
-QStm::SettingBase *QStm::SettingManagerPrv::settingCreate(QObject *parent)
+QStm::SettingBase *QStm::SettingManagerPvt::settingCreate(QObject *parent)
 {
     auto object=this->parent->settingCreate(parent);
     if(object!=nullptr){
@@ -88,7 +88,7 @@ QStm::SettingBase *QStm::SettingManagerPrv::settingCreate(QObject *parent)
     return nullptr;
 }
 
-QStm::SettingManager &QStm::SettingManagerPrv::insert(const QVariantHash &value)
+QStm::SettingManager &QStm::SettingManagerPvt::insert(const QVariantHash &value)
 {
     auto &p=*this;
     QVariantHash vValue=value;
@@ -117,7 +117,7 @@ QStm::SettingManager &QStm::SettingManagerPrv::insert(const QVariantHash &value)
     return*this->parent;
 }
 
-bool QStm::SettingManagerPrv::v_load(const QVariant &v)
+bool QStm::SettingManagerPvt::v_load(const QVariant &v)
 {
     switch (qTypeId(v)) {
     case QMetaType_QVariantHash:
@@ -131,7 +131,7 @@ bool QStm::SettingManagerPrv::v_load(const QVariant &v)
     }
 }
 
-bool QStm::SettingManagerPrv::load(QObject *settingsObject)
+bool QStm::SettingManagerPvt::load(QObject *settingsObject)
 {
     auto &p=*this;
     if(settingsObject==nullptr)
@@ -157,7 +157,7 @@ bool QStm::SettingManagerPrv::load(QObject *settingsObject)
     return false;
 }
 
-bool QStm::SettingManagerPrv::load(const QStringList &settingsFileName)
+bool QStm::SettingManagerPvt::load(const QStringList &settingsFileName)
 {
     QVariantList vList;
     auto &p=*this;
@@ -211,7 +211,7 @@ bool QStm::SettingManagerPrv::load(const QStringList &settingsFileName)
     return p.isLoaded();
 }
 
-bool QStm::SettingManagerPrv::load(const QString &fileName)
+bool QStm::SettingManagerPvt::load(const QString &fileName)
 {
     auto &p=*this;
     QFile file(fileName);
@@ -264,7 +264,7 @@ bool QStm::SettingManagerPrv::load(const QString &fileName)
     return p.load(map);
 }
 
-bool QStm::SettingManagerPrv::load(const QVariantHash &settingsBody)
+bool QStm::SettingManagerPvt::load(const QVariantHash &settingsBody)
 {
     auto &p=*this;
     p.settingBody=settingsBody;

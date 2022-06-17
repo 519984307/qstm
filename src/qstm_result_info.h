@@ -7,7 +7,7 @@
 #include "./qstm_global.h"
 
 namespace QStm {
-
+class ResultInfoPvt;
 //!
 //! \brief The ResultInfo class
 //!
@@ -215,7 +215,7 @@ public:
     virtual bool fromResultInfo(const ResultInfo &resultInfo);
 
 private:
-    void*p=nullptr;
+    ResultInfoPvt *p=nullptr;
 signals:
     void errorsChanged();
     void messagesChanged();

@@ -8,7 +8,6 @@
 #include "./qstm_global.h"
 
 namespace QStm {
-
 //!
 //! \brief The DoubleUtil class
 //!util class to operation numeric values
@@ -82,9 +81,6 @@ public:
     //! \return
     //!
     static bool checkBetween(const int &value, int &vMin, int &vMax);
-
-private:
-    void*p=nullptr;
 };
 
 }

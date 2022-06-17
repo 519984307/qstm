@@ -207,36 +207,35 @@ public:
 Message::Message(const QVariant &v, const QString &settingName):QVariant{}
 {
     this->p = new MessagePvt{this};
-    dPvt();
+
 
     QVariant vv;
     QVariantHash vHash=v.toHash();
     if(!settingName.trimmed().isEmpty()){
-        p.variables=vHash.value(qsl("variables")).toHash();
+        p->variables=vHash.value(qsl("variables")).toHash();
         vv=vHash.value(settingName).toHash();
     }
     else{
         vv=vHash;
     }
-    p.setVar(vv);
+    p->setVar(vv);
 }
 
 Message::Message(const ResultValue &v):QVariant{}
 {
     this->p = new MessagePvt{this};
-    dPvt();
-    p.setVar(v.resultHash());
+    p->setVar(v.resultHash());
 }
 
 Message::~Message()
 {
-    dPvt();delete&p;
+    delete p;
 }
 
 Message &Message::operator=(const QVariant &v)
 {
-    dPvt();
-    p.setVar(v);
+
+    p->setVar(v);
     return*this;
 }
 
@@ -253,8 +252,8 @@ Message Message::make(const QVariant &v)
 
 QVariantHash Message::variables()const
 {
-    dPvt();
-    return p.variables;
+
+    return p->variables;
 }
 
 Message &Message::variables(const QVariant &v)
@@ -264,266 +263,266 @@ Message &Message::variables(const QVariant &v)
 
 Message &Message::setVariables(const QVariant &v)
 {
-    dPvt();
-    p.variables=v.toHash();
-    p.setVar(p.body);
+
+    p->variables=v.toHash();
+    p->setVar(p->body);
     return*this;
 }
 
 Message &Message::read(const QVariant &v)
 {
-    dPvt();
-    p.setVar(v);
+
+    p->setVar(v);
     return*this;
 }
 
 bool Message::isValid() const
 {
-    dPvt();
-    return p.body.isValid();
+
+    return p->body.isValid();
 }
 
 bool Message::isNull() const
 {
-    dPvt();
-    return p.body.isNull();
+
+    return p->body.isNull();
 }
 
 QVariantMap Message::toMap() const
 {
-    dPvt();
-    return p.body.toMap();
+
+    return p->body.toMap();
 }
 
 QVariantHash Message::toHash() const
 {
-    dPvt();
-    return p.body.toHash();
+
+    return p->body.toHash();
 }
 
 QString Message::toString() const
 {
-    dPvt();
+
     Q_DECLARE_VU;
-    return vu.toStr(p.body);
+    return vu.toStr(p->body);
 }
 
 QString Message::name() const
 {
-    dPvt();
-    return p.parserVariable(p.name).toString();
+
+    return p->parserVariable(p->name).toString();
 }
 
 Message &Message::name(const QVariant &value)
 {
-    dPvt();
-    p.name=value.toString();
+
+    p->name=value.toString();
     return*this;
 }
 
 Message &Message::setName(const QVariant &value)
 {
-    dPvt();
-    p.name=value.toString();
+
+    p->name=value.toString();
     return*this;
 }
 
 QString Message::attachmentName() const
 {
-    dPvt();
-    return p.attachmentName;
+
+    return p->attachmentName;
 }
 
 Message &Message::attachmentName(const QVariant &value)
 {
-    dPvt();
-    p.attachmentName=value.toString();
+
+    p->attachmentName=value.toString();
     return*this;
 }
 
 Message &Message::setAttachmentName(const QVariant &value)
 {
-    dPvt();
-    p.attachmentName=value.toString();
+
+    p->attachmentName=value.toString();
     return*this;
 }
 
 QString Message::typeId() const
 {
-    dPvt();
-    return p.parserVariable(p.type).toString();
+
+    return p->parserVariable(p->type).toString();
 }
 
 Message &Message::typeId(const QVariant &value)
 {
-    dPvt();
-    p.type = value.toString();
-    return p.setMap();
+
+    p->type = value.toString();
+    return p->setMap();
 }
 
 Message &Message::setType(const QVariant &value)
 {
-    dPvt();
-    p.type = value.toString();
-    return p.setMap();
+
+    p->type = value.toString();
+    return p->setMap();
 }
 
 QUuid Message::uuid() const
 {
-    dPvt();
-    return p.uuid;
+
+    return p->uuid;
 }
 
 Message &Message::uuid(const QVariant &value)
 {
-    dPvt();
+
     Q_DECLARE_VU;
-    p.uuid = vu.toUuid(value);
-    return p.setMap();
+    p->uuid = vu.toUuid(value);
+    return p->setMap();
 }
 
 Message &Message::setUuid(const QVariant &value)
 {
-    dPvt();
+
     Q_DECLARE_VU;
-    p.uuid = vu.toUuid(value);
-    return p.setMap();
+    p->uuid = vu.toUuid(value);
+    return p->setMap();
 }
 
 QString Message::from() const
 {
-    dPvt();
-    return p.parserVariable(p.from).toString();
+
+    return p->parserVariable(p->from).toString();
 }
 
 Message &Message::from(const QVariant &value)
 {
-    dPvt();
-    p.from = value.toString();
-    return p.setMap();
+
+    p->from = value.toString();
+    return p->setMap();
 }
 
 Message &Message::setFrom(const QVariant &value)
 {
-    dPvt();
-    p.from = value.toString();
-    return p.setMap();
+
+    p->from = value.toString();
+    return p->setMap();
 }
 
 QString Message::to() const
 {
-    dPvt();
-    return p.parserVariable(p.to).toString();
+
+    return p->parserVariable(p->to).toString();
 }
 
 Message&Message::to(const QVariant &value) const
 {
-    dPvt();
-    p.to = value.toString();
-    return p.setMap();
+
+    p->to = value.toString();
+    return p->setMap();
 }
 
 Message&Message::setTo(const QVariant &value)
 {
-    dPvt();
-    p.to = value.toString();
-    return p.setMap();
+
+    p->to = value.toString();
+    return p->setMap();
 }
 
 QString Message::subject() const
 {
-    dPvt();
-    return p.parserVariable(p.subject).toString();
+
+    return p->parserVariable(p->subject).toString();
 }
 
 Message &Message::subject(const QVariant &value)
 {
-    dPvt();
-    p.subject = value.toString();
-    return p.setMap();
+
+    p->subject = value.toString();
+    return p->setMap();
 }
 
 Message &Message::setSubject(const QVariant &value)
 {
-    dPvt();
-    p.subject = value.toString();
-    return p.setMap();
+
+    p->subject = value.toString();
+    return p->setMap();
 }
 
 QString Message::bodyText() const
 {
-    dPvt();
-    return p.parserVariable(p.bodyText).toString();
+
+    return p->parserVariable(p->bodyText).toString();
 }
 
 Message &Message::bodyText(const QVariant &value)
 {
-    dPvt();
-    p.bodyText = p.parserTextLine(value);
-    return p.setMap();
+
+    p->bodyText = p->parserTextLine(value);
+    return p->setMap();
 }
 
 Message &Message::setBodyText(const QVariant &value)
 {
-    dPvt();
-    p.bodyText = p.parserTextLine(value);
-    return p.setMap();
+
+    p->bodyText = p->parserTextLine(value);
+    return p->setMap();
 }
 
 QByteArray Message::bodyHtml() const
 {
-    dPvt();
-    return p.parserVariable(p.bodyHtml).toByteArray();
+
+    return p->parserVariable(p->bodyHtml).toByteArray();
 }
 
 Message &Message::bodyHtml(const QVariant &value)
 {
-    dPvt();
-    p.bodyHtml = p.parserTextHtml(value);
-    return p.setMap();
+
+    p->bodyHtml = p->parserTextHtml(value);
+    return p->setMap();
 }
 
 Message &Message::setBodyHtml(const QVariant &value)
 {
-    dPvt();
-    p.bodyHtml = p.parserTextHtml(value);
-    return p.setMap();
+
+    p->bodyHtml = p->parserTextHtml(value);
+    return p->setMap();
 }
 
 QVariantList Message::attachment()const
 {
-    dPvt();
-    return p.attachment;
+
+    return p->attachment;
 }
 
 Message &Message::attachment(const QStm::Url &value)
 {
-    dPvt();
-    p.attachment.clear();
-    p.attachment.append(value);
-    return p.setMap();
+
+    p->attachment.clear();
+    p->attachment.append(value);
+    return p->setMap();
 }
 
 Message&Message::setAttachment(const QStm::Url &value)
 {
-    dPvt();
-    p.attachment.clear();
-    p.attachment.append(value);
-    return p.setMap();
+
+    p->attachment.clear();
+    p->attachment.append(value);
+    return p->setMap();
 }
 
 Message&Message::setAttachment(const QVariantList &value)
 {
-    dPvt();
-    p.attachment = value;
-    return p.setMap();
+
+    p->attachment = value;
+    return p->setMap();
 }
 
 Message &Message::addAttachment(const QStm::Url &value)
 {
-    dPvt();
-    p.attachment.append(value);
-    return p.setMap();
+
+    p->attachment.append(value);
+    return p->setMap();
 }
 
 }

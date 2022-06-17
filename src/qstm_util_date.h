@@ -7,7 +7,7 @@
 #include <QVariant>
 
 namespace QStm {
-
+class DateUtilPvt;
 //!
 //! \brief The DateUtil class
 //!util class to operation datetimes
@@ -327,7 +327,7 @@ public:
     QVariant parseInterval(const QVariant &v, const QVariant&defaultV=QVariant());
 
 private:
-    void*p=nullptr;
+    DateUtilPvt *p=nullptr;
 };
 
 }

@@ -10,26 +10,19 @@ namespace QStm {
 #define dPvt()\
 auto &p = *reinterpret_cast<DateUtilPvt*>(this->p)
 
-namespace QStmPvt
-{
-    Q_GLOBAL_STATIC_WITH_ARGS(QTime         , static_minTime        , (QTime(00,00,00,000))                 )//
-    Q_GLOBAL_STATIC_WITH_ARGS(QTime         , static_maxTime        , (QTime(23,59,59,999))                 )//
-    Q_GLOBAL_STATIC_WITH_ARGS(QStringList   , static_paramDelimiter , (qvsl_null<<","<<"|")                 )//
-}
-
-static const auto &static_minTime=*QStmPvt::static_minTime;
-static const auto &static_maxTime=*QStmPvt::static_maxTime;
-static const auto &static_paramDelimiter=*QStmPvt::static_paramDelimiter;
+Q_GLOBAL_STATIC_WITH_ARGS(QTime, static_minTime , ({23,59,59,999}))//
+Q_GLOBAL_STATIC_WITH_ARGS(QTime, static_maxTime , ({00,00,00,000}))//
+Q_GLOBAL_STATIC_WITH_ARGS(QStringList, static_paramDelimiter , ({",","|"}))//
 
 //static void initConsts(){
 //}
 //Q_COREAPP_STARTUP_FUNCTION(initConsts)
 
 
-class DateUtilPvt:public QObject{
+class DateUtilPvt{
 public:
     DateUtil*parent=nullptr;
-    explicit DateUtilPvt(DateUtil*v):QObject(nullptr)
+    explicit DateUtilPvt(DateUtil*v)
     {
         this->parent=v;
     }
@@ -39,12 +32,12 @@ public:
 
     void clear()
     {
-        this->parent->setValue(QVariant());
+        this->parent->setValue({});
     }
 
     static const QVariant getAlpha(const QVariant &v)
     {
-        auto num=qsl("0123456789,.");
+        static const auto num=qsl("0123456789,.");
         QString r,ss;
         switch (qTypeId(v)) {
         case QMetaType_Double:
@@ -69,7 +62,7 @@ public:
 
     static const QVariant getNumber(const QVariant &v)
     {
-        auto num=qsl("0123456789,.");
+        static const auto num=qsl("0123456789,.");
         QString r,ss;
 
         switch (qTypeId(v)) {
@@ -94,7 +87,7 @@ public:
         return r;
     }
 
-    QVariant parseInterval(const QVariant &v, const QVariant&defaultV=QVariant())
+    QVariant parseInterval(const QVariant &v, const QVariant&defaultV={})
     {
         if(v.isNull() || !v.isValid() || v.toLongLong()<0)
             return defaultV;
@@ -137,9 +130,7 @@ DateUtil::DateUtil(const QVariant &v):QVariant{v}
 
 DateUtil::~DateUtil()
 {
-    dPvt();
-    this->p=nullptr;
-    p.deleteLater();
+    delete p;
 }
 
 DateUtil&DateUtil::operator=(const QVariant &v)
@@ -174,7 +165,7 @@ QDateTime DateUtil::firstMonthDate(const QVariant &v) const
     default:
         d=QDate::currentDate();
     }
-    return QDateTime(QDate(d.year(), d.month(), 1), static_minTime);
+    return {QDate{d.year(), d.month(), 1}, *static_minTime};
 }
 
 QDateTime DateUtil::lastMonthDate(const QVariant &v) const
@@ -203,8 +194,8 @@ QDateTime DateUtil::lastMonthDate(const QVariant &v) const
     default:
         d=QDate::currentDate();
     }
-    d=QDate(d.year(), d.month(), 1).addMonths(1).addDays(-1);
-    return QDateTime(d, static_maxTime);
+    d=QDate{d.year(), d.month(), 1}.addMonths(1).addDays(-1);
+    return QDateTime{d, *static_maxTime};
 }
 
 QDateTime DateUtil::firstYearDate(const QVariant &v) const
@@ -233,7 +224,7 @@ QDateTime DateUtil::firstYearDate(const QVariant &v) const
     default:
         d=QDate::currentDate();
     }
-    return QDateTime(QDate(d.year(),1,1), static_minTime);
+    return QDateTime{QDate{d.year(),1,1}, *static_minTime};
 }
 
 QDateTime DateUtil::lastYearDate(const QVariant &v) const
@@ -262,7 +253,7 @@ QDateTime DateUtil::lastYearDate(const QVariant &v) const
     default:
         d=QDate::currentDate();
     }
-    return QDateTime(QDate(d.year(),12,31), static_maxTime);
+    return QDateTime{QDate{d.year(),12,31}, *static_maxTime};
 }
 
 QVariantList DateUtil::listMonthDaysToDate(const QVariant &v) const
@@ -271,7 +262,7 @@ QVariantList DateUtil::listMonthDaysToDate(const QVariant &v) const
     auto d=v.toDate();
     if(!d.isValid())
         d=QDate::currentDate();
-    auto start=QDate(d.year(), d.month(), 1);
+    auto start=QDate{d.year(), d.month(), 1};
     auto finish=v.toDate();
     while(start<=finish){
         list<<start;
@@ -286,7 +277,7 @@ QVariantList DateUtil::listMonthDays(const QVariant &v)const
     auto d=v.toDate();
     if(!d.isValid())
         d=QDate::currentDate();
-    auto start=QDate(d.year(), d.month(), 1);
+    auto start=QDate{d.year(), d.month(), 1};
     auto finish=start.addMonths(1).addDays(-1);
     while(start<=finish){
         list<<start;
@@ -301,7 +292,7 @@ QVariantList DateUtil::listYearDaysToDate(const QVariant &v) const
     auto d=v.toDate();
     if(!d.isValid())
         d=QDate::currentDate();
-    auto start=QDate(d.year(), 1, 1);
+    auto start=QDate{d.year(), 1, 1};
     auto finish=v.toDate();
     while(start<=finish){
         list<<start;
@@ -328,7 +319,7 @@ QVariantList DateUtil::listYearDays(const QVariant &v) const
         year=v.toInt();
         break;
     default:
-        auto d=QDateTime(QDate::fromString(v.toString(), Qt::ISODate),QTime());
+        auto d=QDateTime{QDate::fromString(v.toString(), Qt::ISODate), {}};
         if(d.isValid()){
             year=d.date().year();
             break;
@@ -347,7 +338,7 @@ QVariantList DateUtil::listYearDays(const QVariant &v) const
         break;
     }
 
-    auto start=QDate(year, 1, 1);
+    auto start=QDate{year, 1, 1};
     auto finish=start.addYears(1).addDays(-1);
     while(start<=finish){
         list<<start;
@@ -358,75 +349,75 @@ QVariantList DateUtil::listYearDays(const QVariant &v) const
 
 const QTime&DateUtil::minTime()
 {
-    return static_minTime;
+    return *static_minTime;
 }
 
 const QTime&DateUtil::maxTime()
 {
-    return static_maxTime;
+    return *static_maxTime;
 }
 
 QDateTime DateUtil::minDateTime()
 {
     auto d=QDate::currentDate();
-    return QDateTime(d, static_minTime);
+    return QDateTime{d, *static_minTime};
 }
 
 QDateTime DateUtil::minDateTime(const QVariant &dt)
 {
     auto d=qTypeId(dt)==QMetaType_QDateTime?dt.toDateTime().date():dt.toDate();
-    return QDateTime(d, static_minTime);
+    return QDateTime{d, *static_minTime};
 }
 
 QDateTime DateUtil::maxDateTime()
 {
     auto d=QDate::currentDate();
-    return QDateTime(d, static_maxTime);
+    return QDateTime{d, *static_maxTime};
 }
 
 QDateTime DateUtil::maxDateTime(const QVariant &dt)
 {
     auto d=qTypeId(dt)==QMetaType_QDateTime?dt.toDateTime().date():dt.toDate();
-    return QDateTime(d, static_maxTime);
+    return QDateTime{d, *static_maxTime};
 }
 
 QDateTime DateUtil::minMonthDateTime()
 {
     auto d=QDate::currentDate();
-    return QDateTime(d, static_minTime);
+    return QDateTime{d, *static_minTime};
 }
 
 QDateTime DateUtil::minMonthDateTime(const QDate &dt)
 {
     QDate d(dt);
     d=QDate(d.year(), d.month(),1);
-    return QDateTime(d, static_minTime);
+    return QDateTime{d, *static_minTime};
 }
 
 QDateTime DateUtil::minMonthDateTime(int year, int month)
 {
     auto d=QDate(year, month,1);
-    return QDateTime(d, static_minTime);
+    return QDateTime{d, *static_minTime};
 }
 
 QDateTime DateUtil::maxMonthDateTime()
 {
     auto d=QDate::currentDate();
     d=QDate(d.year(), d.month(),1).addMonths(1).addDays(-1);
-    return QDateTime(d, static_maxTime);
+    return QDateTime{d, *static_maxTime};
 }
 
 QDateTime DateUtil::maxMonthDateTime(const QDate &dt)
 {
     QDate d(dt);
     d=QDate(d.year(), d.month(),1).addMonths(1).addDays(-1);
-    return QDateTime(d, static_maxTime);
+    return QDateTime{d, *static_maxTime};
 }
 
 QDateTime DateUtil::maxMonthDateTime(int year, int month)
 {
     auto d=QDate(year, month,1).addMonths(1).addDays(-1);
-    return QDateTime(d, static_maxTime);
+    return QDateTime{d, *static_maxTime};
 }
 
 const QDateTime DateUtil::toDateTime(const QVariant &v)
@@ -440,10 +431,10 @@ const QDateTime DateUtil::toDateTime(const QVariant &v)
         dt=QVariant::toDateTime();
         break;
     case QMetaType_QDate:
-        dt=QDateTime(QVariant::toDate(), QTime());
+        dt=QDateTime{QVariant::toDate(), {}};
         break;
     case QMetaType_QTime:
-        dt=QDateTime(QDate(), QVariant::toTime());
+        dt=QDateTime{QDate{}, QVariant::toTime()};
         break;
     case QMetaType_QString:
     case QMetaType_QByteArray:
@@ -461,7 +452,7 @@ const QDateTime DateUtil::toDateTime(const QVariant &v)
         dt=QVariant::toDateTime();
     }
     if(dt.time().isNull() || !dt.time().isValid())
-        dt.setTime(static_minTime);
+        dt.setTime(*static_minTime);
     return dt;
 }
 
@@ -504,7 +495,7 @@ const QTime DateUtil::toTime(const QVariant &v)
         __return=QVariant::toDateTime().time();
         break;
     case QMetaType_QDate:
-        __return=static_minTime;
+        __return=*static_minTime;
         break;
     case QMetaType_QTime:
     {
@@ -525,7 +516,7 @@ const QTime DateUtil::toTime(const QVariant &v)
         break;
     }
     if(__return.isNull() || !__return.isValid())
-        __return=static_minTime;
+        __return=*static_minTime;
     return __return;
 }
 
@@ -554,15 +545,15 @@ bool DateUtil::setNow(QDateTime &dtA, QDateTime &dtB)
 {
     dtA=QDateTime::currentDateTime();
     dtB=dtA;
-    dtA.setTime(static_minTime);
-    dtB.setTime(static_maxTime);
+    dtA.setTime(*static_minTime);
+    dtB.setTime(*static_maxTime);
     Q_ASSERT(dtA.isValid()); // Fails!
     return dtA.isValid();
 }
 
 bool DateUtil::setMax(QTime &vA)
 {
-    vA=static_maxTime;
+    vA=*static_maxTime;
     Q_ASSERT(vA.isValid()); // Fails!
     return vA.isValid();
 }
@@ -572,7 +563,7 @@ bool DateUtil::setMax(QDateTime &vA)
     if(!vA.isValid())
         vA=QDateTime::currentDateTime();
 
-    vA=QDateTime(vA.date(), static_maxTime);
+    vA=QDateTime{vA.date(), *static_maxTime};
     Q_ASSERT(vA.isValid()); // Fails!
     return vA.isValid();
 }
@@ -584,8 +575,8 @@ bool DateUtil::setMax(QTime &vA, QTime &vB)
 //        vA=vB;
 //        vB=v;
 //    }
-    vA=static_minTime;
-    vB=static_maxTime;
+    vA=*static_minTime;
+    vB=*static_maxTime;
     return vA.isValid() && vB.isValid();
 }
 
@@ -600,8 +591,8 @@ bool DateUtil::setMax(QDateTime &vA, QDateTime &vB)
         vA=vB;
         vB=v;
     }
-    vA=QDateTime(vA.date(),static_minTime);
-    vB=QDateTime(vB.date(),static_maxTime);
+    vA=QDateTime(vA.date(),*static_minTime);
+    vB=QDateTime(vB.date(),*static_maxTime);
     return vA.isValid() && vB.isValid();
 }
 
@@ -630,11 +621,11 @@ bool DateUtil::setMonthRange(QDateTime &vA, QDateTime &vB)
         vB=v;
     }
     QDate a=vA.date(),b=vB.date();
-    vA=QDateTime();
-    vB=QDateTime();
+    vA={};
+    vB={};
     if(setMonthRange(a,b)){
-        vA=QDateTime(a,static_minTime);
-        vB=QDateTime(b,static_maxTime);
+        vA=QDateTime{a,*static_minTime};
+        vB=QDateTime{b,*static_maxTime};
     }
     return vA<vB;
 }
@@ -655,7 +646,7 @@ bool DateUtil::setYearRange(QDate &vA, QDate &vB)
         d=QDate::currentDate();
 
     const auto year=d.year();
-    vA=QDate(year,1,1);
+    vA=QDate{year,1,1};
     vB=vA.addYears(1).addDays(-1);
     return vA<vB;
 }
@@ -668,26 +659,26 @@ bool DateUtil::setYearRange(QDateTime &vA, QDateTime &vB)
         vB=v;
     }
     QDate a=vA.date(),b=vB.date();
-    vA=QDateTime();
-    vB=QDateTime();
+    vA={};
+    vB={};
     if(setYearRange(a,b)){
-        vA=QDateTime(a,static_minTime);
-        vB=QDateTime(b,static_maxTime);
+        vA=QDateTime{a,*static_minTime};
+        vB=QDateTime{b,*static_maxTime};
     }
     return vA<vB;
 }
 
 bool DateUtil::setDistantRange(QDate &vA, QDate &vB)
 {
-    vA=QDate(1901,1,1);
-    vB=QDate(2500,1,1);
+    vA=QDate{1901,1,1};
+    vB=QDate{2500,1,1};
     return vA<vB;
 }
 
 bool DateUtil::setDistantRange(QDateTime &vA, QDateTime &vB)
 {
-    vA=QDateTime(QDate(1901,1,1), static_minTime);
-    vB=QDateTime(QDate(2500,1,1), static_maxTime);
+    vA=QDateTime{QDate{2500,1,1}, *static_maxTime};
+    vB=QDateTime{QDate{1901,1,1}, *static_minTime};
     return vA<vB;
 }
 
@@ -695,8 +686,8 @@ bool DateUtil::validBetween(const QDateTime&vVal, const QDateTime &vMin, const Q
 {
     QDateTime vMax__(vMax);
 
-    if(vMax__.time().isNull() || !vMax__.time().isValid() || vMax__.time()==static_minTime)
-        vMax__.setTime(static_maxTime);
+    if(vMax__.time().isNull() || !vMax__.time().isValid() || vMax__.time()==*static_minTime)
+        vMax__.setTime(*static_maxTime);
 
     if(vVal.isNull() || vMin.isNull() || vMax__.isNull())
         return false;
@@ -722,7 +713,7 @@ bool DateUtil::checkBetween(const QVariant &v, QDateTime &vMin, QDateTime &vMax)
     {
         auto l=vv.toList();
         if(l.isEmpty())
-            vv=QVariant();
+            vv={};
         else if(l.size()==1)
             vv=l.first();
         else
@@ -733,7 +724,7 @@ bool DateUtil::checkBetween(const QVariant &v, QDateTime &vMin, QDateTime &vMax)
     case QMetaType_QByteArray:
     {
         auto s=v.toString().trimmed();
-        for(auto &c:static_paramDelimiter){
+        for(auto &c:*static_paramDelimiter){
             if(s.contains(c)){
                 vv=s.split(c);
                 break;
@@ -753,15 +744,15 @@ bool DateUtil::checkBetween(const QVariant &v, QDateTime &vMin, QDateTime &vMax)
         for(auto &v:l){
             v=v.toString().replace(qsl("\""),qsl_null).replace(qsl("'"),qsl_null).replace(qsl(";"),qsl_null);
         }
-        vMin=l.size()<=0?QDateTime():l[0].toDateTime();
-        vMax=l.size()<=1?QDateTime():l[1].toDateTime();
+        vMin=l.size()<=0?QDateTime{}:l[0].toDateTime();
+        vMax=l.size()<=1?QDateTime{}:l[1].toDateTime();
         break;
     }
     case QMetaType_QDate:
     case QMetaType_QDateTime:
     {
-        vMin=QDateTime(vv.toDateTime().date(), QTime());
-        vMax=QDateTime(vv.toDateTime().date(), QTime());
+        vMin=QDateTime{vv.toDateTime().date(), {}};
+        vMax=QDateTime{vv.toDateTime().date(), {}};
         break;
     }
     default:
@@ -771,7 +762,7 @@ bool DateUtil::checkBetween(const QVariant &v, QDateTime &vMin, QDateTime &vMax)
 
     if(!vMax.isValid()){
         if(vMin.isValid()){
-            vMax=QDateTime(vMin.date(), QTime());
+            vMax=QDateTime{vMin.date(), {}};
         }
     }
 
@@ -782,10 +773,10 @@ bool DateUtil::checkBetween(const QVariant &v, QDateTime &vMin, QDateTime &vMax)
     }
 
     if(vMin.isValid())
-        vMin.setTime(static_minTime);
+        vMin.setTime(*static_minTime);
 
     if(vMax.isValid())
-        vMax.setTime(static_maxTime);
+        vMax.setTime(*static_maxTime);
 
     return vMin.isValid() && vMax.isValid();
 }
@@ -798,8 +789,8 @@ bool DateUtil::checkBetween(QDateTime &vMin, QDateTime &vMax)
         vMax=aux;
     }
 
-    vMin=QDateTime(vMin.date(), static_minTime);
-    vMax=QDateTime(vMax.date(), static_maxTime);
+    vMin=QDateTime{vMin.date(), *static_minTime};
+    vMax=QDateTime{vMax.date(), *static_maxTime};
     return vMin.isValid() && vMax.isValid();
 }
 
@@ -825,17 +816,17 @@ bool DateUtil::checkBetween(QTime &vMin, QTime &vMax)
 
 QVariant DateUtil::parseInterval()
 {
-    dPvt();
-    auto __return = p.parseInterval(*this);
+
+    auto __return = p->parseInterval(*this);
     return __return;
 }
 
 QVariant DateUtil::parseInterval(const QVariant &v, const QVariant &defaultV)
 {
-    dPvt();
+
     if(v.isValid())
         QVariant::setValue(v);
-    auto __return = p.parseInterval(*this, defaultV);
+    auto __return = p->parseInterval(*this, defaultV);
     return __return;
 }
 

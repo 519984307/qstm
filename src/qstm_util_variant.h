@@ -13,7 +13,7 @@
 #include "./qstm_vvm.h"
 
 namespace QStm {
-
+class VariantUtilPvt;
 //!
 //! \brief The VariantUtil class
 //!
@@ -555,7 +555,7 @@ public:
     virtual QVariant convertTo(const QVariant &v, int typeId);
 
 private:
-    void*p=nullptr;
+    VariantUtilPvt *p=nullptr;
 };
 
 }

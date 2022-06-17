@@ -7,7 +7,7 @@
 #include "./qstm_global.h"
 
 namespace QStm {
-
+class PathUtilPvt;
 class Q_STM_EXPORT PathUtil{
 public:
     explicit PathUtil(Q_CONST_V);
@@ -128,7 +128,7 @@ public:
     QString arg(const QVariant &v);
 
 private:
-    void*p=nullptr;
+    PathUtilPvt*p=nullptr;
 };
 
 }

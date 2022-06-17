@@ -4,7 +4,7 @@
 #include "./qstm_global.h"
 
 namespace QStm {
-
+class SettingBasePvt;
 //!
 //! \brief The SettingBase class
 //!
@@ -249,7 +249,7 @@ signals:
     void cacheCleanupChanged();
     void cacheCleanupIntervalChanged();
 private:
-    void*p=nullptr;
+    SettingBasePvt *p=nullptr;
 };
 
 

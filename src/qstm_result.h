@@ -6,6 +6,7 @@
 #include <QtSql/QSqlError>
 #include <QStringList>
 
+class ResultValuePvt;
 //!
 //! \brief The ResultValue class
 //!class for carrying status and varying values
@@ -652,7 +653,7 @@ public:
     //!
     Q_INVOKABLE virtual QString toString() const;
 public:
-    void *p = nullptr;
+    ResultValuePvt *p = nullptr;
 signals:
     void dataChanged();
 };

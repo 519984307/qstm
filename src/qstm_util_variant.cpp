@@ -16,19 +16,15 @@
 
 namespace QStm {
 
-#define dPvt()\
-    auto &p = *reinterpret_cast<VariantUtilPvt*>(this->p)
-
-
 #define set__value(v)\
-if(v.isValid()) {p.vvm.clear();this->setValue(v);}
+if(v.isValid()) {p->vvm.clear();this->setValue(v);}
 
-class VariantUtilPvt:public QObject{
+class VariantUtilPvt{
 public:
     VariantUtil*parent=nullptr;
     QVVM vvm;
 
-    explicit VariantUtilPvt(VariantUtil*v):QObject(nullptr)
+    explicit VariantUtilPvt(VariantUtil*v)
     {
         this->parent=v;
     }
@@ -40,7 +36,7 @@ public:
     void clear()
     {
         vvm.clear();
-        this->parent->setValue(QVariant());
+        this->parent->setValue({});
     }
 
     QVariantHash toHash(const QVariant &v)const
@@ -405,9 +401,7 @@ VariantUtil::VariantUtil(const QVariant &v):QVariant{v}
 
 VariantUtil::~VariantUtil()
 {
-    dPvt();
-    this->p=nullptr;
-    p.deleteLater();
+    delete p;
 }
 
 VariantUtil&VariantUtil::operator=(const QVariant &v)
@@ -430,7 +424,7 @@ bool VariantUtil::isUuid(const QVariant &v) const
 
 bool VariantUtil::isUuid(const QVariant &v, QUuid &uuidSet) const
 {
-    dPvt();
+
     switch (qTypeId(v)) {
     case QMetaType_QUuid:
     {
@@ -440,7 +434,7 @@ bool VariantUtil::isUuid(const QVariant &v, QUuid &uuidSet) const
     default:
         QString text=v.toString();
         QUuid uuid;
-        if(p.md5ParserUuid(text,text))
+        if(p->md5ParserUuid(text,text))
             uuid=QUuid::fromString(text);
 
         if(uuid.isNull())
@@ -471,9 +465,9 @@ bool VariantUtil::isBase64(const QVariant &v) const
 
 const QString VariantUtil::toStr(const QVariant &v)
 {
-    dPvt();
+
     set__value(v);
-    return p.toByteArray(*this);
+    return p->toByteArray(*this);
 }
 
 const QByteArray VariantUtil::toAlphaNumber(const QVariant &v)
@@ -514,21 +508,21 @@ const QString VariantUtil::toAlphaText(const QVariant &v)
 
 const QByteArray VariantUtil::toByteArray(const QVariant &v)
 {
-    dPvt();
+
     set__value(v);
-    return p.toByteArray(*this);
+    return p->toByteArray(*this);
 }
 
 const QChar VariantUtil::toChar(const QVariant &v)
 {
-    dPvt();
+
     set__value(v);
     return QVariant::toChar();
 }
 
 int VariantUtil::toInt(const QVariant &v)
 {
-    dPvt();
+
     set__value(v);
     return QVariant::toUInt();
 }
@@ -541,7 +535,7 @@ qlonglong VariantUtil::toLongLong(const QVariant &v)
 
 const QDate VariantUtil::toDate(const QVariant &v)
 {
-    dPvt();
+
     set__value(v);
     DateUtil du(*this);
     return du.toDate();
@@ -549,7 +543,7 @@ const QDate VariantUtil::toDate(const QVariant &v)
 
 const QTime VariantUtil::toTime(const QVariant &v)
 {
-    dPvt();
+
     set__value(v);
     DateUtil du(*this);
     return du.toTime();
@@ -557,7 +551,7 @@ const QTime VariantUtil::toTime(const QVariant &v)
 
 const QDateTime VariantUtil::toDateTime(const QVariant &v)
 {
-    dPvt();
+
     set__value(v);
     DateUtil du(*this);
     return du.toDateTime();
@@ -565,7 +559,7 @@ const QDateTime VariantUtil::toDateTime(const QVariant &v)
 
 double VariantUtil::toDouble(const QVariant &v)
 {
-    dPvt();
+
     set__value(v);
     return QVariant::toDouble();
 }
@@ -573,7 +567,7 @@ double VariantUtil::toDouble(const QVariant &v)
 bool VariantUtil::toBool(const QVariant &v)
 {
     const static auto listBool=QVector<QByteArray>{qbl("1"), qbl("true"), qbl("yes"), qbl("sim"), qbl("verdadeiro"), qbl("t"), qbl("s"), qbl("v"), qbl("y")};
-    dPvt();
+
     set__value(v);
 
     if(qTypeId(*this)==QMetaType_Bool)
@@ -588,19 +582,19 @@ bool VariantUtil::toBool(const QVariant &v)
 bool VariantUtil::canConvertJson(const QVariant &v) const
 {
     QVariant vOut;
-    dPvt();
-    return p.canConvertJson(v, vOut);
+
+    return p->canConvertJson(v, vOut);
 }
 
 bool VariantUtil::canConvertJson(const QVariant &v, QVariant &vOut) const
 {
-    dPvt();
-    return p.canConvertJson(v, vOut);
+
+    return p->canConvertJson(v, vOut);
 }
 
 const QByteArray VariantUtil::toMd5(const QVariant &v)
 {
-    dPvt();
+
     set__value(v);
     if(!this->isValid())
         return {};
@@ -629,23 +623,23 @@ const QByteArray VariantUtil::toMd5(const QVariant &v)
 
 const QByteArray VariantUtil::toHex(const QVariant &v)
 {
-    dPvt();
+
     set__value(v);
     return this->toByteArray().toHex();
 }
 
 const QUuid VariantUtil::toUuid(const QVariant &v)
 {
-    dPvt();
+
     set__value(v);
     if(qTypeId(*this)==QMetaType_QUuid)
         return QVariant::toUuid();
-    return p.md5toUuid(this->toStr(v));
+    return p->md5toUuid(this->toStr(v));
 }
 
 const QString VariantUtil::toUuidSimple(const QVariant &v)
 {
-    dPvt();
+
     set__value(v);
     auto __return=this->toUuid().toString();
     return __return.toLower().replace(qsl("{"), QString()).replace(qsl("}"), QString());
@@ -659,33 +653,33 @@ const QUuid VariantUtil::toMd5Uuid(const QVariant &v)
 
 QVVM VariantUtil::toVVM() const
 {
-    dPvt();
-    auto vvm=p.vvm;
-    p.clear();
+
+    auto vvm=p->vvm;
+    p->clear();
     return vvm;
 }
 
 const QVVM VariantUtil::toVVM(const QVariant &v)
 {
-    dPvt();
+
     if(v.isValid())
-        p.clear();
+        p->clear();
     auto map=VariantUtil::toHash();
     QHashIterator<QString, QVariant> i(map);
     while (i.hasNext()) {
         i.next();
-        p.vvm[i.key()]=i.value();
+        p->vvm[i.key()]=i.value();
     }
-    return QVVM(p.vvm);
+    return QVVM(p->vvm);
 }
 
 const QVVM VariantUtil::toVVM(const QVariant &key, const QVariant &value)
 {
-    dPvt();
-    p.vvm.clear();
-    p.vvm.insert(key, value);
+
+    p->vvm.clear();
+    p->vvm.insert(key, value);
     this->setValue(QVariant());
-    return p.vvm;
+    return p->vvm;
 }
 
 const QVariantList VariantUtil::takeList(const QByteArray &keyName)
@@ -709,8 +703,8 @@ const QVariantList VariantUtil::takeList(const QByteArray &keyName)
 
 int VariantUtil::typeId() const
 {
-    dPvt();
-    if(!p.vvm.isEmpty())
+
+    if(!p->vvm.isEmpty())
         return QMetaType_QVariantMap;
 
     return qTypeId(*this);
@@ -751,17 +745,17 @@ const QStringList VariantUtil::toStringList(const QVariant &v)
 
 const QVariantList VariantUtil::toList(const QVariant &v)
 {
-    dPvt();
+
     set__value(v);
     return this->toVariantObject(v).toList();
 }
 
 QVariantMap VariantUtil::toMap() const
 {
-    dPvt();
-    if(!p.vvm.isEmpty()){
+
+    if(!p->vvm.isEmpty()){
         QVariantMap map;
-        QHashIterator<QString, QVariant> i(p.vvm);
+        QHashIterator<QString, QVariant> i(p->vvm);
         while (i.hasNext()) {
             i.next();
             map[i.key()]=i.value();
@@ -769,31 +763,31 @@ QVariantMap VariantUtil::toMap() const
         return map;
     }
 
-    auto v=p.toMap(*this);
+    auto v=p->toMap(*this);
     return v;
 }
 
 const QVariantMap VariantUtil::toMap(const QVariant &v)
 {
-    dPvt();
+
     set__value(v);
-    return p.toMap(v);
+    return p->toMap(v);
 }
 
 const QVariantMap VariantUtil::toMap(const QVariant &key, const QVariant &value)
 {
-    dPvt();
-    p.clear();
+
+    p->clear();
     this->makeMap(key,value);
     return this->toMap();
 }
 
 QVariantHash VariantUtil::toHash()const
 {
-    dPvt();
-    if(!p.vvm.isEmpty()){
+
+    if(!p->vvm.isEmpty()){
         QVariantHash map;
-        QHashIterator<QString, QVariant> i(p.vvm);
+        QHashIterator<QString, QVariant> i(p->vvm);
         while (i.hasNext()) {
             i.next();
             map[i.key()]=i.value();
@@ -801,21 +795,21 @@ QVariantHash VariantUtil::toHash()const
         return map;
     }
 
-    auto v=p.toHash(*this);
+    auto v=p->toHash(*this);
     return v;
 }
 
 const QVariantHash VariantUtil::toHash(const QVariant &v)
 {
-    dPvt();
+
     set__value(v);
-    return p.toHash(v);
+    return p->toHash(v);
 }
 
 const QVariantHash VariantUtil::toHash(const QVariant &key, const QVariant &value)
 {
-    dPvt();
-    p.clear();
+
+    p->clear();
     this->makeHash(key,value);
     return this->toHash();
 }
@@ -837,7 +831,7 @@ const QMultiHash<QString, QVariant> VariantUtil::toMultiHash(const QVariant &key
 
 const QVariant VariantUtil::toType(int typeId, const QVariant &v)
 {
-    dPvt();
+
     set__value(v);
     switch (typeId) {
     case QMetaType_QUuid:
@@ -885,7 +879,7 @@ const QVariant VariantUtil::toType(int typeId, const QVariant &v)
 
 const QVariant VariantUtil::toVariant(const QVariant &v)
 {
-    dPvt();
+
     set__value(v);
     auto typeId=qTypeId(*this);
     switch (typeId) {
@@ -909,7 +903,7 @@ const QVariant VariantUtil::toVariant(const QVariant &v)
 
 const QVariant VariantUtil::toVariantObject(const QVariant &v)
 {
-    dPvt();
+
     set__value(v);
     auto typeId=qTypeId(*this);
     switch (typeId) {
@@ -938,7 +932,7 @@ const QVariant VariantUtil::toVariantObject(const QVariant &v)
 
 const QVariant VariantUtil::toVariantJson(const QVariant &v)
 {
-    dPvt();
+
     set__value(v);
     auto typeId=qTypeId(*this);
     switch (typeId) {
@@ -962,7 +956,7 @@ const QVariant VariantUtil::toVariantJson(const QVariant &v)
 
 const QVariant VariantUtil::toVariantCBor(const QVariant &v)
 {
-    dPvt();
+
     set__value(v);
     auto typeId=qTypeId(*this);
     switch (typeId) {
@@ -1002,8 +996,8 @@ const QUrl VariantUtil::toUrl(const QVariant &v)
 
 VariantUtil &VariantUtil::makeVVM(const QVariant &key, const QVariant &value)
 {
-    dPvt();
-    p.vvm.insert(key, value);
+
+    p->vvm.insert(key, value);
     this->setValue(QVariant());
     return*this;
 }
@@ -1015,8 +1009,8 @@ VariantUtil &VariantUtil::mVVM(const QVariant &key, const QVariant &value)
 
 VariantUtil &VariantUtil::makeMap(const QVariant &key, const QVariant &value)
 {
-    dPvt();
-    p.vvm.clear();
+
+    p->vvm.clear();
     auto map=QVariant::toMap();
     map[key.toString()]=value;
     this->setValue(map);
@@ -1030,8 +1024,8 @@ VariantUtil &VariantUtil::mMap(const QVariant &key, const QVariant &value)
 
 VariantUtil &VariantUtil::makeHash(const QVariant &key, const QVariant &value)
 {
-    dPvt();
-    p.vvm.clear();
+
+    p->vvm.clear();
     auto map=QVariant::toHash();
     map[key.toString()]=value;
     this->setValue(map);
@@ -1045,8 +1039,8 @@ VariantUtil &VariantUtil::mHash(const QVariant &key, const QVariant &value)
 
 VariantUtil &VariantUtil::makeList(const QVariant &value)
 {
-    dPvt();
-    p.vvm.clear();
+
+    p->vvm.clear();
     auto list=QVariant::toList();
     list<<value;
     this->setValue(list);
@@ -1128,55 +1122,55 @@ const QUuid VariantUtil::toUuidCompuser(const QVariant &value)
 
 VariantUtil &VariantUtil::clear()
 {
-    dPvt();
-    p.clear();
+
+    p->clear();
     return*this;
 }
 
 VariantUtil &VariantUtil::vUnion(const QVariant &v)
 {
-    dPvt();
-    p.clear();
-    this->setValue(p.vUnion(v));
+
+    p->clear();
+    this->setValue(p->vUnion(v));
     return*this;
 }
 
 VariantUtil &VariantUtil::vUnion(const QVariant &vDestine, const QVariant &vSource)
 {
-    dPvt();
-    p.clear();
-    this->setValue(p.vUnion(vDestine,vSource));
+
+    p->clear();
+    this->setValue(p->vUnion(vDestine,vSource));
     return*this;
 }
 
 VariantUtil &VariantUtil::vMerge(const QVariant &v)
 {
-    dPvt();
-    p.clear();
-    this->setValue(p.vMerge(v));
+
+    p->clear();
+    this->setValue(p->vMerge(v));
     return*this;
 }
 
 VariantUtil &VariantUtil::vMerge(const QVariant &vDestine, const QVariant &vSource)
 {
-    dPvt();
-    p.clear();
-    this->setValue(p.vMerge(vDestine,vSource));
+
+    p->clear();
+    this->setValue(p->vMerge(vDestine,vSource));
     return*this;
 }
 
 VariantUtil &VariantUtil::vDeduplicate(const QVariant &v)
 {
-    dPvt();
-    p.clear();
-    this->setValue(p.vDeduplicate(v));
+
+    p->clear();
+    this->setValue(p->vDeduplicate(v));
     return*this;
 }
 
 bool VariantUtil::vIsEmpty(const QVariant &v)
 {
-    dPvt();
-    p.clear();
+
+    p->clear();
     this->setValue(v);
     auto vv=QVariant(v.isValid()?v:*this);
     bool invalid=vv.isValid() && !v.isNull();
@@ -1220,8 +1214,8 @@ bool VariantUtil::vIsEmpty(const QVariant &v)
 
 bool VariantUtil::vIsObject(const QVariant &v)
 {
-    dPvt();
-    p.clear();
+
+    p->clear();
     this->setValue(v);
     if(QMetaTypeUtilObjects.contains(qTypeId(*this)))
         return true;
@@ -1230,8 +1224,8 @@ bool VariantUtil::vIsObject(const QVariant &v)
 
 bool VariantUtil::vIsList(const QVariant &v)
 {
-    dPvt();
-    p.clear();
+
+    p->clear();
     this->setValue(v);
     if(QMetaTypeUtilVariantList.contains(qTypeId(*this)))
         return true;
@@ -1240,8 +1234,8 @@ bool VariantUtil::vIsList(const QVariant &v)
 
 bool VariantUtil::vIsMap(const QVariant &v)
 {
-    dPvt();
-    p.clear();
+
+    p->clear();
     this->setValue(v);
     if(QMetaTypeUtilVariantDictionary.contains(qTypeId(*this)))
         return true;
@@ -1252,8 +1246,8 @@ bool VariantUtil::vIsMap(const QVariant &v)
 
 bool VariantUtil::vIsString(const QVariant &v)
 {
-    dPvt();
-    p.clear();
+
+    p->clear();
     this->setValue(v);
     if(QMetaTypeUtilString.contains(qTypeId(v)))
         return true;

@@ -8,6 +8,7 @@
 #include "./qstm_global.h"
 
 namespace QStm {
+class QCurrencyPvt;
 //!
 //! \brief The QCurrency class
 //!
@@ -19,7 +20,7 @@ public:
     //! \param v
     //! \param precision
     //!
-    explicit QCurrency(const QVariant &v=QVariant(), const QVariant&precision=QVariant());
+    explicit QCurrency(const QVariant &v={}, const QVariant &precision={});
 
     //!
     //! \brief ~QCurrency
@@ -31,135 +32,135 @@ public:
     //! \param v
     //! \return
     //! operator to calc
-    QCurrency&operator = (const QVariant &v);
+    QCurrency &operator = (const QVariant &v);
 
     //!
     //! \brief operator =
     //! \param v
     //! \return
     //!operator to calc
-    QCurrency&operator = (const qlonglong&v);
+    QCurrency &operator = (const qlonglong&v);
 
     //!
     //! \brief operator =
     //! \param v
     //! \return
     //!operator to calc
-    QCurrency&operator = (const int&v);
+    QCurrency &operator = (const int&v);
 
     //!
     //! \brief operator =
     //! \param v
     //! \return
     //!operator to calc
-    QCurrency&operator = (const double&v);
+    QCurrency &operator = (const double&v);
 
     //!
     //! \brief operator +
     //! \param o
     //! \return
     //!operator to calc
-    QCurrency&operator + (const QCurrency&o);
+    QCurrency &operator + (const QCurrency &o);
 
     //!
     //! \brief operator -
     //! \param o
     //! \return
     //!operator to calc
-    QCurrency&operator - (const QCurrency&o);
+    QCurrency &operator - (const QCurrency &o);
 
     //!
     //! \brief operator *
     //! \param o
     //! \return
     //!
-    QCurrency&operator * (const QCurrency&o);
+    QCurrency &operator * (const QCurrency &o);
 
     //!
     //! \brief operator /
     //! \param o
     //! \return
     //!operator to calc
-    QCurrency&operator / (const QCurrency&o);
+    QCurrency &operator / (const QCurrency &o);
 
     //!
     //! \brief operator %
     //! \param o
     //! \return
     //!operator to calc
-    QCurrency&operator % (const QCurrency&o);
+    QCurrency &operator % (const QCurrency &o);
 
     //!
     //! \brief operator ^
     //! \param o
     //! \return
     //!operator to calc
-    QCurrency&operator ^ (const QCurrency&o);
+    QCurrency &operator ^ (const QCurrency &o);
 
     //!
     //! \brief operator +=
     //! \param o
     //!operator to calc
-    void operator += (const QVariant&o);
+    void operator += (const QVariant &o);
 
     //!
     //! \brief operator -=
     //! \param o
     //!operator to calc
-    void operator -= (const QVariant&o);
+    void operator -= (const QVariant &o);
 
     //!
     //! \brief operator *=
     //! \param o
     //!operator to calc
-    void operator *= (const QVariant&o);
+    void operator *= (const QVariant &o);
 
     //!
     //! \brief operator /=
     //! \param o
     //!operator to calc
-    void operator /= (const QVariant&o);
+    void operator /= (const QVariant &o);
 
     //!
     //! \brief operator ^=
     //! \param o
     //!operator to calc
-    void operator ^= (const QVariant&o);
+    void operator ^= (const QVariant &o);
 
     //!
     //! \brief operator >
     //! \param o
     //! \return
     //!operator to calc
-    bool operator > (const QCurrency&o);
+    bool operator > (const QCurrency &o);
 
     //!
     //! \brief operator >=
     //! \param o
     //! \return
     //!operator to calc
-    bool operator >= (const QCurrency&o);
+    bool operator >= (const QCurrency &o);
 
     //!
     //! \brief operator ==
     //! \param o
     //! \return
     //!
-    bool operator == (const QCurrency&o);
+    bool operator == (const QCurrency &o);
 
     //!
     //! \brief operator <
     //! \param o
     //! \return
     //!operator to calc
-    bool operator < (const QCurrency&o);
+    bool operator < (const QCurrency &o);
 
     //!
     //! \brief operator <=
     //! \param o
     //! \return
     //!operator to calc
-    bool operator <= (const QCurrency&o);
+    bool operator <= (const QCurrency &o);
 
     //!
     //! \brief setValue
@@ -174,7 +175,7 @@ public:
     //! conversao para do double
     double toDouble()const;
 private:
-    void*p=nullptr;
+    QCurrencyPvt *p=nullptr;
 };
 
 }

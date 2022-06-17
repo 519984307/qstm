@@ -14,10 +14,7 @@
 
 namespace QStm {
 
-#define dPvt()\
-    auto &p = *reinterpret_cast<SettingManagerPrv*>(this->p)
-
-class SettingManagerPrv{
+class SettingManagerPvt{
 public:
     QVariant settingsFileName;
     SettingBase settingsDefault;
@@ -27,9 +24,9 @@ public:
     SettingManager*parent=nullptr;
     QObject*parentParent=nullptr;
 
-    explicit SettingManagerPrv(SettingManager*parent);
+    explicit SettingManagerPvt(SettingManager*parent);
 
-    virtual ~SettingManagerPrv();
+    virtual ~SettingManagerPvt();
 
     bool isLoaded();
 

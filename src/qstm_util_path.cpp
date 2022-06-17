@@ -37,15 +37,13 @@ public:
 PathUtil::PathUtil(const QVariant &v)
 {
     this->p = new PathUtilPvt{this};
-    dPvt();
-    p.v=v.toString();
+
+    p->v=v.toString();
 }
 
 PathUtil::~PathUtil()
 {
-    dPvt();
-    this->p=nullptr;
-    delete&p;
+    delete p;
 }
 
 PathUtil&PathUtil::operator=(const QVariant &v)
@@ -61,86 +59,86 @@ PathUtil &PathUtil::operator+=(const QVariant &v)
 
 PathUtil &PathUtil::operator-=(const QVariant &v)
 {
-    dPvt();
-    return this->setPath(p.v.replace(v.toString(),qsl_null));
+
+    return this->setPath(p->v.replace(v.toString(),qsl_null));
 }
 
 PathUtil &PathUtil::operator<<(const QVariant &v)
 {
-    dPvt();
-    this->setPath(p.v+q_dir_separator+v.toString());
+
+    this->setPath(p->v+q_dir_separator+v.toString());
     return*this;
 }
 
 bool PathUtil::exists(const QVariant &v) const
 {
-    dPvt();
+
     if(v.isValid())
         return QDir(v.toString()).exists();
-    return QDir(p.v).exists();
+    return QDir(p->v).exists();
 }
 
 bool PathUtil::isValid(const QVariant &v) const
 {
-    dPvt();
+
     if(v.isValid())
         return v.toString().trimmed().isEmpty();
-    return p.v.isEmpty();
+    return p->v.isEmpty();
 }
 
 PathUtil &PathUtil::clear()
 {
-    dPvt();
-    p.clear();
+
+    p->clear();
     return*this;
 }
 
 PathUtil &PathUtil::setPath(const QVariant &v)
 {
-    dPvt();
-    p.v=p.format(v.toString());
+
+    p->v=p->format(v.toString());
     return*this;
 }
 
 PathUtil &PathUtil::append(const QVariant &v)
 {
-    dPvt();
-    p.v+=q_dir_separator+v.toString();
+
+    p->v+=q_dir_separator+v.toString();
     return this->setPath(v);
 }
 
 PathUtil &PathUtil::remove(const QVariant &v)
 {
-    dPvt();
+
     auto s=v.toString().replace(qsl("\\"),q_dir_separator);
-    s=p.v.replace(s,qsl_null);
+    s=p->v.replace(s,qsl_null);
     return this->setPath(s);
 }
 
 bool PathUtil::mkPath(const QVariant &v)
 {
-    dPvt();
+
     if(v.isValid())
         return QDir().mkpath(v.toString());
-    return QDir(p.v).mkpath(p.v);
+    return QDir(p->v).mkpath(p->v);
 }
 
 QString PathUtil::toLower() const
 {
-    dPvt();
-    return p.v.toLower();
+
+    return p->v.toLower();
 }
 
 QString PathUtil::toString() const
 {
-    dPvt();
-    return p.v;
+
+    return p->v;
 }
 
 QByteArray PathUtil::toByteArray() const
 {
-    dPvt();
-    return p.v.toUtf8();
+
+    return p->v.toUtf8();
 }
 
 QVariantList PathUtil::toList() const
@@ -150,28 +148,28 @@ QVariantList PathUtil::toList() const
 
 QStringList PathUtil::toStringList() const
 {
-    dPvt();
-    return p.v.split(q_dir_separator);
+
+    return p->v.split(q_dir_separator);
 }
 
 QByteArray PathUtil::toMd5() const
 {
-    dPvt();
+
     Q_DECLARE_VU;
-    return vu.toMd5(p.v);
+    return vu.toMd5(p->v);
 }
 
 QUuid PathUtil::toUuid() const
 {
-    dPvt();
+
     Q_DECLARE_VU;
-    return vu.toMd5Uuid(p.v);
+    return vu.toMd5Uuid(p->v);
 }
 
 QString PathUtil::arg(const QVariant &v)
 {
-    dPvt();
-    auto s=p.format(p.v+q_dir_separator+v.toString());
+
+    auto s=p->format(p->v+q_dir_separator+v.toString());
     return s;
 }
 

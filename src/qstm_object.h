@@ -6,7 +6,7 @@
 #include "./qstm_object_macro.h"
 
 namespace QStm {
-
+class ObjectPvt;
 //!
 //! \brief The Object class
 //!
@@ -278,7 +278,7 @@ public:
 
 
 private:
-    void*p=nullptr;
+    ObjectPvt *p=nullptr;
 };
 
 }

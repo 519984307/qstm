@@ -6,7 +6,7 @@
 #include <QUrl>
 
 namespace QStm {
-
+class UrlPvt;
 //!
 //! \brief The Url class
 //! url util class
@@ -36,7 +36,7 @@ public:
     //! \param v
     //! \return
     //!
-    Url&operator=(const QVariant &v);
+    Url &operator=(const QVariant &v);
 
 
     //!
@@ -51,87 +51,87 @@ public:
     //! \param v
     //! \return
     //!
-    Url&read(const QVariant &v);
+    Url &read(const QVariant &v);
 
     //!
     //! \brief headers
     //! \return
     //!
-    virtual QVariantHash&headers() const;
+    virtual QVariantHash &headers() const;
 
     //!
     //! \brief header
     //! \param value
     //! \return
     //!
-    virtual Url&header(const QVariant &value);
+    virtual Url &header(const QVariant &value);
 
     //!
     //! \brief setHeader
     //! \param value
     //! \return
     //!
-    virtual Url&setHeader(const QVariant &value);
+    virtual Url &setHeader(const QVariant &value);
 
     //!
     //! \brief name
     //! \return
     //!
-    virtual QString&name() const;
+    virtual QString &name() const;
 
     //!
     //! \brief name
     //! \param value
     //! \return
     //!
-    virtual Url&name(const QVariant &value);
+    virtual Url &name(const QVariant &value);
 
     //!
     //! \brief setName
     //! \param value
     //! \return
     //!
-    virtual Url&setName(const QVariant &value);
+    virtual Url &setName(const QVariant &value);
 
     //!
     //! \brief outPutName
     //! \return
     //!
-    virtual QString&outPutName() const;
+    virtual QString &outPutName() const;
 
     //!
     //! \brief outPutName
     //! \param value
     //! \return
     //!
-    virtual Url&outPutName(const QVariant &value);
+    virtual Url &outPutName(const QVariant &value);
 
     //!
     //! \brief setOutPutName
     //! \param value
     //! \return
     //!
-    virtual Url&setOutPutName(const QVariant &value);
+    virtual Url &setOutPutName(const QVariant &value);
 
     //!
     //! \brief url
     //! \return
     //!
-    virtual QUrl&url() const;
+    virtual QUrl &url() const;
 
     //!
     //! \brief url
     //! \param value
     //! \return
     //!
-    virtual Url&url(const QVariant &value);
+    virtual Url &url(const QVariant &value);
 
     //!
     //! \brief setUrl
     //! \param value
     //! \return
     //!
-    virtual Url&setUrl(const QVariant &value);
+    virtual Url &setUrl(const QVariant &value);
 
     //!
     //! \brief isValid
@@ -189,7 +189,7 @@ public:
     QString toString() const;
 
 private:
-    void*p = nullptr;
+    UrlPvt *p = nullptr;
 };
 
 }

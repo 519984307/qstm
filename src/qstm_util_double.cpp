@@ -2,34 +2,12 @@
 
 namespace QStm {
 
-#define dPvt()\
-    auto &p = *reinterpret_cast<DoubleUtilPvt*>(this->p)
-
-class DoubleUtilPvt{
-public:
-    DoubleUtil*parent=nullptr;
-    explicit DoubleUtilPvt(DoubleUtil*v)
-    {
-        this->parent=v;
-    }
-    virtual ~DoubleUtilPvt()
-    {
-    }
-    void clear()
-    {
-        this->parent->setValue(QVariant());
-    }
-};
-
 DoubleUtil::DoubleUtil(const QVariant &v):QVariant{v}
 {
-    this->p = new DoubleUtilPvt{this};
 }
 
 DoubleUtil::~DoubleUtil()
 {
-    dPvt();
-    delete&p;
 }
 
 DoubleUtil&DoubleUtil::operator=(const QVariant &v)

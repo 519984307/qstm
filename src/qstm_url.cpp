@@ -16,11 +16,13 @@ public:
     QVariant body;
     QVariantHash headers;
     QUrl url;
-    explicit UrlPvt(Url*parent){
+    explicit UrlPvt(Url*parent)
+    {
         this->parent=parent;
     }
 
-    virtual ~UrlPvt(){
+    virtual ~UrlPvt()
+    {
     }
 
     Url&setData(){
@@ -75,26 +77,24 @@ public:
 Url::Url(const QVariant &v):QVariant{}
 {
     this->p = new UrlPvt{this};
-    dPvt();
-    p.setVar(v);
+    p->setVar(v);
 }
 
 Url::Url(const ResultValue &v):QVariant{}
 {
     this->p = new UrlPvt{this};
-    dPvt();
-    p.setVar(v.resultHash());
+    p->setVar(v.resultHash());
 }
 
 Url::~Url()
 {
-    dPvt();delete&p;
+    delete p;
 }
 
 Url &Url::operator=(const QVariant &v)
 {
-    dPvt();
-    p.setVar(v);
+
+    p->setVar(v);
     return*this;
 }
 
@@ -106,113 +106,113 @@ Url Url::from(const QVariant &v)
 
 Url &Url::read(const QVariant &v)
 {
-    dPvt();
-    p.setVar(v);
+
+    p->setVar(v);
     return*this;
 }
 
 QVariantHash &Url::headers() const
 {
-    dPvt();
-    return p.headers;
+
+    return p->headers;
 }
 
 Url &Url::header(const QVariant &value)
 {
-    dPvt();
-    p.headers=p.vu.toHash(value);
-    return p.setData();
+
+    p->headers=p->vu.toHash(value);
+    return p->setData();
 }
 
 Url &Url::setHeader(const QVariant &value)
 {
-    dPvt();
-    p.headers=p.vu.toHash(value);
-    return p.setData();
+
+    p->headers=p->vu.toHash(value);
+    return p->setData();
 }
 
 QString &Url::name() const
 {
-    dPvt();
-    return p.name;
+
+    return p->name;
 }
 
 Url &Url::name(const QVariant &value)
 {
-    dPvt();
-    p.name=value.toString();
-    return p.setData();
+
+    p->name=value.toString();
+    return p->setData();
 }
 
 Url &Url::setName(const QVariant &value)
 {
-    dPvt();
-    p.name=value.toString();
-    return p.setData();
+
+    p->name=value.toString();
+    return p->setData();
 }
 
 QString &Url::outPutName() const
 {
-    dPvt();
-    return p.outPutName;
+
+    return p->outPutName;
 }
 
 Url &Url::outPutName(const QVariant &value)
 {
-    dPvt();
-    p.outPutName=value.toString();
-    return p.setData();
+
+    p->outPutName=value.toString();
+    return p->setData();
 }
 
 Url &Url::setOutPutName(const QVariant &value)
 {
-    dPvt();
-    p.outPutName=value.toString();
-    return p.setData();
+
+    p->outPutName=value.toString();
+    return p->setData();
 }
 
 QUrl &Url::url() const
 {
-    dPvt();
-    return p.url;
+
+    return p->url;
 }
 
 Url &Url::url(const QVariant &value)
 {
-    dPvt();
-    p.url=p.vu.toUrl(value);
-    return p.setData();
+
+    p->url=p->vu.toUrl(value);
+    return p->setData();
 }
 
 Url&Url::setUrl(const QVariant &value)
 {
-    dPvt();
-    p.url=p.vu.toUrl(value);
-    return p.setData();
+
+    p->url=p->vu.toUrl(value);
+    return p->setData();
 }
 
 bool Url::isValid() const
 {
-    dPvt();
-    return p.url.isValid();
+
+    return p->url.isValid();
 }
 
 bool Url::isNull() const
 {
-    dPvt();
-    return p.url.isEmpty();
+
+    return p->url.isEmpty();
 }
 
 bool Url::isLocalFile() const
 {
-    dPvt();
-    return p.url.isLocalFile();
+
+    return p->url.isLocalFile();
 }
 
 QString Url::toLocalFile() const
 {
-    dPvt();
-    return p.url.toLocalFile();
+
+    return p->url.toLocalFile();
 }
 
 Url Url::fromLocalFile(const QString &localfile)
@@ -222,14 +222,14 @@ Url Url::fromLocalFile(const QString &localfile)
 
 QVariantMap Url::toMap() const
 {
-    dPvt();
-    return p.body.toMap();
+
+    return p->body.toMap();
 }
 
 QVariantHash Url::toHash() const
 {
-    dPvt();
-    return p.body.toHash();
+
+    return p->body.toHash();
 }
 
 QByteArray Url::readBody() const
@@ -247,8 +247,8 @@ QByteArray Url::readBody() const
 
 QString Url::toString() const
 {
-    dPvt();
-    return p.url.toString();
+
+    return p->url.toString();
 }
 
 }

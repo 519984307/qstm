@@ -11,9 +11,6 @@
 
 namespace QStm {
 
-#define dPvt()\
-auto &p = *reinterpret_cast<MetaObjectUtilPvt*>(this->p)
-
 class MetaObjectUtilPvt{
 public:
     MetaObjectUtil*parent=nullptr;
@@ -191,53 +188,52 @@ MetaObjectUtil::MetaObjectUtil()
 MetaObjectUtil::MetaObjectUtil(const QMetaObject &metaObject)
 {
     this->p = new MetaObjectUtilPvt{this};
-    dPvt();
-    p.metaObjectList.clear();
-    p.metaObjectList.append(&metaObject);
+
+    p->metaObjectList.clear();
+    p->metaObjectList.append(&metaObject);
 }
 
 MetaObjectUtil::~MetaObjectUtil()
 {
-    dPvt();
-    delete&p;
+    delete p;
 }
 
 MetaObjectUtil &MetaObjectUtil::operator=(const QMetaObject &v)
 {
-    dPvt();
-    p.metaObjectList.clear();
-    p.metaObjectList.append(&v);
+
+    p->metaObjectList.clear();
+    p->metaObjectList.append(&v);
     return*this;
 }
 
 MetaObjectUtil &MetaObjectUtil::operator+=(const QMetaObject &v)
 {
-    dPvt();
-    p.metaObjectList.clear();
-    p.metaObjectList.append(&v);
+
+    p->metaObjectList.clear();
+    p->metaObjectList.append(&v);
     return*this;
 }
 
 MetaObjectUtil &MetaObjectUtil::operator-=(const QMetaObject &v)
 {
-    dPvt();
+
     Q_UNUSED(v)
-    p.metaObjectList.clear();
-    p.metaObjectList<<&QObject::staticMetaObject;
+    p->metaObjectList.clear();
+    p->metaObjectList<<&QObject::staticMetaObject;
     return*this;
 }
 
 MetaObjectUtil &MetaObjectUtil::operator<<(const QMetaObject &v)
 {
-    dPvt();
-    p.metaObjectList.clear();
-    p.metaObjectList.append(&v);
+
+    p->metaObjectList.clear();
+    p->metaObjectList.append(&v);
     return*this;
 }
 
 QObject *MetaObjectUtil::newInstance(QObject*parent){
-    dPvt();
-    auto &__metaObject=*p.metaObjectList.first();
+
+    auto &__metaObject=*p->metaObjectList.first();
     auto object=__metaObject.newInstance(Q_ARG(QObject*, parent));
     return object;
 }
@@ -251,9 +247,9 @@ QObject *MetaObjectUtil::newInstance(const QMetaObject &metaObject, QObject *par
 
 QMetaMethod MetaObjectUtil::method(const QString &name)
 {
-    dPvt();
+
     auto __name=name.toLower().trimmed();
-    for(auto &metaObject:p.metaObjectList){
+    for(auto &metaObject:p->metaObjectList){
         for(int i = 0; i < metaObject->methodCount(); ++i) {
             auto method = metaObject->method(i);
             auto name__=method.name().toLower();
@@ -268,9 +264,9 @@ QMetaMethod MetaObjectUtil::method(const QString &name)
 
 QMetaProperty MetaObjectUtil::property(const QByteArray &name)
 {
-    dPvt();
+
     auto __name=name.toLower().trimmed();
-    for(auto &metaObject:p.metaObjectList){
+    for(auto &metaObject:p->metaObjectList){
         for(int i = 0; i < metaObject->propertyCount(); ++i) {
             auto property = metaObject->property(i);
             auto name__=QByteArray(property.name()).toLower();
@@ -301,7 +297,7 @@ const QVariantHash MetaObjectUtil::toHash(const QObject *object)const
 
 bool MetaObjectUtil::writeMap(QObject *object, const QVariantMap &v)
 {
-    dPvt();
+
     bool __return=false;
     auto vProperty=this->toPropertyMap(object);
     Q_V_MAP_ITERATOR(v){
@@ -309,7 +305,7 @@ bool MetaObjectUtil::writeMap(QObject *object, const QVariantMap &v)
         auto k=i.key().toUtf8();
         auto &v=i.value();
         auto property=vProperty.value(k);
-        if(p.writeProperty(object, property, v))
+        if(p->writeProperty(object, property, v))
             __return=true;
     }
     return __return;
@@ -317,7 +313,7 @@ bool MetaObjectUtil::writeMap(QObject *object, const QVariantMap &v)
 
 bool MetaObjectUtil::writeHash(QObject *object, const QVariantHash &v)
 {
-    dPvt();
+
     bool __return=false;
     auto vProperty=this->toPropertyMap(object);
     Q_V_HASH_ITERATOR(v){
@@ -325,7 +321,7 @@ bool MetaObjectUtil::writeHash(QObject *object, const QVariantHash &v)
         auto k=i.key().toUtf8();
         auto &v=i.value();
         auto property=vProperty.value(k);
-        if(p.writeProperty(object, property, v))
+        if(p->writeProperty(object, property, v))
             __return=true;
     }
     return __return;
@@ -333,13 +329,13 @@ bool MetaObjectUtil::writeHash(QObject *object, const QVariantHash &v)
 
 const QList<QMetaProperty> MetaObjectUtil::toPropertyList(const QObject *object) const
 {
-    dPvt();
+
     QList<const QMetaObject*> __metaObject;
     if(object!=nullptr){
         __metaObject<<object->metaObject();
     }
     else{
-        __metaObject=p.metaObjectList;
+        __metaObject=p->metaObjectList;
     }
     auto &metaObject =*__metaObject.first();
 
@@ -353,8 +349,8 @@ const QList<QMetaProperty> MetaObjectUtil::toPropertyList(const QObject *object)
 
 const QHash<QByteArray, QMetaProperty> MetaObjectUtil::toPropertyMap(const QObject *object) const
 {
-    dPvt();
-    auto __metaObject=p.metaObjectList;
+
+    auto __metaObject=p->metaObjectList;
     if(object!=nullptr){
         __metaObject.clear();
         __metaObject<<object->metaObject();

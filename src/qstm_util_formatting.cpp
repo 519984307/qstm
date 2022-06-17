@@ -67,15 +67,8 @@ public:
 
 Q_GLOBAL_STATIC(FormattingUtilStruct,___formattingUtilStruct)
 
-
-#define dPvt()\
-auto &p = *reinterpret_cast<FormattingUtilPvt*>(this->p)
-
-
-          auto &consts=*___formattingUtilStruct;
-
 void init(){
-    consts.init();
+    ___formattingUtilStruct->init();
 }
 
 Q_COREAPP_STARTUP_FUNCTION(init)
@@ -87,12 +80,12 @@ public:
     int prec_cur=currencyPrecision;
     int prec_per=percentagePrecision;
     FormattingUtil*parent=nullptr;
-    QHash<QString,QString> maskMap=consts.staticMaskMap[nativeCountryName()];
+    QHash<QString,QString> maskMap=___formattingUtilStruct->staticMaskMap[nativeCountryName()];
     FormattingUtil::Masks masks;
     explicit FormattingUtilPvt(FormattingUtil*parent):masks()
     {
         this->parent=parent;
-        this->maskMap=consts.staticMaskMap[nativeCountryName()];
+        this->maskMap=___formattingUtilStruct->staticMaskMap[nativeCountryName()];
     }
     virtual ~FormattingUtilPvt()
     {
@@ -111,74 +104,74 @@ FormattingUtil::Masks::~Masks()
 
 QString &FormattingUtil::Masks::date() const
 {
-    dPvt();
-    return p.maskMap[__func__];
+
+    return p->maskMap[__func__];
 }
 
 QString &FormattingUtil::Masks::time() const
 {
-    dPvt();
-    return p.maskMap[__func__];
+
+    return p->maskMap[__func__];
 }
 
 QString &FormattingUtil::Masks::timeShort() const
 {
-    dPvt();
-    return p.maskMap[__func__];
+
+    return p->maskMap[__func__];
 }
 
 QString &FormattingUtil::Masks::dateTime() const
 {
-    dPvt();
-    return p.maskMap[__func__];
+
+    return p->maskMap[__func__];
 }
 
 QString &FormattingUtil::Masks::currency() const
 {
-    dPvt();
-    return p.maskMap[__func__];
+
+    return p->maskMap[__func__];
 }
 
 QString &FormattingUtil::Masks::number() const
 {
-    dPvt();
-    return p.maskMap[__func__];
+
+    return p->maskMap[__func__];
 }
 
 QString &FormattingUtil::Masks::numeric() const
 {
-    dPvt();
-    return p.maskMap[__func__];
+
+    return p->maskMap[__func__];
 }
 
 QString &FormattingUtil::Masks::percent() const
 {
-    dPvt();
-    return p.maskMap[__func__];
+
+    return p->maskMap[__func__];
 }
 
 QString &FormattingUtil::Masks::boolean(const bool &v) const
 {
-    dPvt();
-    return p.maskMap[__func__+(v?consts.keyTrue:consts.keyFalse)];
+
+    return p->maskMap[__func__+(v?___formattingUtilStruct->keyTrue:___formattingUtilStruct->keyFalse)];
 }
 
 FormattingUtil::Masks &FormattingUtil::masks()const
 {
-    dPvt();
-    return p.masks;
+
+    return p->masks;
 }
 
 FormattingUtil::FormattingUtil(const QVariant &v):QVariant{v}
 {
     this->p = new FormattingUtilPvt{this};
-    dPvt();
-    p.masks.p=this->p;
+
+    p->masks.p=this->p;
 }
 
 FormattingUtil::~FormattingUtil()
 {
-    dPvt();delete&p;
+    delete p;
 }
 
 FormattingUtil &FormattingUtil::operator=(const QVariant &v)
@@ -217,35 +210,35 @@ const QString FormattingUtil::toDateTime(const QVariant &v)
 
 const QString FormattingUtil::toCurrency(const QVariant &v, int prec)
 {
-    dPvt();
-    prec=(prec<0)?p.prec_cur:prec;
+
+    prec=(prec<0)?p->prec_cur:prec;
     set_v;
     auto val=QCurrency(*this).toDouble();
-    return p.c.toString(val,fChar,prec);
+    return p->c.toString(val,fChar,prec);
 }
 
 const QString FormattingUtil::toInt(const QVariant &v)
 {
-    dPvt();
+
     set_v;
     auto val=QVariant::toDouble();
-    return p.c.toString(val,fChar,0);
+    return p->c.toString(val,fChar,0);
 }
 
 const QString FormattingUtil::toDouble(const QVariant &v, int prec)
 {
-    dPvt();
-    prec=(prec<0)?p.prec_dbl:prec;
+
+    prec=(prec<0)?p->prec_dbl:prec;
     set_v;
-    return p.c.toString(QVariant::toDouble(),fChar,prec);
+    return p->c.toString(QVariant::toDouble(),fChar,prec);
 }
 
 const QString FormattingUtil::toPercent(const QVariant &v, int prec)
 {
-    dPvt();
-    prec=(prec<0)?p.prec_per:prec;
+
+    prec=(prec<0)?p->prec_per:prec;
     set_v;
-    return p.c.toString(QVariant::toDouble(),fChar,prec);
+    return p->c.toString(QVariant::toDouble(),fChar,prec);
 }
 
 const QString FormattingUtil::toBool(const QVariant &v)
@@ -284,9 +277,9 @@ const QString FormattingUtil::v(const QVariant &v, int prec)
         return this->toUrl().toString();
     default:
         auto tn=QByteArray(this->typeName());
-        if(tn==consts.QCurrency_class_name || tn==consts.QCurrency_class_name_short || tn==consts.qcurrency_class_name_short)
+        if(tn==___formattingUtilStruct->QCurrency_class_name || tn==___formattingUtilStruct->QCurrency_class_name_short || tn==___formattingUtilStruct->qcurrency_class_name_short)
             return this->toCurrency(v, prec);
-        if(tn==consts.qpercent_class_name)
+        if(tn==___formattingUtilStruct->qpercent_class_name)
             return this->toPercent(v, prec);
     }
     return QVariant::toString();

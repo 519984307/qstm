@@ -4,7 +4,7 @@
 
 namespace QStm {
 
-FileInfo::FileInfo():QFileInfo()
+FileInfo::FileInfo():QFileInfo{}
 {
 
 }

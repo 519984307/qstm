@@ -6,7 +6,7 @@
 #include "./qstm_global.h"
 
 namespace QStm {
-
+class CachePoolPvt;
 //!
 //! \brief The CachePool class
 //! pool cache class
@@ -20,11 +20,6 @@ public:
     //! \param parent
     //!
     Q_INVOKABLE explicit CachePool(QObject *parent = nullptr);
-
-    //!
-    //! \brief ~CachePool
-    //!
-    ~CachePool();
 
     //!
     //! \brief i
@@ -96,7 +91,7 @@ public:
     virtual QVariant remove(const QVariant &key)const;
 
 private:
-    void*p=nullptr;
+    CachePoolPvt *p=nullptr;
 };
 
 }

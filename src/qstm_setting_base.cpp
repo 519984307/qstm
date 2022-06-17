@@ -17,10 +17,7 @@
 
 namespace QStm {
 
-#define dPvt()\
-    auto &p = *reinterpret_cast<SettingBasePrv*>(this->p)
-
-class SettingBasePrv{
+class SettingBasePvt{
 public:
     QObject*parent=nullptr;
     QVariantHash headers;
@@ -39,12 +36,12 @@ public:
     bool cacheCleanup=false;
     int cacheCleanupInterval=0;
 
-    explicit SettingBasePrv(QObject*parent)
+    explicit SettingBasePvt(QObject*parent)
     {
         this->parent=parent;
     }
 
-    virtual ~SettingBasePrv()
+    virtual ~SettingBasePvt()
     {
     }
 };
@@ -52,12 +49,12 @@ public:
 
 SettingBase::SettingBase(QObject *parent):SettingBaseTemplate<SettingBase>{parent}
 {
-    this->p = new SettingBasePrv(this);
+    this->p = new SettingBasePvt(this);
 }
 
 SettingBase::~SettingBase()
 {
-    dPvt();delete&p;
+    delete p;
 }
 
 QVariant SettingBase::url()const
@@ -118,128 +115,128 @@ SettingBase &SettingBase::setService(const QString &value)
 
 QVariantHash SettingBase::headers() const
 {
-    dPvt();
-    return p.headers;
+
+    return p->headers;
 }
 
 SettingBase &SettingBase::setHeaders(const QVariantHash &value)
 {
-    dPvt();
-    p.headers = value;
+
+    p->headers = value;
     return*this;
 }
 
 QVariant SettingBase::protocol() const
 {
-    dPvt();
-    return p.protocol;
+
+    return p->protocol;
 }
 
 SettingBase &SettingBase::setProtocol(const QVariant &value)
 {
-    dPvt();
+
     switch (qTypeId(value)) {
     case QMetaType_Int:
     case QMetaType_UInt:
     case QMetaType_Double:
     case QMetaType_LongLong:
     case QMetaType_ULongLong:
-        p.protocol=QStm::ProtocolName.value(value.toInt());
+        p->protocol=QStm::ProtocolName.value(value.toInt());
         break;
     default:
-        p.protocol=value;
+        p->protocol=value;
     }
     return*this;
 }
 
 QString SettingBase::method() const
 {
-    dPvt();
-    return p.method;
+
+    return p->method;
 }
 
 SettingBase &SettingBase::setMethod(const QString &value)
 {
-    dPvt();
-    p.method=value;
+
+    p->method=value;
     return*this;
 }
 
 QString SettingBase::driverName() const
 {
-    dPvt();
-    return p.driverName;
+
+    return p->driverName;
 }
 
 SettingBase &SettingBase::setDriverName(const QString &value)
 {
-    dPvt();
-    p.driverName=value;
+
+    p->driverName=value;
     return*this;
 }
 
 QString SettingBase::hostName() const
 {
-    dPvt();
-    return this->parseVariables(p.hostName).toString();
+
+    return this->parseVariables(p->hostName).toString();
 }
 
 SettingBase &SettingBase::setHostName(const QString &value)
 {
-    dPvt();
-    p.hostName = value.trimmed();
+
+    p->hostName = value.trimmed();
     return*this;
 }
 
 QString SettingBase::userName() const
 {
-    dPvt();
-    return this->parseVariables(p.userName).toString();
+
+    return this->parseVariables(p->userName).toString();
 }
 
 SettingBase &SettingBase::setUserName(const QString &value)
 {
-    dPvt();
-    p.userName = value.trimmed();
+
+    p->userName = value.trimmed();
     return*this;
 }
 
 QString SettingBase::password() const
 {
-    dPvt();
-    return p.password;
+
+    return p->password;
 }
 
 SettingBase &SettingBase::setPassword(const QString &value)
 {
-    dPvt();
-    p.password = value.trimmed();
+
+    p->password = value.trimmed();
     return*this;
 }
 
 int SettingBase::port() const
 {
-    dPvt();
-    return p.port;
+
+    return p->port;
 }
 
 SettingBase &SettingBase::setPort(int value)
 {
-    dPvt();
-    p.port = value;
+
+    p->port = value;
     return*this;
 }
 
 QVariant SettingBase::route() const
 {
-    dPvt();
-    return this->parseVariables(p.route).toString();
+
+    return this->parseVariables(p->route).toString();
 }
 
 QVariantList SettingBase::routeList() const
 {
-    dPvt();
-    const auto &vRoute=p.route;
+
+    const auto &vRoute=p->route;
     QVariantList vRouteList=vRoute.toList();
     if(vRouteList.isEmpty()){
         auto route=vRoute.toString().trimmed();
@@ -253,86 +250,86 @@ QVariantList SettingBase::routeList() const
 
 SettingBase &SettingBase::setRoute(const QVariant &value)
 {
-    dPvt();
-    p.route = value;
+
+    p->route = value;
     return*this;
 }
 
 QString SettingBase::path() const
 {
-    dPvt();
-    return this->parseVariables(p.path).toString();
+
+    return this->parseVariables(p->path).toString();
 }
 
 SettingBase &SettingBase::setPath(const QString &value)
 {
-    dPvt();
-    p.path = value.trimmed();
+
+    p->path = value.trimmed();
     return*this;
 }
 
 QVariantHash SettingBase::parameters() const
 {
-    dPvt();
-    return p.parameters;
+
+    return p->parameters;
 }
 
 SettingBase &SettingBase::setParameters(const QVariantHash &value)
 {
-    dPvt();
-    p.parameters=value;
+
+    p->parameters=value;
     return*this;
 }
 
 QVariant SettingBase::body() const
 {
-    dPvt();
-    return p.body;
+
+    return p->body;
 }
 
 SettingBase &SettingBase::setBody(const QVariant &value)
 {
-    dPvt();
-    p.body=value;
+
+    p->body=value;
     return*this;
 }
 
 int SettingBase::cacheInterval() const
 {
-    dPvt();
-    return this->parseInterval(p.cacheInterval, defaultInterval).toInt();
+
+    return this->parseInterval(p->cacheInterval, defaultInterval).toInt();
 }
 
 SettingBase &SettingBase::setCacheInterval(const QVariant &value)
 {
-    dPvt();
-    p.cacheInterval=value.toInt();
+
+    p->cacheInterval=value.toInt();
     return*this;
 }
 
 bool SettingBase::cacheCleanup() const
 {
-    dPvt();
-    return p.cacheCleanup;
+
+    return p->cacheCleanup;
 }
 
 SettingBase &SettingBase::setCacheCleanup(const QVariant &value)
 {
-    dPvt();
-    p.cacheCleanup=value.toBool();
+
+    p->cacheCleanup=value.toBool();
     return*this;
 }
 
 int SettingBase::cacheCleanupInterval() const
 {
-    dPvt();
-    return this->parseInterval(p.cacheCleanupInterval).toInt();
+
+    return this->parseInterval(p->cacheCleanupInterval).toInt();
 }
 
 SettingBase &SettingBase::setCacheCleanupInterval(const QVariant &value)
 {
-    dPvt();
-    p.cacheCleanupInterval=value.toInt();
+
+    p->cacheCleanupInterval=value.toInt();
     return*this;
 }
 

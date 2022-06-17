@@ -6,7 +6,7 @@
 #include <QVariantHash>
 
 namespace QStm {
-
+class MessagePvt;
 //!
 //! \brief The Message class
 //!
@@ -316,7 +316,7 @@ public:
     Message &setAttachment(const QVariantList &value);
 
 private:
-    void*p = nullptr;
+    MessagePvt*p = nullptr;
 };
 }
 
