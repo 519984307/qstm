@@ -5,9 +5,6 @@
 
 namespace QStm {
 
-#define dPvt()\
-    auto &p = *reinterpret_cast<PathUtilPvt*>(this->p)
-
 class PathUtilPvt:public QObject{
 public:
     QString v;

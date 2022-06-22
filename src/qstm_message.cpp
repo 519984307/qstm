@@ -5,9 +5,6 @@
 
 namespace QStm {
 
-#define dPvt()\
-auto &p =*reinterpret_cast<MessagePvt*>(this->p)
-
 class MessagePvt{
 public:
     static QByteArray base(){
