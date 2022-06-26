@@ -13,6 +13,7 @@ HEADERS += \
     $$PWD/qstm_global.h \
     $$PWD/qstm_macro.h \
     $$PWD/qstm_meta_types.h \
+    $$PWD/qstm_network_types.h \
     $$PWD/qstm_object_macro.h \
     $$PWD/qstm_result_info.h \
     $$PWD/qstm_types_const.h \
@@ -20,6 +21,7 @@ HEADERS += \
     $$PWD/qstm_result.h \
     $$PWD/qstm_cache_pool.h \
     $$PWD/qstm_object.h \
+    $$PWD/qstm_object_wrapper.h \
     $$PWD/qstm_setting_manager.h \
     $$PWD/qstm_setting_base.h \
     $$PWD/qstm_types.h \
@@ -43,6 +45,7 @@ SOURCES += \
     $$PWD/qstm_result.cpp \
     $$PWD/qstm_cache_pool.cpp \
     $$PWD/qstm_object.cpp \
+    $$PWD/qstm_object_wrapper.cpp \
     $$PWD/qstm_setting_manager.cpp \
     $$PWD/qstm_setting_base.cpp \
     $$PWD/qstm_types.cpp \
