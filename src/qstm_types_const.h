@@ -73,6 +73,7 @@ static const auto vpOrder="order";
 static const auto vpPerfumery="perfumerys";
 static const auto vpReadOnly="readOnly";
 static const auto vpResultInfo="resultInfo";
+static const auto vpColumns="columns";
 static const auto vpRows="rows";
 static const auto vpSearch="search";
 static const auto vpSortable="sortable";
@@ -107,6 +108,7 @@ static const auto vtInputUuid="inputuuid";
 
 static const auto vpOutput="output";
 static const auto vpRoute="route";
+static const auto vpPath="path";
 
 static const auto driver_QMYSQL="QMYSQL";
 static const auto driver_QODBC="QODBC";
