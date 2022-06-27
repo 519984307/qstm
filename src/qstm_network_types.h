@@ -33,6 +33,14 @@ public:
     const QByteArray APPLICATION_TEXT_XML="text/xml";
     const QByteArray APPLICATION_X_WWW_FORT_URLENCODED="application/x-www-form-urlencoded";
 
+    const QByteArray METHOD_GET="GET";
+    const QByteArray METHOD_POST="POST";
+    const QByteArray METHOD_PUT="PUT";
+    const QByteArray METHOD_DELETE="DELETE";
+    const QByteArray METHOD_HEAD="HEAD";
+    const QByteArray METHOD_OPTIONS="OPTIONS";
+    const QByteArray METHOD_PATCH="PACTH";
+    const QByteArray METHOD_TRACE="TRACE";
 
     enum SyncMode{
         Sync, aSync
@@ -56,7 +64,9 @@ public:
         PUT=2,
         DELETE=3,
         HEAD=4,
-        OPTIONS=5
+        OPTIONS=5,
+        PATCH=6,
+        TRACE=7
     };
 
     Q_ENUM(Method)
@@ -66,18 +76,16 @@ public:
     };
     Q_ENUM(Mode)
 
-    static const QHash<int,QString> &methodName(){
+    static const QHash<int,QString> &methodName()
+    {
         static const QHash<int,QString> __return{
-            {HEAD,"Head"},
             {HEAD,"head"},
-            {GET,"Get"},
             {GET,"get"},
-            {POST,"Post"},
             {POST,"post"},
-            {PUT,"Put"},
             {PUT,"put"},
-            {DELETE,"Delete"},
-            {DELETE,"delete"}
+            {DELETE,"delete"},
+            {PATCH,"patch"},
+            {TRACE,"trace"}
         };
         return __return;
     }

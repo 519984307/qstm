@@ -328,4 +328,4 @@ const QVariantHash ObjectWrapper::extractHash(const QObject *object)
     return __return;
 }
 
-} // namespace QMFE
+} // namespace QStm

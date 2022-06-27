@@ -167,4 +167,4 @@ signals:
     void baseValuesChanged();
 };
 
-} // namespace QMFE
+} // namespace QStm
